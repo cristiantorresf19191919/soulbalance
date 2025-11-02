@@ -80,11 +80,21 @@ loginForm.addEventListener('submit', async (e) => {
     window.location.href = 'admin.html';
     
   } catch (error) {
-    console.error('Error al iniciar sesión:', error);
+    console.error('❌ [LOGIN] Error al iniciar sesión:', error);
+    console.error('   Error code:', error.code);
+    console.error('   Error message:', error.message);
+    console.error('   Full error:', error);
     
     let errorMessage = 'Error al iniciar sesión. Por favor, verifica tus credenciales.';
     
-    if (error.code === 'auth/user-not-found') {
+    if (error.code === 'auth/api-key-not-valid' || error.message?.includes('api-key-not-valid')) {
+      errorMessage = '⚠️ Error de configuración: La API Key de Firebase no es válida. Por favor, verifica las variables de entorno en Netlify.';
+      console.error('🔴 [LOGIN] API Key inválida. Verifica:');
+      console.error('   1. Que FIREBASE_API_KEY esté configurada en Netlify');
+      console.error('   2. Que la API Key empiece con "AIza" (no "Alza")');
+      console.error('   3. Que la API Key esté completa (~39 caracteres)');
+      console.error('   4. Que hayas redesplegado después de agregar las variables');
+    } else if (error.code === 'auth/user-not-found') {
       errorMessage = 'No existe una cuenta con este email.';
     } else if (error.code === 'auth/wrong-password') {
       errorMessage = 'Contraseña incorrecta.';
@@ -92,6 +102,8 @@ loginForm.addEventListener('submit', async (e) => {
       errorMessage = 'Email inválido.';
     } else if (error.code === 'auth/too-many-requests') {
       errorMessage = 'Demasiados intentos fallidos. Intenta más tarde.';
+    } else if (error.code === 'auth/invalid-api-key') {
+      errorMessage = 'API Key inválida. Verifica la configuración en Netlify.';
     }
     
     showError(errorMessage);

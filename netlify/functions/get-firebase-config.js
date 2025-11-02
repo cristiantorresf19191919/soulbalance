@@ -24,15 +24,21 @@ exports.handler = async (event, context) => {
   console.log('  - FIREBASE_PROJECT_ID exists:', !!projectId);
   console.log('  - FIREBASE_PROJECT_ID value:', projectId || 'N/A');
 
+  // Generate authDomain if not provided (required for Authentication)
+  const authDomain = process.env.FIREBASE_AUTH_DOMAIN || (projectId ? `${projectId}.firebaseapp.com` : null);
+  
   const firebaseConfig = {
     apiKey: apiKey,
     projectId: projectId,
-    authDomain: process.env.FIREBASE_AUTH_DOMAIN || (projectId ? `${projectId}.firebaseapp.com` : undefined),
+    authDomain: authDomain,
     // Add other Firebase config if needed:
     // storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
     // messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
     // appId: process.env.FIREBASE_APP_ID,
   };
+  
+  // Log authDomain for debugging
+  console.log('  - AuthDomain:', authDomain || 'NOT SET');
 
   // Validate that required config exists
   if (!firebaseConfig.apiKey || !firebaseConfig.projectId) {
@@ -52,10 +58,27 @@ exports.handler = async (event, context) => {
   }
 
   // Validate API key format (should start with "AIza" and be ~39 characters)
-  if (!firebaseConfig.apiKey.startsWith('AIza') || firebaseConfig.apiKey.length < 30) {
-    console.warn('⚠️ [FIREBASE CONFIG] API key format may be invalid');
-    console.warn('  - Expected format: Starts with "AIza" and ~39 characters');
-    console.warn('  - Actual value:', firebaseConfig.apiKey.substring(0, 20) + '...');
+  if (!firebaseConfig.apiKey.startsWith('AIza')) {
+    console.error('❌ [FIREBASE CONFIG] API key format is INVALID');
+    console.error('  - Expected: Starts with "AIza"');
+    console.error('  - Actual starts with:', firebaseConfig.apiKey.substring(0, 4));
+    console.error('  - Full key length:', firebaseConfig.apiKey.length);
+    console.error('  - First 20 chars:', firebaseConfig.apiKey.substring(0, 20));
+    
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ 
+        error: 'Invalid API key format',
+        message: 'API key must start with "AIza". Please verify the FIREBASE_API_KEY in Netlify environment variables.',
+        received: firebaseConfig.apiKey.substring(0, 20) + '...'
+      })
+    };
+  }
+  
+  if (firebaseConfig.apiKey.length < 30 || firebaseConfig.apiKey.length > 50) {
+    console.warn('⚠️ [FIREBASE CONFIG] API key length may be unusual');
+    console.warn('  - Expected: ~39 characters');
+    console.warn('  - Actual:', firebaseConfig.apiKey.length);
   }
 
   return {

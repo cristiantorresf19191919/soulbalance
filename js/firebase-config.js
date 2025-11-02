@@ -90,10 +90,17 @@
         throw new Error('Missing projectId in Firebase configuration');
       }
       
+      // Ensure authDomain is set (required for Authentication)
+      if (!config.authDomain && config.projectId) {
+        config.authDomain = `${config.projectId}.firebaseapp.com`;
+        console.log('⚠️ [FIREBASE] authDomain was missing, auto-generated:', config.authDomain);
+      }
+      
       console.log('🚀 [FIREBASE] Initializing with config:', {
         projectId: config.projectId,
         authDomain: config.authDomain,
-        apiKeyFormat: 'AIza...'
+        apiKeyFormat: config.apiKey ? config.apiKey.substring(0, 10) + '...' : 'MISSING',
+        apiKeyLength: config.apiKey ? config.apiKey.length : 0
       });
       
       // Dynamic import of Firebase modules
