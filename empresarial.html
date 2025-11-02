@@ -19,6 +19,12 @@
       href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
+    <!-- Font Awesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      referrerpolicy="no-referrer"
+    />
     <style>
       .corporate-hero {
         background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-dark) 100%);
@@ -98,7 +104,9 @@
       }
 
       .highlight-box li::before {
-        content: '✓';
+        content: '\f00c'; /* Unicode de Font Awesome para fa-check */
+        font-family: 'Font Awesome 6 Free';
+        font-weight: 900;
         position: absolute;
         left: 0;
         top: 0.75rem;
@@ -306,7 +314,7 @@
 
         <div class="corporate-packages">
           <div class="corporate-package-card">
-            <div class="package-icon">⏰</div>
+            <div class="package-icon"><i class="fa-regular fa-clock"></i></div>
             <h3>Jornada de ½ Día</h3>
             <p>
               Perfecta para integrar el bienestar en la rutina sin interrumpir la jornada. Incluye actividades 
@@ -318,8 +326,8 @@
           </div>
 
           <div class="corporate-package-card featured">
-            <div class="package-badge-star">⭐</div>
-            <div class="package-icon">🌅</div>
+            <div class="package-badge-star"><i class="fa-solid fa-star"></i></div>
+            <div class="package-icon"><i class="fa-solid fa-sun"></i></div>
             <h3>Jornada Full Day</h3>
             <p>
               Una inmersión completa en el bienestar. Este programa de día entero maximiza el impacto en la salud 
@@ -331,7 +339,7 @@
           </div>
 
           <div class="corporate-package-card">
-            <div class="package-icon">⚡</div>
+            <div class="package-icon"><i class="fa-solid fa-bolt"></i></div>
             <h3>Servicio por Horas</h3>
             <p>
               Máxima flexibilidad para cubrir necesidades puntuales. Contrata sesiones específicas 
@@ -348,17 +356,17 @@
           <h3 style="text-align: center;">Nuestro Enfoque Integral</h3>
           <div class="approach-grid">
             <div class="approach-card">
-              <div class="approach-card-icon">🧠</div>
+              <div class="approach-card-icon"><i class="fa-solid fa-brain"></i></div>
               <h4>Bienestar Mental</h4>
               <p>Técnicas de mindfulness y gestión del estrés para mejorar la concentración y reducir la ansiedad.</p>
             </div>
             <div class="approach-card">
-              <div class="approach-card-icon">💆</div>
+              <div class="approach-card-icon"><i class="fa-solid fa-hand-sparkles"></i></div>
               <h4>Bienestar Físico</h4>
               <p>Masajes terapéuticos y sesiones de relajación para aliviar tensiones y dolores musculares.</p>
             </div>
             <div class="approach-card">
-              <div class="approach-card-icon">❤️</div>
+              <div class="approach-card-icon"><i class="fa-solid fa-heart"></i></div>
               <h4>Bienestar Emocional</h4>
               <p>Espacios de contención y apoyo emocional para promover un clima laboral más positivo.</p>
             </div>
@@ -367,7 +375,7 @@
 
         <!-- Benefits -->
         <div class="corporate-value">
-          <div class="value-icon">✓</div>
+          <div class="value-icon"><i class="fa-solid fa-check"></i></div>
           <div class="value-content">
             <h3>Maximice el valor para su empresa:</h3>
             <p>
@@ -472,8 +480,8 @@
                 </svg>
                 <span class="social-handle">@soulbalancespa</span>
               </a>
-              <a href="#" aria-label="Facebook">👥</a>
-              <a href="#" aria-label="WhatsApp">💬</a>
+              <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+              <a href="#" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
             </div>
           </div>
         </div>

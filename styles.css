@@ -769,8 +769,7 @@ body {
    ============================================ */
 .premium-section {
     padding: var(--spacing-xl) 0;
-    /* Cambiamos el fondo café por tonos de la paleta (beige marfil) */
-    background: linear-gradient(135deg, var(--primary-cream) 0%, var(--primary-ivory) 100%);
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-dark-soft) 30%, var(--primary-dark) 70%, var(--primary-dark-soft) 100%);
     position: relative;
     overflow: hidden;
 }
@@ -782,10 +781,9 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    /* Overlays suavizados con verdes y dorados tenues */
     background:
-        radial-gradient(circle at 20% 30%, rgba(156, 175, 136, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 80% 70%, rgba(212, 175, 122, 0.08) 0%, transparent 50%);
+        radial-gradient(circle at 20% 30%, rgba(201, 125, 96, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(156, 175, 136, 0.1) 0%, transparent 50%);
     pointer-events: none;
 }
 
@@ -797,14 +795,9 @@ body {
     right: 0;
     bottom: 0;
     background-image:
-        radial-gradient(circle at 20% 30%, rgba(245, 241, 235, 0.6) 0%, transparent 55%),
-        radial-gradient(circle at 80% 70%, rgba(253, 252, 249, 0.6) 0%, transparent 55%);
+        radial-gradient(circle at 20% 30%, rgba(212, 175, 122, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(232, 180, 160, 0.1) 0%, transparent 50%);
     pointer-events: none;
-}
-
-/* Título en color oscuro para el nuevo fondo claro */
-.premium-section .section-title {
-    color: var(--primary-dark) !important;
 }
 
 .section-title-light {
@@ -2743,7 +2736,10 @@ select:focus-visible {
 }
 
 .content-insight::before {
-    content: '💡';
+    content: '\f0eb';
+    /* Unicode de Font Awesome para fa-lightbulb */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
     position: absolute;
     top: -15px;
     left: 30px;
@@ -2752,6 +2748,11 @@ select:focus-visible {
     padding: 0.5rem;
     border-radius: 50%;
     box-shadow: 0 4px 15px rgba(212, 175, 122, 0.2);
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .content-insight h3 {
@@ -3777,9 +3778,33 @@ select:focus-visible {
 
 .admin-stats {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: var(--spacing-md);
     margin-bottom: var(--spacing-lg);
+}
+
+/* Ajuste responsivo para que no quede tarjeta sola */
+@media (max-width: 968px) {
+    .admin-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .admin-stats .stat-card:last-child {
+        grid-column: 1 / -1;
+        /* La tercera tarjeta ocupa todo el ancho en pantallas medianas */
+    }
+}
+
+@media (max-width: 640px) {
+    .admin-stats {
+        grid-template-columns: 1fr;
+        /* Una columna en móviles */
+    }
+
+    .admin-stats .stat-card:last-child {
+        grid-column: 1;
+        /* Restablecer en móviles */
+    }
 }
 
 .stat-card {
@@ -3827,6 +3852,12 @@ select:focus-visible {
     flex-shrink: 0;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
     transition: transform 0.3s ease;
+    color: var(--primary-green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
 }
 
 .stat-card:hover .stat-icon {
@@ -3863,9 +3894,28 @@ select:focus-visible {
     flex-wrap: wrap;
 }
 
+.search-input-wrapper {
+    position: relative;
+    flex: 1;
+    min-width: 250px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-medium);
+    font-size: 1rem;
+    z-index: 1;
+    pointer-events: none;
+}
+
 .search-input,
 .filter-select {
     padding: 0.875rem 1rem;
+    padding-left: 2.75rem;
+    /* Espacio para el ícono */
     border: 2px solid var(--border-light);
     border-radius: 12px;
     font-family: var(--font-sans);
@@ -3875,6 +3925,7 @@ select:focus-visible {
     background: var(--bg-white);
     flex: 1;
     min-width: 250px;
+    width: 100%;
 }
 
 .search-input:focus,
@@ -3882,6 +3933,11 @@ select:focus-visible {
     outline: none;
     border-color: var(--primary-terracotta);
     box-shadow: 0 0 0 3px rgba(201, 125, 96, 0.1);
+}
+
+.search-input:focus+.search-icon,
+.search-input-wrapper:focus-within .search-icon {
+    color: var(--primary-terracotta);
 }
 
 .filter-select {
@@ -3925,7 +3981,8 @@ select:focus-visible {
 .table-empty .empty-icon {
     font-size: 4rem;
     margin-bottom: var(--spacing-md);
-    opacity: 0.5;
+    opacity: 0.6;
+    color: var(--primary-green);
 }
 
 .table-empty h3 {
@@ -4086,17 +4143,31 @@ select:focus-visible {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.2rem;
+    font-size: 1rem;
     text-decoration: none;
+    color: var(--text-dark);
+}
+
+.action-btn i {
+    font-size: 1rem;
 }
 
 .action-btn:hover {
     background: var(--primary-terracotta);
+    color: var(--text-light);
     transform: translateY(-2px);
+}
+
+.action-btn:hover i {
+    color: var(--text-light);
 }
 
 .delete-btn {
     background: rgba(239, 68, 68, 0.1);
+    color: #EF4444;
+}
+
+.delete-btn i {
     color: #EF4444;
 }
 
@@ -4107,16 +4178,35 @@ select:focus-visible {
     box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 }
 
+.delete-btn:hover i {
+    color: white;
+}
+
 .call-btn:hover {
     background: #10b981;
+    color: white;
+}
+
+.call-btn:hover i {
+    color: white;
 }
 
 .email-btn:hover {
     background: var(--primary-green);
+    color: white;
+}
+
+.email-btn:hover i {
+    color: white;
 }
 
 .detail-btn:hover {
     background: var(--primary-gold);
+    color: var(--text-dark);
+}
+
+.detail-btn:hover i {
+    color: var(--text-dark);
 }
 
 /* Modal */
@@ -4170,17 +4260,22 @@ select:focus-visible {
     border: none;
     background: var(--bg-cream);
     border-radius: 8px;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     cursor: pointer;
     transition: var(--transition-fast);
     display: flex;
     align-items: center;
     justify-content: center;
+    color: var(--text-dark);
 }
 
 .modal-close:hover {
     background: var(--primary-terracotta);
     color: var(--text-light);
+}
+
+.modal-close i {
+    font-size: 1.1rem;
 }
 
 .modal-body {
@@ -4269,6 +4364,11 @@ select:focus-visible {
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.detail-action-btn i {
+    font-size: 1rem;
 }
 
 .detail-action-btn.call {

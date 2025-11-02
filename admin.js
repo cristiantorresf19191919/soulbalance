@@ -219,16 +219,16 @@ function renderLeads() {
         <td>
           <div class="action-buttons">
             <a href="tel:${lead.phone}" class="action-btn call-btn" title="Llamar">
-              📞
+              <i class="fa-solid fa-phone"></i>
             </a>
             <a href="mailto:${lead.email}" class="action-btn email-btn" title="Email">
-              ✉️
+              <i class="fa-regular fa-envelope"></i>
             </a>
             <button class="action-btn detail-btn" onclick="showLeadDetail('${lead.id}')" title="Ver detalles">
-              👁️
+              <i class="fa-regular fa-eye"></i>
             </button>
             <button class="action-btn delete-btn" onclick="deleteLead('${lead.id}', '${escapeHtml(lead.name || 'este lead')}')" title="Eliminar">
-              🗑️
+              <i class="fa-solid fa-trash"></i>
             </button>
           </div>
         </td>
@@ -361,13 +361,13 @@ window.showLeadDetail = function(leadId) {
       
       <div class="detail-actions">
         <a href="tel:${lead.phone}" class="detail-action-btn call">
-          📞 Llamar
+          <i class="fa-solid fa-phone"></i> Llamar
         </a>
         <a href="mailto:${lead.email}" class="detail-action-btn email">
-          ✉️ Enviar Email
+          <i class="fa-regular fa-envelope"></i> Enviar Email
         </a>
         <button class="detail-action-btn delete" onclick="deleteLead('${lead.id}', '${escapeHtml(lead.name || 'este lead')}'); modalOverlay.style.display = 'none';">
-          🗑️ Eliminar Lead
+          <i class="fa-solid fa-trash"></i> Eliminar Lead
         </button>
       </div>
     </div>

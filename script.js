@@ -97,14 +97,14 @@ let loadingTimeout = null;
 
 // Tips rotativos mientras carga
 const loadingTips = [
-    { icon: '🌿', text: 'Un masaje regular ayuda a reducir el estrés y mejorar la calidad del sueño' },
-    { icon: '✨', text: 'Los aceites esenciales no solo relajan, también nutren tu piel' },
-    { icon: '🧘', text: 'Respirar profundamente durante el masaje aumenta sus beneficios terapéuticos' },
-    { icon: '💆', text: 'Un ambiente tranquilo y música suave maximizan la experiencia de relajación' },
-    { icon: '🌱', text: 'La hidratación después del masaje ayuda a eliminar toxinas liberadas' },
-    { icon: '✨', text: 'Nuestros profesionales certificados se adaptan a tus necesidades específicas' },
-    { icon: '🧘', text: 'Un masaje semanal puede mejorar significativamente tu bienestar general' },
-    { icon: '💆', text: 'La aromaterapia durante el masaje activa múltiples sentidos para mayor relajación' }
+    { icon: '<i class="fa-solid fa-leaf"></i>', text: 'Un masaje regular ayuda a reducir el estrés y mejorar la calidad del sueño' },
+    { icon: '<i class="fa-solid fa-sparkles"></i>', text: 'Los aceites esenciales no solo relajan, también nutren tu piel' },
+    { icon: '<i class="fa-solid fa-spa"></i>', text: 'Respirar profundamente durante el masaje aumenta sus beneficios terapéuticos' },
+    { icon: '<i class="fa-solid fa-hand-sparkles"></i>', text: 'Un ambiente tranquilo y música suave maximizan la experiencia de relajación' },
+    { icon: '<i class="fa-solid fa-seedling"></i>', text: 'La hidratación después del masaje ayuda a eliminar toxinas liberadas' },
+    { icon: '<i class="fa-solid fa-sparkles"></i>', text: 'Nuestros profesionales certificados se adaptan a tus necesidades específicas' },
+    { icon: '<i class="fa-solid fa-spa"></i>', text: 'Un masaje semanal puede mejorar significativamente tu bienestar general' },
+    { icon: '<i class="fa-solid fa-hand-sparkles"></i>', text: 'La aromaterapia durante el masaje activa múltiples sentidos para mayor relajación' }
 ];
 
 let currentTipIndex = 0;
@@ -160,7 +160,7 @@ function showToast(title, message, type = 'success') {
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
     
-    const icon = type === 'success' ? '✓' : '✕';
+    const icon = type === 'success' ? '<i class="fa-solid fa-check"></i>' : '<i class="fa-solid fa-xmark"></i>';
     
     toast.innerHTML = `
         <div class="toast-icon">${icon}</div>
@@ -406,7 +406,7 @@ contactForm.addEventListener('submit', async (e) => {
         // Show success toast
         showToast(
             '¡Mensaje enviado!',
-            'Te responderemos muy pronto. Tu bienestar es nuestra prioridad ✨',
+            'Te responderemos muy pronto. Tu bienestar es nuestra prioridad',
             'success'
         );
         console.log('✅ [FORM] Toast de éxito mostrado');

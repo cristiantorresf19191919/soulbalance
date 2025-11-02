@@ -143,13 +143,13 @@ if (passwordToggle && passwordInput) {
     const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
     passwordInput.setAttribute('type', type);
     
-    // Cambiar icono
+    // Cambiar icono Font Awesome
     const eyeIcon = passwordToggle.querySelector('.eye-icon');
     if (type === 'text') {
-      eyeIcon.textContent = '🙈';
+      eyeIcon.className = 'fa-solid fa-eye-slash eye-icon';
       passwordToggle.setAttribute('aria-label', 'Ocultar contraseña');
     } else {
-      eyeIcon.textContent = '👁️';
+      eyeIcon.className = 'fa-regular fa-eye eye-icon';
       passwordToggle.setAttribute('aria-label', 'Mostrar contraseña');
     }
   });
