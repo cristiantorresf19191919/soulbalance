@@ -25,10 +25,28 @@
       // Initialize Firebase with config from Netlify Function
       window
         .initializeFirebase()
-        .then(({ app }) => {
+        .then(({ app, config }) => {
+          console.log("🔍 [LOGIN] Firebase app initialized:", {
+            name: app.name,
+            options: app.options,
+          });
+          console.log("🔍 [LOGIN] Using config:", {
+            apiKey: config.apiKey
+              ? config.apiKey.substring(0, 10) + "..."
+              : "MISSING",
+            apiKeyLength: config.apiKey ? config.apiKey.length : 0,
+            projectId: config.projectId,
+            authDomain: config.authDomain,
+          });
+
           window.firebaseAuth = getAuth(app);
           window.firebaseSignIn = signInWithEmailAndPassword;
           window.firebaseOnAuthStateChanged = onAuthStateChanged;
+
+          console.log("✅ [LOGIN] Firebase Auth initialized:", {
+            app: window.firebaseAuth.app.name,
+            currentUser: window.firebaseAuth.currentUser,
+          });
 
           // Marcar que Firebase está listo
           window.firebaseReady = true;

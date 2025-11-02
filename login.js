@@ -72,6 +72,17 @@ loginForm.addEventListener('submit', async (e) => {
       throw new Error('Firebase no está disponible. Por favor, recarga la página.');
     }
     
+    // Debug: Log auth config before sign in
+    console.log('🔍 [LOGIN] Attempting sign in with:', {
+      email: email,
+      authApp: window.firebaseAuth?.app?.name,
+      authConfig: window.firebaseAuth?.app?.options ? {
+        apiKey: window.firebaseAuth.app.options.apiKey ? window.firebaseAuth.app.options.apiKey.substring(0, 10) + '...' : 'MISSING',
+        projectId: window.firebaseAuth.app.options.projectId,
+        authDomain: window.firebaseAuth.app.options.authDomain
+      } : 'NOT AVAILABLE'
+    });
+    
     // Intentar iniciar sesión
     await window.firebaseSignIn(window.firebaseAuth, email, password);
     

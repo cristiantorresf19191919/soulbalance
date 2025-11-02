@@ -96,18 +96,43 @@
         console.log('⚠️ [FIREBASE] authDomain was missing, auto-generated:', config.authDomain);
       }
       
+      // Critical: authDomain MUST be set for Authentication
+      if (!config.authDomain) {
+        throw new Error('authDomain is required for Firebase Authentication. Please set FIREBASE_AUTH_DOMAIN or ensure FIREBASE_PROJECT_ID is set.');
+      }
+      
       console.log('🚀 [FIREBASE] Initializing with config:', {
         projectId: config.projectId,
         authDomain: config.authDomain,
         apiKeyFormat: config.apiKey ? config.apiKey.substring(0, 10) + '...' : 'MISSING',
-        apiKeyLength: config.apiKey ? config.apiKey.length : 0
+        apiKeyLength: config.apiKey ? config.apiKey.length : 0,
+        fullConfig: {
+          apiKey: config.apiKey ? config.apiKey.substring(0, 15) + '...' : 'MISSING',
+          projectId: config.projectId,
+          authDomain: config.authDomain
+        }
       });
       
       // Dynamic import of Firebase modules
-      const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js');
+      const { initializeApp, getApps } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js');
+      
+      // Check if Firebase is already initialized
+      const existingApps = getApps();
+      if (existingApps.length > 0) {
+        console.warn('⚠️ [FIREBASE] Firebase already initialized, using existing app:', existingApps[0].name);
+        const existingApp = existingApps.find(app => app.options.projectId === config.projectId);
+        if (existingApp) {
+          return { app: existingApp, config };
+        }
+      }
       
       const app = initializeApp(config);
       console.log('✅ [FIREBASE] Firebase initialized successfully');
+      console.log('📋 [FIREBASE] App details:', {
+        name: app.name,
+        projectId: app.options.projectId,
+        authDomain: app.options.authDomain
+      });
       
       return { app, config };
     } catch (error) {
