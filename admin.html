@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - Soul Balance</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Firebase Configuration Loader -->
+    <script src="js/firebase-config.js"></script>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+      import {
+        getAuth,
+        signOut,
+        onAuthStateChanged,
+      } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+      import {
+        getFirestore,
+        collection,
+        query,
+        orderBy,
+        onSnapshot,
+        getDocs,
+        doc,
+        deleteDoc,
+      } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+      // Initialize Firebase with config from Netlify Function
+      window
+        .initializeFirebase()
+        .then(({ app }) => {
+          window.firebaseAuth = getAuth(app);
+          window.firebaseFirestore = getFirestore(app);
+          window.firebaseSignOut = signOut;
+          window.firebaseOnAuthStateChanged = onAuthStateChanged;
+          window.firebaseCollection = collection;
+          window.firebaseQuery = query;
+          window.firebaseOrderBy = orderBy;
+          window.firebaseOnSnapshot = onSnapshot;
+          window.firebaseGetDocs = getDocs;
+          window.firebaseDoc = doc;
+          window.firebaseDeleteDoc = deleteDoc;
+
+          // Marcar que Firebase está listo
+          window.firebaseReady = true;
+          window.dispatchEvent(new Event("firebaseReady"));
+        })
+        .catch((error) => {
+          console.error("Failed to initialize Firebase:", error);
+        });
+    </script>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="admin-header">
+      <div class="admin-header-content">
+        <div class="admin-logo">
+          <img
+            src="superLogo.png"
+            alt="Soul Balance"
+            class="admin-logo-image"
+          />
+          <span class="admin-logo-text">SOUL BALANCE</span>
+          <span class="admin-badge">Admin</span>
+        </div>
+        <div class="admin-user-info">
+          <span id="adminEmail"></span>
+          <button class="logout-btn" id="logoutBtn">Cerrar Sesión</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <div class="admin-container">
+        <div class="admin-header-section">
+          <h1 class="admin-title">Dashboard de Leads</h1>
+          <p class="admin-subtitle">
+            Gestiona y revisa todos los leads capturados desde el formulario de
+            contacto
+          </p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="admin-stats">
+          <div class="stat-card">
+            <div class="stat-icon">📊</div>
+            <div class="stat-content">
+              <h3 class="stat-value" id="totalLeads">0</h3>
+              <p class="stat-label">Total de Leads</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">✨</div>
+            <div class="stat-content">
+              <h3 class="stat-value" id="todayLeads">0</h3>
+              <p class="stat-label">Leads Hoy</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">📈</div>
+            <div class="stat-content">
+              <h3 class="stat-value" id="weekLeads">0</h3>
+              <p class="stat-label">Leads Esta Semana</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="admin-filters">
+          <input
+            type="text"
+            id="searchInput"
+            class="search-input"
+            placeholder="🔍 Buscar por nombre, email o teléfono..."
+          />
+          <select id="serviceFilter" class="filter-select">
+            <option value="">Todos los servicios</option>
+            <option value="relajante">Masaje Relajante</option>
+            <option value="descontracturante">Masaje Descontracturante</option>
+            <option value="piedras">Masaje con Piedras Volcánicas</option>
+            <option value="prenatal">Masaje Prenatal</option>
+            <option value="4manos">Masaje a 4 Manos</option>
+            <option value="piernas">Masaje Piernas Cansadas</option>
+            <option value="pareja">Masaje en Pareja</option>
+            <option value="soulbalance">
+              Masaje Soul Balance - Cuatro Elementos
+            </option>
+            <option value="otro">Otro servicio</option>
+          </select>
+        </div>
+
+        <!-- Leads Table -->
+        <div class="admin-table-container">
+          <div class="table-loading" id="tableLoading">
+            <div class="loading-spinner">
+              <div class="spinner-circle"></div>
+              <div class="spinner-circle"></div>
+              <div class="spinner-circle"></div>
+            </div>
+            <p>Cargando leads...</p>
+          </div>
+
+          <div class="table-empty" id="tableEmpty" style="display: none">
+            <div class="empty-icon">📭</div>
+            <h3>No hay leads aún</h3>
+            <p>
+              Los leads aparecerán aquí cuando los usuarios completen el
+              formulario
+            </p>
+          </div>
+
+          <div
+            class="admin-table-wrapper"
+            id="tableWrapper"
+            style="display: none"
+          >
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Nombre</th>
+                  <th>Email</th>
+                  <th>Teléfono</th>
+                  <th>Servicio</th>
+                  <th>Mensaje</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="leadsTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Lead Detail Modal -->
+    <div class="modal-overlay" id="modalOverlay" style="display: none">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Detalle del Lead</h2>
+          <button class="modal-close" id="modalClose">✕</button>
+        </div>
+        <div class="modal-body" id="modalBody"></div>
+      </div>
+    </div>
+
+    <script src="admin.js"></script>
+  </body>
+</html>

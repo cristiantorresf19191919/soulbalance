@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Servicios - Soul Balance</title>
+    <meta
+      name="description"
+      content="Descubre todos nuestros servicios de masajes terapéuticos y relajantes. Desde masajes clásicos hasta terapias especializadas con técnicas ancestrales."
+    />
+    <meta
+      name="keywords"
+      content="masajes terapéuticos, spa a domicilio, masaje relajante, masaje descontracturante, piedras volcánicas, drenaje linfático, Soul Balance"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .services-hero {
+        background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-dark) 100%);
+        padding: 120px 0 60px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .services-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+        pointer-events: none;
+      }
+
+      .services-hero-content {
+        position: relative;
+        z-index: 1;
+      }
+
+      .services-title {
+        font-family: var(--font-serif);
+        font-size: clamp(2.5rem, 6vw, 4rem);
+        font-weight: 700;
+        color: var(--text-light);
+        margin-bottom: var(--spacing-sm);
+        letter-spacing: 2px;
+        text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      .services-subtitle {
+        font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+        color: rgba(255, 255, 255, 0.95);
+        max-width: 700px;
+        margin: 0 auto;
+        font-weight: 300;
+        line-height: 1.7;
+      }
+
+      .service-category {
+        margin-bottom: calc(var(--spacing-xl) * 1.5);
+      }
+
+      .category-header {
+        text-align: center;
+        margin-bottom: var(--spacing-lg);
+      }
+
+      .category-title {
+        font-family: var(--font-serif);
+        font-size: clamp(2rem, 5vw, 3rem);
+        color: var(--primary-green);
+        margin-bottom: var(--spacing-sm);
+        font-weight: 700;
+        position: relative;
+        display: inline-block;
+      }
+
+      .category-title::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary-green), var(--primary-sage));
+        border-radius: 2px;
+      }
+
+      .category-description {
+        font-size: 1.1rem;
+        color: var(--text-medium);
+        max-width: 600px;
+        margin: var(--spacing-md) auto 0;
+        font-style: italic;
+      }
+
+      .services-layout {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: var(--spacing-lg);
+        margin-top: var(--spacing-lg);
+      }
+
+      .service-card-detailed {
+        background: var(--bg-white);
+        border-radius: 32px;
+        overflow: hidden;
+        box-shadow: 0 10px 40px var(--shadow-soft);
+        transition: var(--transition-smooth);
+        border: 2px solid var(--border-light);
+        position: relative;
+      }
+
+      .service-card-detailed:hover {
+        transform: translateY(-12px);
+        box-shadow: 0 20px 60px var(--shadow-medium);
+        border-color: var(--primary-sage);
+      }
+
+      .service-image-detailed {
+        width: 100%;
+        height: 320px;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+
+      .service-card-detailed:hover .service-image-detailed {
+        transform: scale(1.08);
+      }
+
+      .service-image-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.5) 100%);
+        padding: var(--spacing-md);
+        color: var(--text-light);
+      }
+
+      .service-badge {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        padding: 0.4rem 1rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: var(--spacing-sm);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+
+      .service-content-detailed {
+        padding: var(--spacing-lg);
+      }
+
+      .service-title-detailed {
+        font-family: var(--font-serif);
+        font-size: 1.8rem;
+        color: var(--primary-dark);
+        margin-bottom: var(--spacing-sm);
+        font-weight: 700;
+        line-height: 1.3;
+      }
+
+      .service-description-detailed {
+        font-size: 1rem;
+        line-height: 1.8;
+        color: var(--text-dark);
+        margin-bottom: var(--spacing-md);
+      }
+
+      .service-pricing-detailed {
+        background: linear-gradient(135deg, rgba(44, 122, 122, 0.05) 0%, rgba(156, 175, 136, 0.05) 100%);
+        padding: var(--spacing-md);
+        border-radius: 16px;
+        border: 1px solid var(--border-light);
+      }
+
+      .pricing-title {
+        font-weight: 700;
+        color: var(--primary-green);
+        margin-bottom: var(--spacing-sm);
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .price-item-detailed {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid rgba(44, 122, 122, 0.1);
+      }
+
+      .price-item-detailed:last-child {
+        border-bottom: none;
+      }
+
+      .price-item-detailed span {
+        color: var(--text-dark);
+        font-size: 1rem;
+        font-weight: 500;
+      }
+
+      .price-item-detailed strong {
+        color: var(--primary-terracotta);
+        font-size: 1.3rem;
+        font-weight: 700;
+      }
+
+      .cta-services {
+        text-align: center;
+        padding: calc(var(--spacing-xl) * 1.5);
+        background: linear-gradient(135deg, var(--bg-warm) 0%, var(--bg-cream) 100%);
+        border-top: 3px solid var(--primary-green);
+      }
+
+      @media (max-width: 768px) {
+        .services-layout {
+          grid-template-columns: 1fr;
+          gap: var(--spacing-md);
+        }
+
+        .service-image-detailed {
+          height: 250px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+      <div class="nav-container">
+        <div class="logo">
+          <a
+            href="index.html"
+            style="
+              text-decoration: none;
+              display: flex;
+              align-items: center;
+              gap: 0.75rem;
+            "
+          >
+            <img src="superLogo.png" alt="Soul Balance" class="logo-image" />
+            <span class="logo-text">SOUL BALANCE</span>
+          </a>
+        </div>
+        <a href="login.html" class="login-nav-btn">Login</a>
+        <button class="language-toggle" id="languageToggle" aria-label="Toggle language">
+          <span class="language-icon">🌐</span>
+          <span class="language-text">EN</span>
+        </button>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <ul class="nav-menu" id="navMenu">
+          <li><a href="index.html#inicio">Inicio</a></li>
+          <li><a href="servicios.html">Servicios</a></li>
+          <li><a href="index.html#experiencias">Experiencias</a></li>
+          <li><a href="empresarial.html">Empresarial</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="index.html#contacto">Contacto</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Services Hero -->
+    <section class="services-hero">
+      <div class="container">
+        <div class="services-hero-content">
+          <h1 class="services-title">Nuestros Servicios</h1>
+          <p class="services-subtitle">
+            Cada masaje es una oportunidad para reconectarte contigo mismo.
+            Descubre nuestra amplia gama de terapias diseñadas para restaurar tu
+            equilibrio físico, mental y energético.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Masajes Principales -->
+    <section class="services" style="padding: calc(var(--spacing-xl) * 1.5) 0;">
+      <div class="container">
+        <div class="service-category">
+          <div class="category-header">
+            <h2 class="category-title">Masajes Principales</h2>
+            <p class="category-description">
+              Terapias clásicas y especializadas para cada necesidad
+            </p>
+          </div>
+
+          <div class="services-layout">
+            <!-- Masaje Relajante -->
+            <div class="service-card-detailed">
+              <div class="service-image-detailed" style="background-image: url('services/masajeRelajante.jpg');">
+                <div class="service-image-overlay">
+                  <span class="service-badge">Más Popular</span>
+                </div>
+              </div>
+              <div class="service-content-detailed">
+                <h3 class="service-title-detailed">Masaje Relajante</h3>
+                <p class="service-description-detailed">
+                  Un masaje suave diseñado para liberar el estrés, calmar la mente
+                  y restaurar la armonía entre cuerpo y emociones. Renueva tu
+                  energía y te ofrece la paz interior que mereces.
+                </p>
+                <div class="service-pricing-detailed">
+                  <div class="pricing-title">Precios</div>
+                  <div class="price-item-detailed">
+                    <span>60 min</span> <strong>$130.000</strong>
+                  </div>
+                  <div class="price-item-detailed">
+                    <span>90 min</span> <strong>$170.000</strong>
+                  </div>
+                  <div class="price-item-detailed">
+                    <span>120 min</span> <strong>$210.000</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Masaje Descontracturante -->
+            <div class="service-card-detailed">
+              <div class="service-image-detailed" style="background-image: url('services/masajeDescontracturante.jpg');">
+              </div>
+              <div class="service-content-detailed">
+                <h3 class="service-title-detailed">Masaje Descontracturante</h3>
+                <p class="service-description-detailed">
+                  Masaje profundo que disuelve nudos musculares y alivia el dolor,
+                  liberando la tensión acumulada. Utiliza técnicas focalizadas
+                  para devolver ligereza y movilidad.
+                </p>
+                <div class="service-pricing-detailed">
+                  <div class="pricing-title">Precios</div>
+                  <div class="price-item-detailed">
+                    <span>60 min</span> <strong>$140.000</strong>
+                  </div>
+                  <div class="price-item-detailed">
+                    <span>90 min</span> <strong>$180.000</strong>
+                  </div>
+                  <div class="price-item-detailed">
+                    <span>120 min</span> <strong>$220.000</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Masaje con Piedras Volcánicas -->
+            <div class="service-card-detailed">
+              <div class="service-image-detailed" style="background-image: url('services/masajesPiedrasVolcanicas.jpg');">
+                <div class="service-image-overlay">
+                  <span class="service-badge">Premium</span>
+                </div>
+              </div>
+              <div class="service-content-detailed">
+                <h3 class="service-title-detailed">Masaje con Piedras Volcánicas</h3>
+                <p class="service-description-detailed">
+                  Experimenta la renovación a través del calor de las piedras
+                  volcánicas. Su penetración profunda disuelve la tensión
+                  muscular, equilibra la energía y genera una profunda sensación
+                  de calma.
+                </p>
+                <div class="service-pricing-detailed">
+                  <div class="pricing-title">Precios</div>
+                  <div class="price-item-detailed">
+                    <span>60 min</span> <strong>$150.000</strong>
+                  </div>
+                  <div class="price-item-detailed">
+                    <span>90 min</span> <strong>$190.000</strong>
+                  </div>
+                  <div class="price-item-detailed">
+                    <span>120 min</span> <strong>$230.000</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Masaje Terapéutico de Espalda -->
+            <div class="service-card-detailed">
+              <div class="service-image-detailed" style="background-image: url('services/masajeTerapeuticoEspalda.jpg');">
+              </div>
+              <div class="service-content-detailed">
+                <h3 class="service-title-detailed">Masaje Terapéutico de Espalda</h3>
+                <p class="service-description-detailed">
+                  Enfoque especializado en la columna vertebral y músculos de la espalda.
+                  Reduce tensiones, mejora la postura y alivia dolores crónicos,
+                  devolviendo flexibilidad y equilibrio a tu zona central.
+                </p>
+                <div class="service-pricing-detailed">
+                  <div class="pricing-title">Precios</div>
+                  <div class="price-item-detailed">
+                    <span>45 min</span> <strong>$120.000</strong>
+                  </div>
+                  <div class="price-item-detailed">
+                    <span>60 min</span> <strong>$150.000</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Masaje de Tejido Profundo -->
+            <div class="service-card-detailed">
+              <div class="service-image-detailed" style="background-image: url('services/masajeTejidoProfundo.jpg');">
+              </div>
+              <div class="service-content-detailed">
+                <h3 class="service-title-detailed">Masaje de Tejido Profundo</h3>
+                <p class="service-description-detailed">
+                  Técnica intensa que trabaja las capas profundas de los músculos y
+                  tejidos conectivos. Ideal para lesiones crónicas y contracturas
+                  persistentes, liberando tensiones profundas.
+                </p>
+                <div class="service-pricing-detailed">
+                  <div class="pricing-title">Precios</div>
+                  <div class="price-item-detailed">
+                    <span>60 min</span> <strong>$145.000</strong>
+                  </div>
+                  <div class="price-item-detailed">
+                    <span>90 min</span> <strong>$185.000</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Masaje Deportivo -->
+            <div class="service-card-detailed">
+              <div class="service-image-detailed" style="background-image: url('services/masajeDeportivo.jpg');">
+              </div>
+              <div class="service-content-detailed">
+                <h3 class="service-title-detailed">Masaje Deportivo</h3>
+                <p class="service-description-detailed">
+                  Optimizado para atletas y personas activas. Previene lesiones,
+                  acelera la recuperación muscular, mejora el rendimiento y mantiene
+                  tu cuerpo en óptimas condiciones.
+                </p>
+                <div class="service-pricing-detailed">
+                  <div class="pricing-title">Precios</div>
+                  <div class="price-item-detailed">
+                    <span>60 min</span> <strong>$150.000</strong>
+                  </div>
+                  <div class="price-item-detailed">
+                    <span>90 min</span> <strong>$190.000</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Masaje Piernas Cansadas -->
+            <div class="service-card-detailed">
+              <div class="service-image-detailed" style="background-image: url('services/masajePiernasCansadas.jpg');">
+              </div>
+              <div class="service-content-detailed">
+                <h3 class="service-title-detailed">Masaje Piernas Cansadas</h3>
+                <p class="service-description-detailed">
+                  Masaje revitalizante que estimula la circulación, reduce la
+                  fatiga y devuelve frescura y descanso a tus piernas después de
+                  largas jornadas.
+                </p>
+                <div class="service-pricing-detailed">
+                  <div class="pricing-title">Precios</div>
+                  <div class="price-item-detailed">
+                    <span>30 min</span> <strong>$100.000</strong>
+                  </div>
+                  <div class="price-item-detailed">
+                    <span>60 min</span> <strong>$140.000</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Masajes Especiales -->
+    <section class="premium-section" style="padding: 0 0 calc(var(--spacing-xl) * 1.5);">
+      <div class="container">
+        <div class="service-category">
+          <div class="category-header">
+            <h2 class="category-title section-title-light">Masajes Especiales</h2>
+            <p class="category-description" style="color: rgba(255, 255, 255, 0.9);">
+              Terapias únicas con técnicas ancestrales
+            </p>
+          </div>
+
+          <div class="services-layout">
+            <!-- Masaje con Vela -->
+            <div class="service-card-detailed">
+              <div class="service-image-detailed" style="background-image: url('services/masajeVela.jpg');">
+                <div class="service-image-overlay">
+                  <span class="service-badge">Espiritual</span>
+                </div>
+              </div>
+              <div class="service-content-detailed">
+                <h3 class="service-title-detailed">Masaje con Vela</h3>
+                <p class="service-description-detailed">
+                  Terapia con velas aromáticas que combinan el calor suave con aceites
+                  esenciales. Genera una experiencia sensorial única que nutre la piel
+                  y restaura la energía vital.
+                </p>
+                <div class="service-pricing-detailed">
+                  <div class="pricing-title">Precios</div>
+                  <div class="price-item-detailed">
+                    <span>60 min</span> <strong>$155.000</strong>
+                  </div>
+                  <div class="price-item-detailed">
+                    <span>90 min</span> <strong>$195.000</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bambuterapia -->
+            <div class="service-card-detailed">
+              <div class="service-image-detailed" style="background-image: url('services/bambuTerapia.jpg');">
+                <div class="service-image-overlay">
+                  <span class="service-badge">Exótico</span>
+                </div>
+              </div>
+              <div class="service-content-detailed">
+                <h3 class="service-title-detailed">Bambuterapia</h3>
+                <p class="service-description-detailed">
+                  Masaje revitalizante utilizando varillas de bambú calientes. Mejora
+                  la circulación, tonifica los tejidos y libera la tensión muscular,
+                  creando una experiencia exótica y profundamente relajante.
+                </p>
+                <div class="service-pricing-detailed">
+                  <div class="pricing-title">Precios</div>
+                  <div class="price-item-detailed">
+                    <span>60 min</span> <strong>$160.000</strong>
+                  </div>
+                  <div class="price-item-detailed">
+                    <span>90 min</span> <strong>$200.000</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Masaje con Pindas -->
+            <div class="service-card-detailed">
+              <div class="service-image-detailed" style="background-image: url('services/masajeConPindas.jpg');">
+                <div class="service-image-overlay">
+                  <span class="service-badge">Ayurvédico</span>
+                </div>
+              </div>
+              <div class="service-content-detailed">
+                <h3 class="service-title-detailed">Masaje con Pindas</h3>
+                <p class="service-description-detailed">
+                  Bolsitas herbales tibias llenas de hierbas medicinales que liberan
+                  sus propiedades curativas sobre tu cuerpo. Equilibra los doshas,
+                  alivia el dolor y fomenta una profunda calma y armonía.
+                </p>
+                <div class="service-pricing-detailed">
+                  <div class="pricing-title">Precios</div>
+                  <div class="price-item-detailed">
+                    <span>60 min</span> <strong>$150.000</strong>
+                  </div>
+                  <div class="price-item-detailed">
+                    <span>90 min</span> <strong>$190.000</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Masaje Cráneo Facial -->
+            <div class="service-card-detailed">
+              <div class="service-image-detailed" style="background-image: url('services/masajeCraneoFacial.jpg');">
+              </div>
+              <div class="service-content-detailed">
+                <h3 class="service-title-detailed">Masaje Cráneo Facial</h3>
+                <p class="service-description-detailed">
+                  Liberación craneosacral y facial que suaviza las líneas de expresión,
+                  alivia dolores de cabeza, reduce el estrés y promueve una sensación
+                  de relajación profunda en rostro y cuero cabelludo.
+                </p>
+                <div class="service-pricing-detailed">
+                  <div class="pricing-title">Precios</div>
+                  <div class="price-item-detailed">
+                    <span>45 min</span> <strong>$125.000</strong>
+                  </div>
+                  <div class="price-item-detailed">
+                    <span>60 min</span> <strong>$155.000</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Masaje Prenatal -->
+            <div class="service-card-detailed">
+              <div class="service-image-detailed" style="background-image: url('services/masajePreNatal.jpg');">
+                <div class="service-image-overlay">
+                  <span class="service-badge">Embarazo</span>
+                </div>
+              </div>
+              <div class="service-content-detailed">
+                <h3 class="service-title-detailed">Masaje Prenatal</h3>
+                <p class="service-description-detailed">
+                  Diseñado especialmente para futuras mamás. Este masaje alivia
+                  eficazmente la espalda, piernas y pies, reduce la hinchazón y
+                  crea un espacio de calma y profunda conexión con tu bebé.
+                </p>
+                <div class="service-pricing-detailed">
+                  <div class="pricing-title">Precios</div>
+                  <div class="price-item-detailed">
+                    <span>60 min</span> <strong>$145.000</strong>
+                  </div>
+                  <div class="price-item-detailed">
+                    <span>90 min</span> <strong>$185.000</strong>
+                  </div>
+                  <div class="price-item-detailed">
+                    <span>120 min</span> <strong>$225.000</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Masaje a 4 Manos -->
+            <div class="service-card-detailed">
+              <div class="service-image-detailed" style="background-image: url('services/masajes4Manos.jpg');">
+                <div class="service-image-overlay">
+                  <span class="service-badge">Exclusivo</span>
+                </div>
+              </div>
+              <div class="service-content-detailed">
+                <h3 class="service-title-detailed">Masaje a 4 Manos</h3>
+                <p class="service-description-detailed">
+                  Dos terapeutas en perfecta sincronía envuelven tu cuerpo con un
+                  ritmo único de movimientos. Esta experiencia envolvente
+                  multiplica la relajación y equilibra tu energía de manera profunda.
+                </p>
+                <div class="service-pricing-detailed">
+                  <div class="pricing-title">Precios</div>
+                  <div class="price-item-detailed">
+                    <span>30 min</span> <strong>$130.000</strong>
+                  </div>
+                  <div class="price-item-detailed">
+                    <span>60 min</span> <strong>$170.000</strong>
+                  </div>
+                  <div class="price-item-detailed">
+                    <span>90 min</span> <strong>$210.000</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Drenaje Linfático Manual -->
+            <div class="service-card-detailed">
+              <div class="service-image-detailed" style="background-image: url('services/drenajeLinfaticoManual.jpg');">
+              </div>
+              <div class="service-content-detailed">
+                <h3 class="service-title-detailed">Drenaje Linfático Manual</h3>
+                <p class="service-description-detailed">
+                  Técnica manual suave que activa la circulación linfática, elimina
+                  toxinas y reduce la retención de líquidos. Mejora el sistema inmunológico
+                  y aporta una sensación de ligereza y bienestar integral.
+                </p>
+                <div class="service-pricing-detailed">
+                  <div class="pricing-title">Precios</div>
+                  <div class="price-item-detailed">
+                    <span>60 min</span> <strong>$145.000</strong>
+                  </div>
+                  <div class="price-item-detailed">
+                    <span>90 min</span> <strong>$185.000</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Otros Servicios de Spa -->
+    <section class="services" style="padding: calc(var(--spacing-xl) * 1.5) 0;">
+      <div class="container">
+        <div class="service-category">
+          <div class="category-header">
+            <h2 class="category-title">Otros Servicios de Spa</h2>
+            <p class="category-description">
+              Tratamientos adicionales para completar tu experiencia
+            </p>
+          </div>
+
+          <div class="services-layout">
+            <!-- SPA de Pies -->
+            <div class="service-card-detailed">
+              <div class="service-image-detailed" style="background-image: url('services/spaPies.jpg');">
+                <div class="service-image-overlay">
+                  <span class="service-badge">Relajante</span>
+                </div>
+              </div>
+              <div class="service-content-detailed">
+                <h3 class="service-title-detailed">SPA de Pies</h3>
+                <p class="service-description-detailed">
+                  Exfoliación, hidratación profunda y masaje reflexológico. Trata tus
+                  pies con el cuidado que se merecen, aliviando la tensión y devolviendo
+                  suavidad y bienestar a cada paso.
+                </p>
+                <div class="service-pricing-detailed">
+                  <div class="pricing-title">Precios</div>
+                  <div class="price-item-detailed">
+                    <span>45 min</span> <strong>$100.000</strong>
+                  </div>
+                  <div class="price-item-detailed">
+                    <span>60 min</span> <strong>$130.000</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- SPA de Manos -->
+            <div class="service-card-detailed">
+              <div class="service-image-detailed" style="background-image: url('services/spaManos.jpg');">
+                <div class="service-image-overlay">
+                  <span class="service-badge">Nourishing</span>
+                </div>
+              </div>
+              <div class="service-content-detailed">
+                <h3 class="service-title-detailed">SPA de Manos</h3>
+                <p class="service-description-detailed">
+                  Tratamiento completo de exfoliación, hidratación y masaje para tus
+                  manos. Nutre la piel, fortalece las uñas y relaja la tensión
+                  acumulada por el trabajo diario.
+                </p>
+                <div class="service-pricing-detailed">
+                  <div class="pricing-title">Precios</div>
+                  <div class="price-item-detailed">
+                    <span>45 min</span> <strong>$100.000</strong>
+                  </div>
+                  <div class="price-item-detailed">
+                    <span>60 min</span> <strong>$130.000</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-services">
+      <div class="container">
+        <h2 style="font-family: var(--font-serif); font-size: 2.5rem; color: var(--primary-green); margin-bottom: var(--spacing-md);">
+          ¿Listo para tu experiencia?
+        </h2>
+        <p style="font-size: 1.2rem; color: var(--text-dark); margin-bottom: var(--spacing-lg); max-width: 600px; margin-left: auto; margin-right: auto;">
+          Reserva ahora y descubre cómo nuestros masajes pueden transformar tu
+          bienestar. Disponibles Domingo a Domingo, de 8 AM a 7 PM.
+        </p>
+        <a href="index.html#contacto" class="cta-button">Reservar Ahora</a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-brand">
+            <div class="logo">
+              <div class="logo-icon">🧘</div>
+              <span class="logo-text">SOUL BALANCE</span>
+            </div>
+            <p>Equilibrio entre cuerpo, mente y alma</p>
+          </div>
+          <div class="footer-links">
+            <h4>Enlaces</h4>
+            <ul>
+              <li><a href="index.html#inicio">Inicio</a></li>
+              <li><a href="servicios.html">Servicios</a></li>
+              <li><a href="index.html#experiencias">Experiencias</a></li>
+              <li><a href="blog.html">Blog</a></li>
+              <li><a href="index.html#contacto">Contacto</a></li>
+            </ul>
+          </div>
+          <div class="footer-social">
+            <h4>Síguenos</h4>
+            <div class="social-links">
+              <a
+                href="https://www.instagram.com/soulbalancespa"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram @soulbalancespa"
+                class="social-instagram"
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+                  />
+                </svg>
+                <span class="social-handle">@soulbalancespa</span>
+              </a>
+              <a href="#" aria-label="Facebook">👥</a>
+              <a href="#" aria-label="WhatsApp">💬</a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>
+            &copy; 2024 Soul Balance. Todos los derechos reservados. |
+            Experiencias de Bienestar
+          </p>
+          <p style="margin-top: 1rem; font-size: 0.95rem;">
+            <a href="mailto:balancecol2024@gmail.com" style="color: rgba(255, 255, 255, 0.9); text-decoration: none;">balancecol2024@gmail.com</a>
+            |
+            <a href="tel:+573202632993" style="color: rgba(255, 255, 255, 0.9); text-decoration: none;">320 2632993</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a
+      href="https://wa.me/573202632993"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="whatsapp-float"
+      aria-label="Contáctanos por WhatsApp"
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"
+        />
+      </svg>
+      <span class="whatsapp-tooltip">Escríbenos</span>
+    </a>
+
+    <script src="script.js"></script>
+  </body>
+</html>
+

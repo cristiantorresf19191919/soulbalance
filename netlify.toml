@@ -1,0 +1,20 @@
+[build]
+  # No build command needed for static site
+  publish = "."
+
+[functions]
+  # Functions directory
+  directory = "netlify/functions"
+
+[[redirects]]
+  # Redirect function requests to correct path
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+# Optional: Environment variables can be set here for local development
+# But it's better to use Netlify UI for production
+# [build.environment]
+#   FIREBASE_API_KEY = "your-api-key-here"
+#   FIREBASE_PROJECT_ID = "your-project-id-here"
+
