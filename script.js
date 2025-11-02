@@ -304,7 +304,7 @@ contactForm.addEventListener('submit', async (e) => {
             console.log('📊 [FIRESTORE] Información de Firestore:', {
                 type: 'Cloud Firestore',
                 app: window.firebaseFirestore.app?.name || 'N/A',
-                projectId: 'barber-s-app-18e7e'
+                projectId: window.firebaseFirestore.app?.options?.projectId || 'N/A'
             });
         }
         

@@ -19,3 +19,7 @@ Thumbs.db
 # Logs
 *.log
 
+# Sensitive configuration files
+*_SECRET.md
+*_CREDENTIALS.md
+
