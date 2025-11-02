@@ -359,7 +359,7 @@ body {
     }
 
     50% {
-        transform: translateY(-10px);
+        transform: translateY(-4px);
     }
 }
 
@@ -377,7 +377,7 @@ body {
     }
 
     50% {
-        transform: translateY(-10px);
+        transform: translateY(-4px);
     }
 }
 
@@ -769,7 +769,8 @@ body {
    ============================================ */
 .premium-section {
     padding: var(--spacing-xl) 0;
-    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-dark-soft) 30%, var(--primary-dark) 70%, var(--primary-dark-soft) 100%);
+    /* Cambiamos el fondo café por tonos de la paleta (beige marfil) */
+    background: linear-gradient(135deg, var(--primary-cream) 0%, var(--primary-ivory) 100%);
     position: relative;
     overflow: hidden;
 }
@@ -781,9 +782,10 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
+    /* Overlays suavizados con verdes y dorados tenues */
     background:
-        radial-gradient(circle at 20% 30%, rgba(201, 125, 96, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 70%, rgba(156, 175, 136, 0.1) 0%, transparent 50%);
+        radial-gradient(circle at 20% 30%, rgba(156, 175, 136, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(212, 175, 122, 0.08) 0%, transparent 50%);
     pointer-events: none;
 }
 
@@ -795,9 +797,14 @@ body {
     right: 0;
     bottom: 0;
     background-image:
-        radial-gradient(circle at 20% 30%, rgba(212, 175, 122, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 70%, rgba(232, 180, 160, 0.1) 0%, transparent 50%);
+        radial-gradient(circle at 20% 30%, rgba(245, 241, 235, 0.6) 0%, transparent 55%),
+        radial-gradient(circle at 80% 70%, rgba(253, 252, 249, 0.6) 0%, transparent 55%);
     pointer-events: none;
+}
+
+/* Título en color oscuro para el nuevo fondo claro */
+.premium-section .section-title {
+    color: var(--primary-dark) !important;
 }
 
 .section-title-light {
@@ -825,8 +832,8 @@ body {
 
 .premium-card:hover {
     background: rgba(255, 255, 255, 0.12);
-    transform: translateY(-5px);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
 }
 
 .premium-card-dark {
@@ -963,7 +970,7 @@ body {
 .corporate-icon {
     font-size: 4rem;
     margin-bottom: var(--spacing-sm);
-    animation: float 3s ease-in-out infinite;
+    color: var(--primary-green);
 }
 
 .section-title-corporate {
@@ -1022,9 +1029,13 @@ body {
 }
 
 .corporate-package-card:hover {
-    transform: translateY(-12px);
-    box-shadow: 0 20px 60px rgba(44, 122, 122, 0.4);
+    transform: translateY(-6px);
+    box-shadow: 0 14px 45px rgba(44, 122, 122, 0.3);
+}
+
+.corporate-package-card.featured:hover {
     border-color: var(--primary-gold);
+    box-shadow: 0 18px 55px rgba(44, 122, 122, 0.35);
 }
 
 .corporate-package-card.featured {
@@ -1062,13 +1073,14 @@ body {
     top: 20px;
     right: 20px;
     font-size: 2rem;
-    animation: sparkle 2s ease-in-out infinite;
+    color: var(--primary-gold);
 }
 
 .package-icon {
-    font-size: 3.5rem;
+    font-size: 3.2rem;
     margin-bottom: var(--spacing-md);
     text-align: center;
+    color: #ffffff;
 }
 
 .corporate-package-card h3 {
