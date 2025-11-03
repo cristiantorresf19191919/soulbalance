@@ -8,6 +8,7 @@
   z-index: 1000;
   transition: var(--transition-smooth);
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  overflow: visible;
 }
 
 .navbar.scrolled {

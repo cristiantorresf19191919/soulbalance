@@ -18,14 +18,12 @@ export function VersionBadge({ variant = 'header' }: VersionBadgeProps) {
       onMouseLeave={() => setShowTooltip(false)}
     >
       <span className={styles.versionNumber}>v{APP_VERSION}</span>
-      {showTooltip && (
-        <div className={styles.tooltip}>
-          <div className={styles.tooltipArrow}></div>
-          <p className={styles.tooltipText}>
-            Versión {APP_VERSION} de la aplicación. Este número se incrementa con cada despliegue a producción para facilitar el seguimiento de cambios y actualizaciones.
-          </p>
-        </div>
-      )}
+      <div className={`${styles.tooltip} ${showTooltip ? styles.tooltipVisible : ''}`}>
+        <div className={styles.tooltipArrow}></div>
+        <p className={styles.tooltipText}>
+          Versión {APP_VERSION} de la aplicación. Este número se incrementa con cada despliegue a producción para facilitar el seguimiento de cambios y actualizaciones.
+        </p>
+      </div>
     </div>
   )
 }

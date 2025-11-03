@@ -55,10 +55,13 @@ export function Footer() {
           </div>
         </div>
         <div className={styles.footerBottom}>
-          <p>
-            &copy; 2024 Soul Balance. Todos los derechos reservados. |
-            Experiencias de Bienestar <VersionBadge variant="footer" />
-          </p>
+          <div className={styles.footerCopyright}>
+            <span>
+              &copy; 2024 Soul Balance. Todos los derechos reservados. |
+              Experiencias de Bienestar
+            </span>
+            <VersionBadge variant="footer" />
+          </div>
           <p style={{ marginTop: '1rem', fontSize: '0.95rem' }}>
             <a
               href="mailto:balancecol2024@gmail.com"
