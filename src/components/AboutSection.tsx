@@ -27,7 +27,7 @@ export function AboutSection() {
             </div>
             <div className={styles.featureCard}>
               <div className={styles.featureIcon}>
-                <i className="fa-solid fa-sparkles"></i>
+                <i className="fa-solid fa-wand-magic-sparkles"></i>
               </div>
               <h3>Experiencias Personalizadas</h3>
               <p>Adaptadas a tus necesidades</p>

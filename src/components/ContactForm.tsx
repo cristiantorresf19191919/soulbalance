@@ -1,10 +1,29 @@
 'use client'
 
 import { useState, FormEvent } from 'react'
+import { 
+  Select, 
+  MenuItem, 
+  FormControl, 
+  SelectChangeEvent 
+} from '@mui/material'
 import { useContactForm } from '@/hooks/useContactForm'
 import { LoadingOverlay } from './LoadingOverlay'
 import { showToast } from './ToastNotifications'
 import styles from './ContactForm.module.css'
+
+const serviceOptions = [
+  { value: 'relajante', label: 'Masaje Relajante' },
+  { value: 'descontracturante', label: 'Masaje Descontracturante' },
+  { value: 'piedras', label: 'Masaje con Piedras Volcánicas' },
+  { value: 'prenatal', label: 'Masaje Prenatal' },
+  { value: '4manos', label: 'Masaje a 4 Manos' },
+  { value: 'piernas', label: 'Masaje Piernas Cansadas' },
+  { value: 'pareja', label: 'Masaje en Pareja' },
+  { value: 'soulbalance', label: 'Masaje Soul Balance - Cuatro Elementos' },
+  { value: 'empresarial', label: 'Servicios Empresariales' },
+  { value: 'otro', label: 'Otro servicio' },
+]
 
 export function ContactForm() {
   const [formData, setFormData] = useState({
@@ -34,10 +53,17 @@ export function ContactForm() {
     }
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
+    })
+  }
+
+  const handleSelectChange = (e: SelectChangeEvent<string>) => {
+    setFormData({
+      ...formData,
+      service: e.target.value
     })
   }
 
@@ -105,28 +131,46 @@ export function ContactForm() {
         </div>
 
         <div className={styles.formGroup}>
-          <label htmlFor="service">
+          <label htmlFor="service" className={styles.selectLabel}>
             <i className="fa-solid fa-leaf label-icon"></i>
             ¿Qué servicio te interesa?
           </label>
-          <select
-            id="service"
-            name="service"
-            required
-            value={formData.service}
-            onChange={handleChange}
-          >
-            <option value="">Selecciona una opción</option>
-            <option value="relajante">Masaje Relajante</option>
-            <option value="descontracturante">Masaje Descontracturante</option>
-            <option value="piedras">Masaje con Piedras Volcánicas</option>
-            <option value="prenatal">Masaje Prenatal</option>
-            <option value="4manos">Masaje a 4 Manos</option>
-            <option value="piernas">Masaje Piernas Cansadas</option>
-            <option value="pareja">Masaje en Pareja</option>
-            <option value="soulbalance">Masaje Soul Balance - Cuatro Elementos</option>
-            <option value="otro">Otro servicio</option>
-          </select>
+          <FormControl fullWidth className={styles.muiSelectWrapper}>
+            <Select
+              id="service"
+              name="service"
+              value={formData.service}
+              onChange={handleSelectChange}
+              required
+              displayEmpty
+              className={styles.muiSelect}
+              renderValue={(selected) => {
+                if (!selected) {
+                  return (
+                    <span className={styles.placeholderText}>
+                      <span className={styles.checkmark}>✓</span> Selecciona una opción
+                    </span>
+                  )
+                }
+                const option = serviceOptions.find(opt => opt.value === selected)
+                return option ? option.label : selected
+              }}
+              MenuProps={{
+                PaperProps: {
+                  className: styles.muiMenuPaper
+                }
+              }}
+            >
+              <MenuItem value="" disabled className={styles.muiMenuItemPlaceholder}>
+                <span className={styles.checkmark}>✓</span> Selecciona una opción
+              </MenuItem>
+              {serviceOptions.map((option) => (
+                <MenuItem key={option.value} value={option.value} className={styles.muiMenuItem}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </div>
 
         <div className={styles.formGroup}>

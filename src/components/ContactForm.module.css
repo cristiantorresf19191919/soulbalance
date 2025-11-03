@@ -130,6 +130,160 @@
   cursor: pointer;
 }
 
+/* Material UI Select Styling */
+.selectLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: var(--spacing-xs);
+  color: var(--primary-dark);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.muiSelectWrapper {
+  width: 100%;
+}
+
+.muiSelect {
+  width: 100%;
+  background: var(--bg-white) !important;
+  border-radius: 14px !important;
+  font-family: var(--font-sans) !important;
+  font-size: 1rem !important;
+  color: var(--text-dark) !important;
+  transition: var(--transition-smooth) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+}
+
+.muiSelect::before,
+.muiSelect::after {
+  display: none !important;
+}
+
+.muiSelect .MuiOutlinedInput-notchedOutline {
+  border: 2px solid var(--border-light) !important;
+  border-radius: 14px !important;
+  transition: var(--transition-smooth) !important;
+}
+
+.muiSelect:hover .MuiOutlinedInput-notchedOutline {
+  border-color: rgba(77, 77, 77, 0.3) !important;
+  box-shadow: 0 4px 12px rgba(77, 77, 77, 0.1) !important;
+}
+
+.muiSelect.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: var(--primary-green) !important;
+  border-width: 2px !important;
+  box-shadow: 
+    0 0 0 4px rgba(7, 82, 87, 0.1),
+    0 6px 20px rgba(7, 82, 87, 0.15) !important;
+}
+
+.muiSelect .MuiSelect-select {
+  padding: 1rem 1.25rem !important;
+  padding-right: 3rem !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+
+.muiSelect .MuiSelect-icon {
+  color: var(--primary-green) !important;
+  right: 1rem !important;
+  font-size: 1.5rem !important;
+  transition: transform 0.3s ease !important;
+}
+
+.muiSelect.Mui-expanded .MuiSelect-icon {
+  transform: rotate(180deg) !important;
+}
+
+/* Menu Paper (Dropdown) */
+.muiMenuPaper {
+  border-radius: 14px !important;
+  margin-top: 0.5rem !important;
+  box-shadow: 
+    0 10px 35px rgba(7, 82, 87, 0.15),
+    0 4px 15px rgba(77, 77, 77, 0.1) !important;
+  border: 2px solid var(--border-light) !important;
+  overflow: hidden !important;
+  max-height: 400px !important;
+}
+
+.muiMenuPaper .MuiList-root {
+  padding: 0.5rem 0 !important;
+}
+
+/* Menu Items */
+.muiMenuItemPlaceholder {
+  background: rgba(7, 82, 87, 0.12) !important;
+  color: var(--text-dark) !important;
+  font-weight: 500 !important;
+  padding: 1rem 1.25rem !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.75rem !important;
+  cursor: default !important;
+  pointer-events: none !important;
+  opacity: 1 !important;
+}
+
+/* Style for select when showing placeholder */
+.muiSelect .MuiSelect-select:has(.placeholderText) {
+  background: rgba(7, 82, 87, 0.08) !important;
+  color: var(--text-dark) !important;
+}
+
+.placeholderText {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.75rem !important;
+  color: var(--text-medium) !important;
+  font-weight: 500 !important;
+}
+
+.placeholderText .checkmark {
+  color: var(--text-medium) !important;
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+}
+
+.muiMenuItemPlaceholder .checkmark {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-dark) !important;
+  opacity: 0.7 !important;
+}
+
+.muiMenuItem {
+  padding: 1rem 1.25rem !important;
+  color: var(--text-dark) !important;
+  font-family: var(--font-sans) !important;
+  font-size: 1rem !important;
+  transition: all 0.2s ease !important;
+  border-radius: 0 !important;
+}
+
+.muiMenuItem:hover {
+  background: rgba(7, 82, 87, 0.08) !important;
+  color: var(--primary-green) !important;
+}
+
+.muiMenuItem.Mui-selected {
+  background: rgba(7, 82, 87, 0.12) !important;
+  color: var(--primary-green) !important;
+  font-weight: 600 !important;
+}
+
+.muiMenuItem.Mui-selected:hover {
+  background: rgba(7, 82, 87, 0.15) !important;
+}
+
+.muiMenuItem.Mui-focusVisible {
+  background: rgba(7, 82, 87, 0.1) !important;
+}
+
 .formGroup textarea {
   resize: vertical;
   min-height: 130px;

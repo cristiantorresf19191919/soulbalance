@@ -1,83 +1,83 @@
 /* Reset & Base Styles */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 :root {
-  /* ============================================
+    /* ============================================
      COLORES CORPORATIVOS SOUL BALANCE
      ============================================ */
-  
-  /* Verde Soul Balance - Color Principal */
-  --primary-green: #075257;
-  --primary-green-dark: #053F43;
-  --primary-green-light: #0A6B72;
-  --primary-green-soft: rgba(7, 82, 87, 0.1);
-  --primary-green-hover: #06444A;
 
-  /* Gris Carbón - Textos */
-  --text-dark: #4D4D4D;
-  --text-medium: #6B6B6B;
-  --text-light: #FFFFFF;
-  --text-on-green: #FFFFFF;
-  --text-on-beige: #4D4D4D;
+    /* Verde Soul Balance - Color Principal */
+    --primary-green: #075257;
+    --primary-green-dark: #053F43;
+    --primary-green-light: #0A6B72;
+    --primary-green-soft: rgba(7, 82, 87, 0.1);
+    --primary-green-hover: #06444A;
 
-  /* Beige Cálido - Destacados */
-  --beige-calido: #F2E9C9;
-  --beige-calido-dark: #E8DCB0;
-  --beige-calido-light: #F7F1DC;
+    /* Gris Carbón - Textos */
+    --text-dark: #4D4D4D;
+    --text-medium: #6B6B6B;
+    --text-light: #FFFFFF;
+    --text-on-green: #FFFFFF;
+    --text-on-beige: #4D4D4D;
 
-  /* Beige Champagne - Fondos Suaves */
-  --bg-champagne: #F5F1E8;
-  --bg-champagne-dark: #EDE7D8;
-  --bg-champagne-light: #FAF8F4;
+    /* Beige Cálido - Destacados */
+    --beige-calido: #F2E9C9;
+    --beige-calido-dark: #E8DCB0;
+    --beige-calido-light: #F7F1DC;
 
-  /* Blanco Puro - Contraste */
-  --bg-white: #FFFFFF;
+    /* Beige Champagne - Fondos Suaves */
+    --bg-champagne: #F5F1E8;
+    --bg-champagne-dark: #EDE7D8;
+    --bg-champagne-light: #FAF8F4;
 
-  /* Border & Shadow */
-  --border-light: rgba(7, 82, 87, 0.15);
-  --border-medium: rgba(7, 82, 87, 0.25);
-  --border-strong: rgba(7, 82, 87, 0.4);
-  --shadow-soft: rgba(7, 82, 87, 0.08);
-  --shadow-medium: rgba(7, 82, 87, 0.15);
-  --shadow-strong: rgba(7, 82, 87, 0.25);
+    /* Blanco Puro - Contraste */
+    --bg-white: #FFFFFF;
 
-  /* Typography */
-  --font-serif: 'Playfair Display', serif;
-  --font-sans: 'Inter', sans-serif;
+    /* Border & Shadow */
+    --border-light: rgba(7, 82, 87, 0.15);
+    --border-medium: rgba(7, 82, 87, 0.25);
+    --border-strong: rgba(7, 82, 87, 0.4);
+    --shadow-soft: rgba(7, 82, 87, 0.08);
+    --shadow-medium: rgba(7, 82, 87, 0.15);
+    --shadow-strong: rgba(7, 82, 87, 0.25);
 
-  /* Spacing */
-  --spacing-xs: 0.5rem;
-  --spacing-sm: 1rem;
-  --spacing-md: 2rem;
-  --spacing-lg: 3rem;
-  --spacing-xl: 4rem;
+    /* Typography */
+    --font-serif: 'Playfair Display', serif;
+    --font-sans: 'Inter', sans-serif;
+
+    /* Spacing */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 2rem;
+    --spacing-lg: 3rem;
+    --spacing-xl: 4rem;
 }
 
 html {
-  scroll-behavior: smooth;
+    scroll-behavior: smooth;
 }
 
 body {
-  font-family: var(--font-sans);
-  font-size: 16px;
-  line-height: 1.75;
-  color: var(--text-dark);
-  background-color: var(--bg-champagne);
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-weight: 400;
-  letter-spacing: 0.01em;
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--text-dark);
+    background-color: var(--bg-champagne);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 400;
+    letter-spacing: 0.01em;
 }
 
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 var(--spacing-md);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
 }
 
 /* ============================================
@@ -135,7 +135,7 @@ body {
     --primary-rose: #D9A890;
     --primary-dark: #075257;
     --primary-dark-soft: #0A6B72;
-    
+
     /* Accent colors */
     --accent-warm: var(--beige-calido-dark);
     --accent-mint: var(--primary-sage);
@@ -1130,40 +1130,7 @@ body {
     box-shadow: 0 14px 45px rgba(7, 82, 87, 0.3);
 }
 
-.corporate-package-card.featured:hover {
-    border-color: var(--primary-gold);
-    box-shadow: 0 18px 55px rgba(7, 82, 87, 0.35);
-}
-
-.corporate-package-card.featured {
-    background: linear-gradient(135deg, var(--primary-green-dark) 0%, var(--primary-green) 100%);
-    border: 3px solid var(--primary-gold);
-}
-
-.corporate-package-card.featured::after {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: linear-gradient(135deg, var(--primary-gold), var(--primary-rose));
-    border-radius: 32px;
-    z-index: -1;
-    animation: borderGlow 3s ease-in-out infinite;
-}
-
-@keyframes borderGlow {
-
-    0%,
-    100% {
-        opacity: 0.5;
-    }
-
-    50% {
-        opacity: 1;
-    }
-}
+/* Featured styles removed - all cards are now identical */
 
 .package-badge-star {
     position: absolute;

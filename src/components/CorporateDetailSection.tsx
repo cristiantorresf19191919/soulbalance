@@ -39,10 +39,7 @@ export function CorporateDetailSection() {
             </div>
           </div>
 
-          <div className={`${styles.corporatePackageCard} ${styles.featured}`}>
-            <div className={styles.packageBadgeStar}>
-              <i className="fa-solid fa-star"></i>
-            </div>
+          <div className={styles.corporatePackageCard}>
             <div className={styles.packageIcon}>
               <i className="fa-solid fa-sun"></i>
             </div>

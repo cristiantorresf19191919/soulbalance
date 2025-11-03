@@ -18,26 +18,33 @@ export function ServicesGrid() {
           </Link>
         </div>
         <div className={styles.servicesGrid}>
-          {services.map((service) => (
-            <div key={service.id} className={styles.serviceCard}>
-              <div
-                className={styles.serviceImage}
-                style={{ backgroundImage: `url('${service.image}')` }}
-              ></div>
-              <div className={styles.serviceContent}>
-                <h3>{service.name}</h3>
-                <p>{service.description}</p>
-                <div className={styles.servicePricing}>
-                  {service.pricing.map((price, idx) => (
-                    <div key={idx} className={styles.priceItem}>
-                      <span>{price.duration}</span>
-                      <strong>{price.price}</strong>
-                    </div>
-                  ))}
+          {services.map((service, index) => {
+            const isLast = index === services.length - 1
+            const isSolo = (services.length % 3) === 1 && isLast
+            return (
+              <div 
+                key={service.id} 
+                className={`${styles.serviceCard} ${isSolo ? styles.soloCard : ''}`}
+              >
+                <div
+                  className={styles.serviceImage}
+                  style={{ backgroundImage: `url('${service.image}')` }}
+                ></div>
+                <div className={styles.serviceContent}>
+                  <h3>{service.name}</h3>
+                  <p>{service.description}</p>
+                  <div className={styles.servicePricing}>
+                    {service.pricing.map((price, idx) => (
+                      <div key={idx} className={styles.priceItem}>
+                        <span>{price.duration}</span>
+                        <strong>{price.price}</strong>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
       </div>
     </section>

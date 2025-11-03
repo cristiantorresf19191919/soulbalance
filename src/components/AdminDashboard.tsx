@@ -294,6 +294,7 @@ export function AdminDashboard() {
               <option value="piernas">Masaje Piernas Cansadas</option>
               <option value="pareja">Masaje en Pareja</option>
               <option value="soulbalance">Masaje Soul Balance - Cuatro Elementos</option>
+              <option value="empresarial">Servicios Empresariales</option>
               <option value="otro">Otro servicio</option>
             </select>
           </div>

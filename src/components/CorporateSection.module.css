@@ -101,32 +101,7 @@
   box-shadow: 0 14px 45px rgba(7, 82, 87, 0.3);
 }
 
-.corporatePackageCard.featured {
-  background: linear-gradient(135deg, var(--primary-green-dark) 0%, var(--primary-green) 100%);
-  border: 3px solid var(--primary-gold);
-}
-
-.corporatePackageCard.featured::after {
-  content: '';
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  background: linear-gradient(135deg, var(--primary-gold), var(--primary-rose));
-  border-radius: 32px;
-  z-index: -1;
-  animation: borderGlow 3s ease-in-out infinite;
-}
-
-@keyframes borderGlow {
-  0%, 100% {
-    opacity: 0.5;
-  }
-  50% {
-    opacity: 1;
-  }
-}
+/* Featured styles removed - all cards are now identical */
 
 .packageBadgeStar {
   position: absolute;

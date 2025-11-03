@@ -91,7 +91,7 @@ export function Navbar() {
         </button>
         <ul className={`${styles.navMenu} ${menuOpen ? styles.active : ''}`}>
           <li>
-            <Link href="/#inicio" onClick={(e) => handleLinkClick(e, '#inicio')}>Inicio</Link>
+            <Link href="/" onClick={(e) => handleLinkClick(e, '/')}>Inicio</Link>
           </li>
           <li>
             <Link href="/servicios" onClick={(e) => handleLinkClick(e, '/servicios')}>Servicios</Link>
@@ -106,7 +106,7 @@ export function Navbar() {
             <Link href="/blog" onClick={(e) => handleLinkClick(e, '/blog')}>Blog</Link>
           </li>
           <li>
-            <Link href="/#contacto" onClick={(e) => handleLinkClick(e, '#contacto')}>Contacto</Link>
+            <Link href="/contacto" onClick={(e) => handleLinkClick(e, '/contacto')}>Contacto</Link>
           </li>
         </ul>
       </div>
