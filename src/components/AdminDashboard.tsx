@@ -126,6 +126,10 @@ export function AdminDashboard() {
 
   const handleLogout = async () => {
     try {
+      if (!auth) {
+        router.push('/login')
+        return
+      }
       await signOut(auth)
       router.push('/login')
     } catch (error) {

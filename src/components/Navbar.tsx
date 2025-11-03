@@ -1,13 +1,18 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
+import { auth } from '@/lib/firebase'
+import { onAuthStateChanged, signOut } from 'firebase/auth'
 import styles from './Navbar.module.css'
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const router = useRouter()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,6 +20,16 @@ export function Navbar() {
     }
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || !auth) return
+
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setIsAuthenticated(!!user)
+    })
+
+    return () => unsubscribe()
   }, [])
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -36,6 +51,21 @@ export function Navbar() {
     }
   }
 
+  const handleLogout = async () => {
+    try {
+      if (!auth) {
+        router.push('/login')
+        return
+      }
+      await signOut(auth)
+      router.push('/')
+      setMenuOpen(false)
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error)
+      alert('Error al cerrar sesión. Por favor, intenta nuevamente.')
+    }
+  }
+
   return (
     <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ''}`} id="navbar">
       <div className={styles.navContainer}>
@@ -45,7 +75,13 @@ export function Navbar() {
             <span className={styles.logoText}>SOUL BALANCE</span>
           </Link>
         </div>
-        <Link href="/login" className={styles.loginNavBtn}>Login</Link>
+        {isAuthenticated ? (
+          <button onClick={handleLogout} className={styles.logoutNavBtn}>
+            Cerrar Sesión
+          </button>
+        ) : (
+          <Link href="/login" className={styles.loginNavBtn}>Login</Link>
+        )}
         <button className={styles.menuToggle} onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">
           <span></span>
           <span></span>

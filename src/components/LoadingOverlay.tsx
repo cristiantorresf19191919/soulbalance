@@ -29,7 +29,7 @@ export function LoadingOverlay({ show }: LoadingOverlayProps) {
     }, 3000)
 
     return () => clearInterval(interval)
-  }, [show])
+  }, [show, loadingTips.length])
 
   if (!show) return null
 

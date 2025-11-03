@@ -27,7 +27,7 @@ export function BlogArticle() {
             </h1>
             <p className={styles.articleExcerpt}>
               Te has preguntado por qué algunas sesiones te dejan transformado y
-              otras solo "alivian un poco". La diferencia no está solo en las
+              otras solo &quot;alivian un poco&quot;. La diferencia no está solo en las
               manos del terapeuta, sino también en cómo te entregas al proceso.
             </p>
           </div>
@@ -66,8 +66,8 @@ export function BlogArticle() {
 
             <div className={styles.contentQuote}>
               <p>
-                "Sin confianza y apertura, la técnica trabaja. Con ellas,
-                transforma."
+                &quot;Sin confianza y apertura, la técnica trabaja. Con ellas,
+                transforma.&quot;
               </p>
             </div>
 
@@ -78,16 +78,16 @@ export function BlogArticle() {
               pensando en el trabajo, con la mandíbula apretada (aunque no te
               des cuenta), ese guardia sigue alerta. Y cuando está alerta, los
               músculos no se sueltan de verdad. Pueden relajarse un poco, pero
-              hay una resistencia sutil, como si el cuerpo mismo dijera "no
-              confío todavía".
+              hay una resistencia sutil, como si el cuerpo mismo dijera &quot;no
+              confío todavía&quot;.
             </p>
 
             <p>
               Ahora, cuando respiras lento, cuando sueltas esa mandíbula que no
               sabías que tenías tensa, cuando permites que alguien toque sin que
               tu mente analice cada movimiento... algo mágico pasa. El sistema
-              nervioso cambia de canal. Deja de estar en modo "pelea o huida" y
-              entra en modo "descanso y digestión". Y ahí es cuando la magia
+              nervioso cambia de canal. Deja de estar en modo &quot;pelea o huida&quot; y
+              entra en modo &quot;descanso y digestión&quot;. Y ahí es cuando la magia
               ocurre de verdad.
             </p>
 
@@ -108,7 +108,7 @@ export function BlogArticle() {
               qué tan efectivo puede ser un masaje. Cuando pasas de estar en
               estado de alerta a un estado de calma, el cuerpo libera tensiones
               que ni siquiera sabías que estaban ahí. Es como si hubiera un
-              interruptor que dice "ahora sí puedes soltar". Y ese interruptor
+              interruptor que dice &quot;ahora sí puedes soltar&quot;. Y ese interruptor
               no lo activa el terapeuta con sus manos; lo activas tú con tu
               respiración, con tu atención, con tu permiso interno de sentir.
             </p>
@@ -116,7 +116,7 @@ export function BlogArticle() {
             <p>
               Las exhalaciones largas son especialmente poderosas. Cuando
               exhalas más lento de lo que inhalas, le estás comunicando a tu
-              sistema nervioso: "estoy a salvo, puedo soltar". No es místico, es
+              sistema nervioso: &quot;estoy a salvo, puedo soltar&quot;. No es místico, es
               pura neurobiología. Y cuando el cuerpo entiende que está a salvo,
               los tejidos cambian. La fascia se mueve diferente, los músculos se
               abren, la circulación mejora. Todo porque decidiste confiar.
@@ -145,11 +145,11 @@ export function BlogArticle() {
             <p>
               Después de trabajar con tantas personas, noto patrones. Las
               sesiones que realmente transforman tienen algo en común: la
-              persona llega con intención. No llega pensando "ojalá esto me
-              ayude" mientras revisa el teléfono hasta el último segundo. Llega
+              persona llega con intención. No llega pensando &quot;ojalá esto me
+              ayude&quot; mientras revisa el teléfono hasta el último segundo. Llega
               unos minutos antes, respira, y tal vez hasta se permite un segundo
-              de introspección: "hoy quiero soltar los hombros que cargo desde
-              hace meses".
+              de introspección: &quot;hoy quiero soltar los hombros que cargo desde
+              hace meses&quot;.
             </p>
 
             <p>
@@ -164,9 +164,9 @@ export function BlogArticle() {
             <p>
               Y después... esto es importante. Después de una buena sesión,
               cuando te tomas esos minutos para caminar suave, beber agua,
-              evitar las pantallas un rato... el cuerpo integra. No es solo "me
-              siento relajado", es "mi cuerpo recordó cómo se siente estar
-              suelto". Y esa memoria queda. Por eso algunos clientes notan
+              evitar las pantallas un rato... el cuerpo integra. No es solo &quot;me
+              siento relajado&quot;, es &quot;mi cuerpo recordó cómo se siente estar
+              suelto&quot;. Y esa memoria queda. Por eso algunos clientes notan
               cambios que duran días, incluso semanas.
             </p>
 
@@ -187,7 +187,7 @@ export function BlogArticle() {
                 respiraciones profundas, nasales, con exhalación más larga que
                 la inhalación. Haz un escaneo rápido: frente, ojos, mandíbula,
                 lengua, hombros, abdomen, manos, pies. Y dile a tu cuerpo, en
-                silencio: "blandito por dentro". Suena simple, pero es increíble
+                silencio: &quot;blandito por dentro&quot;. Suena simple, pero es increíble
                 cómo cambia el espacio de la sesión cuando empiezas desde ahí.
               </p>
             </div>
@@ -196,17 +196,17 @@ export function BlogArticle() {
 
             <p>
               Aquí hay algo que tal vez te sorprenda: confiar también es saber
-              decir "no". El mejor masaje respeta tu autonomía. Puedes pedir
+              decir &quot;no&quot;. El mejor masaje respeta tu autonomía. Puedes pedir
               menos presión, otra zona, una pausa. Y cuando sientes que tienes
               el control, paradójicamente, puedes soltar el control. Es como si
-              tu sistema nervioso dijera "okay, si puedo comunicar, entonces
-              estoy seguro". Y cuando te sientes seguro, puedes entregarte de
+              tu sistema nervioso dijera &quot;okay, si puedo comunicar, entonces
+              estoy seguro&quot;. Y cuando te sientes seguro, puedes entregarte de
               verdad.
             </p>
 
             <p>
-              A veces la gente me pregunta: "¿debo hablar o quedarme en
-              silencio?" Y mi respuesta siempre es: lo que necesites en ese
+              A veces la gente me pregunta: &quot;¿debo hablar o quedarme en
+              silencio?&quot; Y mi respuesta siempre es: lo que necesites en ese
               momento. Si hablar te relaja, háblame. Si el silencio te ayuda a
               entrar en presencia, quédate en silencio. Si te emocionas (y pasa
               más de lo que imaginas), respira y permite. Es liberación de carga
@@ -250,8 +250,8 @@ export function BlogArticle() {
                 <h3>¿Y si me duele demasiado?</h3>
                 <p>
                   La presión debe ayudar, no endurecerte. Si sientes que te
-                  estás tensando en lugar de soltarte, pide ajuste. El "dolor
-                  bueno" nunca te hace contener la respiración. Y recuerda: tú
+                  estás tensando en lugar de soltarte, pide ajuste. El &quot;dolor
+                  bueno&quot; nunca te hace contener la respiración. Y recuerda: tú
                   tienes el control. Un buen terapeuta lo sabe y lo respeta.
                 </p>
               </div>
@@ -273,7 +273,7 @@ export function BlogArticle() {
                   Primero, es normal. Muchos de nosotros estamos tan entrenados
                   en estar alerta que relajarse se siente extraño al principio.
                   Prueba el ritual de sesenta segundos que mencioné antes. Y
-                  recuerda: no hay presión de estar "perfectamente relajado".
+                  recuerda: no hay presión de estar &quot;perfectamente relajado&quot;.
                   Estar presente es suficiente. El resto viene con la práctica y
                   la confianza que se construye sesión a sesión.
                 </p>
