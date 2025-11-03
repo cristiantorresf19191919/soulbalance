@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { VersionBadge } from './VersionBadge'
 import styles from './Footer.module.css'
 
 export function Footer() {
@@ -56,7 +57,7 @@ export function Footer() {
         <div className={styles.footerBottom}>
           <p>
             &copy; 2024 Soul Balance. Todos los derechos reservados. |
-            Experiencias de Bienestar
+            Experiencias de Bienestar <VersionBadge variant="footer" />
           </p>
           <p style={{ marginTop: '1rem', fontSize: '0.95rem' }}>
             <a

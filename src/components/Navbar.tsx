@@ -6,6 +6,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { auth } from '@/lib/firebase'
 import { onAuthStateChanged, signOut } from 'firebase/auth'
+import { VersionBadge } from './VersionBadge'
 import styles from './Navbar.module.css'
 
 export function Navbar() {
@@ -68,6 +69,7 @@ export function Navbar() {
 
   return (
     <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ''}`} id="navbar">
+      <VersionBadge variant="header" />
       <div className={styles.navContainer}>
         <div className={styles.logo}>
           <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
