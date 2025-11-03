@@ -56,6 +56,19 @@
     transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
 }
 
+/* Header tooltip should appear BELOW the badge */
+.versionBadge.header .tooltip {
+    bottom: auto;
+    top: 100%;
+    margin-top: 8px;
+    margin-bottom: 0;
+    transform: translateY(-4px);
+}
+
+.versionBadge.header .tooltip.tooltipVisible {
+    transform: translateY(0);
+}
+
 .tooltip.tooltipVisible {
     opacity: 1;
     visibility: visible;
@@ -85,11 +98,20 @@
     right: 20px;
 }
 
-.versionBadge.footer .tooltipArrow {
+/* Header arrow points UP (tooltip is below) */
+.versionBadge.header .tooltipArrow {
     bottom: auto;
     top: -6px;
     border-top: none;
     border-bottom: 6px solid var(--primary-green-dark);
+}
+
+/* Footer arrow points DOWN (tooltip is above) */
+.versionBadge.footer .tooltipArrow {
+    bottom: -6px;
+    top: auto;
+    border-bottom: none;
+    border-top: 6px solid var(--primary-green-dark);
 }
 
 .tooltipText {
