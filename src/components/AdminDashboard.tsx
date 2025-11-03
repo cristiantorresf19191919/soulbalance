@@ -7,6 +7,7 @@ import { auth, firestore } from '@/lib/firebase'
 import { onAuthStateChanged, signOut } from 'firebase/auth'
 import { collection, query, orderBy, onSnapshot, doc, deleteDoc } from 'firebase/firestore'
 import { LeadModal } from './LeadModal'
+import { allServiceOptions, getServiceLabel } from '@/data/serviceCategories'
 import styles from './AdminDashboard.module.css'
 
 interface Lead {
@@ -192,18 +193,7 @@ export function AdminDashboard() {
   }
 
   const getServiceName = (serviceKey: string) => {
-    const services: Record<string, string> = {
-      relajante: 'Masaje Relajante',
-      descontracturante: 'Masaje Descontracturante',
-      piedras: 'Masaje con Piedras Volcánicas',
-      prenatal: 'Masaje Prenatal',
-      '4manos': 'Masaje a 4 Manos',
-      piernas: 'Masaje Piernas Cansadas',
-      pareja: 'Masaje en Pareja',
-      soulbalance: 'Masaje Soul Balance - Cuatro Elementos',
-      otro: 'Otro servicio'
-    }
-    return services[serviceKey] || serviceKey || 'No especificado'
+    return getServiceLabel(serviceKey) || serviceKey || 'No especificado'
   }
 
   return (
@@ -286,16 +276,11 @@ export function AdminDashboard() {
               className={styles.filterSelect}
             >
               <option value="">Todos los servicios</option>
-              <option value="relajante">Masaje Relajante</option>
-              <option value="descontracturante">Masaje Descontracturante</option>
-              <option value="piedras">Masaje con Piedras Volcánicas</option>
-              <option value="prenatal">Masaje Prenatal</option>
-              <option value="4manos">Masaje a 4 Manos</option>
-              <option value="piernas">Masaje Piernas Cansadas</option>
-              <option value="pareja">Masaje en Pareja</option>
-              <option value="soulbalance">Masaje Soul Balance - Cuatro Elementos</option>
-              <option value="empresarial">Servicios Empresariales</option>
-              <option value="otro">Otro servicio</option>
+              {allServiceOptions.map((service) => (
+                <option key={service.value} value={service.value}>
+                  {service.label}
+                </option>
+              ))}
             </select>
           </div>
 

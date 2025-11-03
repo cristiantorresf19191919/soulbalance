@@ -36,9 +36,12 @@
 }
 
 @keyframes float {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-4px);
   }
@@ -175,7 +178,7 @@
 .muiSelect.Mui-focused .MuiOutlinedInput-notchedOutline {
   border-color: var(--primary-green) !important;
   border-width: 2px !important;
-  box-shadow: 
+  box-shadow:
     0 0 0 4px rgba(7, 82, 87, 0.1),
     0 6px 20px rgba(7, 82, 87, 0.15) !important;
 }
@@ -203,7 +206,7 @@
 .muiMenuPaper {
   border-radius: 14px !important;
   margin-top: 0.5rem !important;
-  box-shadow: 
+  box-shadow:
     0 10px 35px rgba(7, 82, 87, 0.15),
     0 4px 15px rgba(77, 77, 77, 0.1) !important;
   border: 2px solid var(--border-light) !important;
@@ -282,6 +285,35 @@
 
 .muiMenuItem.Mui-focusVisible {
   background: rgba(7, 82, 87, 0.1) !important;
+}
+
+/* Category Headers */
+.categoryHeader {
+  background: rgba(7, 82, 87, 0.08) !important;
+  color: var(--primary-green) !important;
+  font-weight: 700 !important;
+  font-size: 0.85rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  padding: 0.75rem 1.25rem !important;
+  margin-top: 0.5rem !important;
+  margin-bottom: 0.25rem !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  font-family: var(--font-sans) !important;
+  pointer-events: none !important;
+  border-top: 1px solid rgba(7, 82, 87, 0.1) !important;
+}
+
+.categoryHeader:first-of-type {
+  margin-top: 0 !important;
+  border-top: none !important;
+}
+
+.categoryIcon {
+  font-size: 0.9rem !important;
+  opacity: 0.8 !important;
 }
 
 .formGroup textarea {
@@ -385,9 +417,12 @@
 }
 
 @keyframes sparkle {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(1) rotate(0deg);
   }
+
   50% {
     transform: scale(1.2) rotate(180deg);
   }
@@ -409,4 +444,3 @@
     font-size: 1.05rem;
   }
 }
-

@@ -5,25 +5,14 @@ import {
   Select, 
   MenuItem, 
   FormControl, 
-  SelectChangeEvent 
+  SelectChangeEvent,
+  ListSubheader
 } from '@mui/material'
 import { useContactForm } from '@/hooks/useContactForm'
 import { LoadingOverlay } from './LoadingOverlay'
 import { showToast } from './ToastNotifications'
+import { serviceCategories, getServiceLabel } from '@/data/serviceCategories'
 import styles from './ContactForm.module.css'
-
-const serviceOptions = [
-  { value: 'relajante', label: 'Masaje Relajante' },
-  { value: 'descontracturante', label: 'Masaje Descontracturante' },
-  { value: 'piedras', label: 'Masaje con Piedras Volcánicas' },
-  { value: 'prenatal', label: 'Masaje Prenatal' },
-  { value: '4manos', label: 'Masaje a 4 Manos' },
-  { value: 'piernas', label: 'Masaje Piernas Cansadas' },
-  { value: 'pareja', label: 'Masaje en Pareja' },
-  { value: 'soulbalance', label: 'Masaje Soul Balance - Cuatro Elementos' },
-  { value: 'empresarial', label: 'Servicios Empresariales' },
-  { value: 'otro', label: 'Otro servicio' },
-]
 
 export function ContactForm() {
   const [formData, setFormData] = useState({
@@ -152,8 +141,7 @@ export function ContactForm() {
                     </span>
                   )
                 }
-                const option = serviceOptions.find(opt => opt.value === selected)
-                return option ? option.label : selected
+                return getServiceLabel(selected)
               }}
               MenuProps={{
                 PaperProps: {
@@ -164,11 +152,26 @@ export function ContactForm() {
               <MenuItem value="" disabled className={styles.muiMenuItemPlaceholder}>
                 <span className={styles.checkmark}>✓</span> Selecciona una opción
               </MenuItem>
-              {serviceOptions.map((option) => (
-                <MenuItem key={option.value} value={option.value} className={styles.muiMenuItem}>
-                  {option.label}
-                </MenuItem>
-              ))}
+              {serviceCategories.flatMap((category) => [
+                <ListSubheader 
+                  key={`category-${category.id}`} 
+                  className={styles.categoryHeader}
+                >
+                  {category.icon && (
+                    <i className={`fa-solid ${category.icon} ${styles.categoryIcon}`}></i>
+                  )}
+                  {category.name}
+                </ListSubheader>,
+                ...category.services.map((service) => (
+                  <MenuItem 
+                    key={service.value} 
+                    value={service.value} 
+                    className={styles.muiMenuItem}
+                  >
+                    {service.label}
+                  </MenuItem>
+                ))
+              ])}
             </Select>
           </FormControl>
         </div>
