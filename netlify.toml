@@ -1,20 +1,12 @@
 [build]
-  # No build command needed for static site
-  publish = "."
+  command = "npm run build"
+  publish = ".next"
 
-[functions]
-  # Functions directory
-  directory = "netlify/functions"
+[build.environment]
+  NODE_VERSION = "18"
 
-[[redirects]]
-  # Redirect function requests to correct path
-  from = "/api/*"
-  to = "/.netlify/functions/:splat"
-  status = 200
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
 
-# Optional: Environment variables can be set here for local development
-# But it's better to use Netlify UI for production
-# [build.environment]
-#   FIREBASE_API_KEY = "your-api-key-here"
-#   FIREBASE_PROJECT_ID = "your-project-id-here"
-
+[context.deploy-preview]
+  skip = true

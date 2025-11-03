@@ -1,0 +1,129 @@
+.contact {
+  padding: var(--spacing-xl) 0;
+  background: linear-gradient(180deg, var(--bg-warm) 0%, var(--bg-ivory) 100%);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+.sectionTitle {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: var(--primary-green);
+  margin-bottom: var(--spacing-md);
+  text-align: center;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.contactIntro {
+  text-align: center;
+  font-size: 1.1rem;
+  color: var(--text-dark);
+  max-width: 700px;
+  margin: 0 auto var(--spacing-lg);
+  line-height: 1.8;
+  opacity: 0.9;
+}
+
+.contactWrapper {
+  display: grid;
+  grid-template-columns: 1.8fr 1fr;
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-lg);
+  align-items: start;
+}
+
+.contactInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  position: sticky;
+  top: 100px;
+}
+
+.infoCard {
+  background: var(--bg-white);
+  padding: calc(var(--spacing-sm) * 1.2);
+  border-radius: 16px;
+  text-align: center;
+  border: 1px solid var(--border-light);
+  transition: var(--transition-smooth);
+  box-shadow: 0 3px 15px var(--shadow-soft);
+}
+
+.infoCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px var(--shadow-medium);
+  border-color: var(--border-medium);
+}
+
+.infoIcon {
+  font-size: 1.8rem;
+  margin-bottom: calc(var(--spacing-xs) * 0.8);
+}
+
+.infoCard h4 {
+  font-family: var(--font-serif);
+  color: var(--primary-dark);
+  margin-bottom: calc(var(--spacing-xs) * 0.5);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.infoCard p {
+  color: var(--text-dark);
+  font-size: 0.8rem;
+  margin-bottom: calc(var(--spacing-xs) * 0.5);
+  line-height: 1.5;
+}
+
+.infoCard a {
+  color: var(--primary-green);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: var(--transition-smooth);
+  display: block;
+  word-break: break-word;
+}
+
+.infoCard a:hover {
+  color: var(--primary-green-dark);
+  text-decoration: underline;
+}
+
+.infoCard strong {
+  color: var(--primary-green);
+  display: block;
+  margin-top: calc(var(--spacing-xs) * 0.5);
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  .contactWrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .contactInfo {
+    position: static;
+    margin-top: var(--spacing-md);
+  }
+
+  .infoCard {
+    padding: var(--spacing-sm);
+  }
+
+  .infoIcon {
+    font-size: 1.5rem;
+  }
+
+  .infoCard h4 {
+    font-size: 1rem;
+  }
+}
+

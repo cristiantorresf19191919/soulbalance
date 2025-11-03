@@ -1,0 +1,22 @@
+.heroSection {
+  position: relative;
+}
+
+.logoHero {
+  filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.4));
+  animation: float 3s ease-in-out infinite;
+}
+
+.brandName {
+  line-height: 1.1;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+

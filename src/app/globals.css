@@ -1,3 +1,85 @@
+/* Reset & Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* ============================================
+     COLORES CORPORATIVOS SOUL BALANCE
+     ============================================ */
+  
+  /* Verde Soul Balance - Color Principal */
+  --primary-green: #075257;
+  --primary-green-dark: #053F43;
+  --primary-green-light: #0A6B72;
+  --primary-green-soft: rgba(7, 82, 87, 0.1);
+  --primary-green-hover: #06444A;
+
+  /* Gris Carbón - Textos */
+  --text-dark: #4D4D4D;
+  --text-medium: #6B6B6B;
+  --text-light: #FFFFFF;
+  --text-on-green: #FFFFFF;
+  --text-on-beige: #4D4D4D;
+
+  /* Beige Cálido - Destacados */
+  --beige-calido: #F2E9C9;
+  --beige-calido-dark: #E8DCB0;
+  --beige-calido-light: #F7F1DC;
+
+  /* Beige Champagne - Fondos Suaves */
+  --bg-champagne: #F5F1E8;
+  --bg-champagne-dark: #EDE7D8;
+  --bg-champagne-light: #FAF8F4;
+
+  /* Blanco Puro - Contraste */
+  --bg-white: #FFFFFF;
+
+  /* Border & Shadow */
+  --border-light: rgba(7, 82, 87, 0.15);
+  --border-medium: rgba(7, 82, 87, 0.25);
+  --border-strong: rgba(7, 82, 87, 0.4);
+  --shadow-soft: rgba(7, 82, 87, 0.08);
+  --shadow-medium: rgba(7, 82, 87, 0.15);
+  --shadow-strong: rgba(7, 82, 87, 0.25);
+
+  /* Typography */
+  --font-serif: 'Playfair Display', serif;
+  --font-sans: 'Inter', sans-serif;
+
+  /* Spacing */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 2rem;
+  --spacing-lg: 3rem;
+  --spacing-xl: 4rem;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--text-dark);
+  background-color: var(--bg-champagne);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
 /* ============================================
    RESET & BASE STYLES
    ============================================ */
@@ -53,6 +135,10 @@
     --primary-rose: #D9A890;
     --primary-dark: #075257;
     --primary-dark-soft: #0A6B72;
+    
+    /* Accent colors */
+    --accent-warm: var(--beige-calido-dark);
+    --accent-mint: var(--primary-sage);
 
     /* Border & Shadow con nueva paleta */
     --border-light: rgba(7, 82, 87, 0.15);

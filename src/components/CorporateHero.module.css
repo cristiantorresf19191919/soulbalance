@@ -1,0 +1,55 @@
+.corporateHero {
+  background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-dark) 100%);
+  padding: 140px 0 80px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.corporateHero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+.corporateHeroContent {
+  position: relative;
+  z-index: 1;
+}
+
+.corporateHeroIcon {
+  font-size: 4rem;
+  margin-bottom: var(--spacing-sm);
+  color: var(--text-light);
+}
+
+.corporateHero h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 700;
+  color: var(--text-light);
+  margin-bottom: var(--spacing-sm);
+  letter-spacing: 2px;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+
+.corporateHero p {
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  color: rgba(255, 255, 255, 0.95);
+  max-width: 800px;
+  margin: 0 auto;
+  font-weight: 300;
+  line-height: 1.7;
+}
+
