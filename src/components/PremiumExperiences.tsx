@@ -4,7 +4,7 @@ import styles from './PremiumExperiences.module.css'
 
 export function PremiumExperiences() {
   return (
-    <section id="experiencias" className={styles.premiumSection}>
+    <section className={styles.premiumSection}>
       <div className={styles.container}>
         <h2 className={`${styles.sectionTitle} ${styles.sectionTitleLight}`}>
           Experiencias Premium

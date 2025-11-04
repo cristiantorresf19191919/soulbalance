@@ -12,6 +12,13 @@ export function HeroSection() {
     // Smooth scroll for anchor links
     const handleClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement
+      
+      // Don't handle clicks inside accordions (they should expand/collapse, not scroll)
+      const accordion = target.closest('[role="region"], .MuiAccordion-root, [class*="categoryAccordion"], [class*="categorySummary"]')
+      if (accordion) {
+        return
+      }
+      
       const link = target.closest('a[href^="#"]')
       if (link) {
         e.preventDefault()

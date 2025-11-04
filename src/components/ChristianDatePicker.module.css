@@ -1,0 +1,411 @@
+.dialog {
+  z-index: 20000 !important;
+}
+
+.backdrop {
+  background-color: rgba(0, 0, 0, 0.75) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+}
+
+.dialogPaper {
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  background: transparent !important;
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.3),
+    0 8px 20px rgba(0, 0, 0, 0.2) !important;
+  border: none !important;
+  max-width: 1400px !important;
+  width: 90vw !important;
+  min-width: 900px !important;
+  margin: auto !important;
+  animation: modalFadeIn 0.3s ease-out !important;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.calendarContainer {
+  position: relative;
+  background: var(--bg-white);
+  border-radius: 16px;
+  padding: 0;
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  box-shadow:
+    0 8px 32px rgba(7, 82, 87, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3.5rem 4rem 3rem;
+  background: linear-gradient(135deg, var(--primary-green), var(--primary-green-dark));
+  min-height: 160px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.monthYear {
+  color: var(--text-light) !important;
+  font-weight: 600;
+  font-size: 2.2rem;
+  font-family: var(--font-serif);
+  text-transform: capitalize;
+  letter-spacing: 0.3px;
+  flex: 1;
+  text-align: center;
+}
+
+.navButton {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  color: var(--text-light);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.navButton:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.navButton:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.navButton:active:not(:disabled) {
+  transform: translateY(0) scale(1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Weekday headers */
+.weekdayHeaders {
+  display: flex;
+  justify-content: space-around;
+  padding: 2rem 4rem 1rem;
+  margin-bottom: 1.5rem;
+  width: 100%;
+  background: var(--bg-white);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.weekdayHeader {
+  color: var(--primary-green);
+  font-weight: 700;
+  font-size: 1.3rem;
+  flex: 1;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  padding: 1rem 0;
+}
+
+/* Calendar grid */
+.calendarGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+  padding: 2.5rem 4rem 3.5rem;
+  width: 100%;
+  background: var(--bg-white);
+  position: relative;
+}
+
+/* Animation classes */
+.calendarGrid.slideLeft {
+  animation: slideLeft 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.calendarGrid.slideRight {
+  animation: slideRight 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideLeft {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideRight {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Day cells */
+.day {
+  color: var(--text-dark);
+  border-radius: 12px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 80px;
+  height: 80px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: transparent;
+  border: 2px solid transparent;
+  position: relative;
+  cursor: pointer;
+  font-size: 1.4rem;
+  font-weight: 500;
+  font-family: var(--font-sans);
+}
+
+.day:hover:not(.dayDisabled):not(.daySelected) {
+  background: linear-gradient(135deg, rgba(7, 82, 87, 0.15), rgba(7, 82, 87, 0.1));
+  border-color: rgba(7, 82, 87, 0.4);
+  transform: translateY(-2px) scale(1.06);
+  font-weight: 600;
+  color: var(--primary-green);
+  box-shadow: 0 4px 16px rgba(7, 82, 87, 0.2);
+  z-index: 1;
+}
+
+.daySelected {
+  background: linear-gradient(135deg, var(--primary-green), var(--primary-green-dark));
+  color: var(--text-light);
+  font-weight: 700;
+  border: 3px solid var(--primary-green);
+  box-shadow:
+    0 4px 16px rgba(7, 82, 87, 0.3),
+    0 2px 8px rgba(7, 82, 87, 0.2);
+  transform: scale(1.08);
+  z-index: 2;
+}
+
+.daySelected:hover {
+  background: linear-gradient(135deg, var(--primary-green-dark), var(--primary-green));
+  transform: scale(1.1);
+  box-shadow:
+    0 6px 20px rgba(7, 82, 87, 0.4),
+    0 3px 10px rgba(7, 82, 87, 0.3);
+}
+
+.dayToday {
+  border: 2px solid var(--primary-green);
+  font-weight: 600;
+  background: linear-gradient(135deg, rgba(7, 82, 87, 0.1), rgba(7, 82, 87, 0.05));
+  color: var(--primary-green);
+  position: relative;
+}
+
+.dayToday:not(.daySelected):not(.dayDisabled):hover {
+  background: linear-gradient(135deg, rgba(7, 82, 87, 0.15), rgba(7, 82, 87, 0.08));
+  border-color: var(--primary-green);
+}
+
+.dayOutsideMonth {
+  color: var(--text-medium);
+  opacity: 0.25;
+  cursor: not-allowed;
+  background: rgba(0, 0, 0, 0.01);
+  border-color: transparent;
+  font-weight: 400;
+}
+
+.dayOutsideMonth:hover {
+  transform: none;
+  background: rgba(0, 0, 0, 0.01);
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.dayDisabled {
+  color: var(--text-medium);
+  opacity: 0.3;
+  cursor: not-allowed;
+  background: rgba(0, 0, 0, 0.015);
+  border-color: transparent;
+  font-weight: 400;
+  pointer-events: none;
+}
+
+.dayDisabled:hover {
+  transform: none;
+  background: rgba(0, 0, 0, 0.015);
+  border-color: transparent;
+  box-shadow: none;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .dialogPaper {
+    width: 95vw !important;
+    max-width: 95vw !important;
+    min-width: auto !important;
+    border-radius: 24px !important;
+  }
+
+  .calendarContainer {
+    border-radius: 24px;
+  }
+
+  .header {
+    padding: 2.5rem 3rem 2rem;
+    min-height: 140px;
+  }
+
+  .monthYear {
+    font-size: 1.8rem;
+  }
+
+  .navButton {
+    width: 56px;
+    height: 56px;
+    font-size: 1.2rem;
+  }
+
+  .weekdayHeaders {
+    padding: 1.5rem 3rem 1rem;
+  }
+
+  .weekdayHeader {
+    font-size: 1.1rem;
+  }
+
+  .calendarGrid {
+    padding: 2rem 3rem 2.5rem;
+    gap: 0.4rem;
+  }
+
+  .day {
+    min-width: 60px;
+    height: 60px;
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .dialogPaper {
+    width: 95vw !important;
+    max-width: 95vw !important;
+    min-width: auto !important;
+    border-radius: 24px !important;
+  }
+
+  .header {
+    padding: 2rem 2.5rem 1.5rem;
+    min-height: 120px;
+  }
+
+  .monthYear {
+    font-size: 1.6rem;
+  }
+
+  .navButton {
+    width: 48px;
+    height: 48px;
+    font-size: 1.1rem;
+  }
+
+  .weekdayHeaders {
+    padding: 1.25rem 2rem 0.75rem;
+  }
+
+  .weekdayHeader {
+    font-size: 1rem;
+    letter-spacing: 0.8px;
+  }
+
+  .calendarGrid {
+    padding: 1.5rem 2rem 2rem;
+    gap: 0.3rem;
+  }
+
+  .day {
+    min-width: 42px;
+    height: 42px;
+    font-size: 1rem;
+    border-radius: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dialogPaper {
+    width: 98vw !important;
+    max-width: 98vw !important;
+    border-radius: 20px !important;
+  }
+
+  .calendarContainer {
+    border-radius: 20px;
+  }
+
+  .header {
+    padding: 1.5rem 2rem 1rem;
+    min-height: 100px;
+  }
+
+  .monthYear {
+    font-size: 1.4rem;
+  }
+
+  .navButton {
+    width: 44px;
+    height: 44px;
+    font-size: 1rem;
+  }
+
+  .weekdayHeaders {
+    padding: 1rem 1.5rem 0.5rem;
+  }
+
+  .weekdayHeader {
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+  }
+
+  .calendarGrid {
+    padding: 1rem 1.5rem 1.5rem;
+    gap: 0.25rem;
+  }
+
+  .day {
+    min-width: 40px;
+    height: 40px;
+    font-size: 0.95rem;
+    border-radius: 8px;
+  }
+}
+

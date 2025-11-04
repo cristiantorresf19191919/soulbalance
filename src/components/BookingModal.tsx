@@ -29,8 +29,8 @@ export function BookingModal({
     <Dialog
       open={open}
       onClose={onClose}
-      maxWidth="md"
-      fullWidth
+      maxWidth={false}
+      fullWidth={false}
       className={styles.dialog}
       PaperProps={{
         className: styles.dialogPaper

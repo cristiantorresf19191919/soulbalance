@@ -1,13 +1,6 @@
 'use client'
 
-import { useState, useEffect, FormEvent, useRef } from 'react'
-import DatePicker from 'react-datepicker'
-import { registerLocale, setDefaultLocale } from 'react-datepicker'
-import { es } from 'date-fns/locale/es'
-import 'react-datepicker/dist/react-datepicker.css'
-
-registerLocale('es', es)
-setDefaultLocale('es')
+import { useState, useEffect, FormEvent } from 'react'
 import { 
   Select, 
   MenuItem, 
@@ -18,6 +11,7 @@ import {
 import { useContactForm } from '@/hooks/useContactForm'
 import { LoadingOverlay } from './LoadingOverlay'
 import { showToast } from './ToastNotifications'
+import { DatePickerModal } from './DatePickerModal'
 import styles from './BookingForm.module.css'
 
 interface BookingFormProps {
@@ -46,7 +40,6 @@ export function BookingForm({
   const [selectedDate, setSelectedDate] = useState<Date | null>(null)
   const [showLoading, setShowLoading] = useState(false)
   const { submitForm } = useContactForm()
-  const datePickerRef = useRef<DatePicker>(null)
 
   // Update selected duration when initialDuration prop changes
   useEffect(() => {
@@ -168,52 +161,27 @@ export function BookingForm({
             Selecciona la fecha
           </label>
           <div className={styles.datePickerWrapper}>
-            <DatePicker
-              ref={datePickerRef}
-              selected={selectedDate}
-              onChange={(date: Date | null) => {
-                setSelectedDate(date)
-                setIsDatePickerOpen(false)
-              }}
-              filterDate={isWeekday}
-              minDate={minDate}
-              dateFormat="EEEE, d 'de' MMMM 'de' yyyy"
-              placeholderText="Selecciona una fecha"
+            <input
+              type="text"
+              readOnly
+              value={selectedDate ? selectedDate.toLocaleDateString('es-ES', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+              }) : ''}
+              placeholder="Selecciona una fecha"
               className={styles.datePicker}
+              onClick={() => setIsDatePickerOpen(true)}
               required
-              locale="es"
-              showPopperArrow={false}
-              popperPlacement="bottom"
-              withPortal
+            />
+            <DatePickerModal
               open={isDatePickerOpen}
-              onClickOutside={() => {
-                setIsDatePickerOpen(false)
-              }}
-              onCalendarOpen={() => setIsDatePickerOpen(true)}
-              onCalendarClose={() => setIsDatePickerOpen(false)}
-              onInputClick={() => setIsDatePickerOpen(true)}
-              calendarContainer={(props) => (
-                <div className={styles.datePickerContainer}>
-                  <button
-                    type="button"
-                    className={styles.datePickerClose}
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      e.preventDefault()
-                      setIsDatePickerOpen(false)
-                      // Also blur the input to ensure it closes
-                      const input = document.querySelector(`input.${styles.datePicker}`) as HTMLInputElement
-                      if (input) {
-                        input.blur()
-                      }
-                    }}
-                    aria-label="Cerrar calendario"
-                  >
-                    <i className="fa-solid fa-times"></i>
-                  </button>
-                  {props.children}
-                </div>
-              )}
+              onClose={() => setIsDatePickerOpen(false)}
+              selectedDate={selectedDate}
+              onChange={(date) => setSelectedDate(date)}
+              minDate={minDate}
+              filterDate={isWeekday}
             />
           </div>
         </div>

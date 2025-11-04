@@ -4555,3 +4555,5 @@ select:focus-visible {
         flex-direction: column;
     }
 }
+
+/* react-datepicker removed - using custom ChristianDatePicker */
