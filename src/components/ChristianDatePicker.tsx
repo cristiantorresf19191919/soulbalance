@@ -195,6 +195,16 @@ export function ChristianDatePicker({
       }}
     >
       <div className={`${styles.calendarContainer} ${className}`}>
+        {/* Close button */}
+        <button
+          type="button"
+          onClick={onClose}
+          className={styles.closeButton}
+          aria-label={locale === 'en' ? 'Close' : 'Cerrar'}
+        >
+          <i className="fa-solid fa-times"></i>
+        </button>
+
         {/* Header */}
         <div className={styles.header}>
           <button

@@ -2,29 +2,9 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-md);
-}
-
-.serviceInfo {
-  text-align: center;
-  margin-bottom: var(--spacing-sm);
-}
-
-.serviceBadge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem 1.5rem;
-  background: linear-gradient(135deg, rgba(7, 82, 87, 0.1), rgba(7, 82, 87, 0.05));
-  border: 2px solid var(--primary-green);
-  border-radius: 50px;
-  color: var(--primary-green);
-  font-weight: 700;
-  font-size: 1.1rem;
-  font-family: var(--font-serif);
-}
-
-.serviceBadge i {
-  font-size: 1.2rem;
+  min-height: 100%;
+  position: relative;
+  padding-bottom: 0;
 }
 
 .formSection {
@@ -110,18 +90,27 @@
   align-items: center;
   width: 100%;
   gap: var(--spacing-md);
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  transition: var(--transition-smooth);
+  background: rgba(7, 82, 87, 0.02);
+}
+
+.durationOption:hover {
+  background: rgba(7, 82, 87, 0.08);
+  transform: translateX(4px);
 }
 
 .duration {
   color: var(--text-dark);
-  font-weight: 500;
-  font-size: 1rem;
+  font-weight: 600;
+  font-size: 1.05rem;
 }
 
 .price {
   color: var(--primary-green);
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
 }
 
 .costDisplay {
@@ -264,17 +253,26 @@
 }
 
 .formActions {
-  margin-top: var(--spacing-md);
-  padding-top: var(--spacing-md);
-  border-top: 1px solid var(--border-light);
+  margin-top: auto;
+  padding-top: var(--spacing-lg);
+  margin-left: calc(var(--spacing-lg) * -1);
+  margin-right: calc(var(--spacing-lg) * -1);
+  margin-bottom: calc(var(--spacing-lg) * -1) !important;
+  padding-bottom: 0 !important;
+  position: relative;
+  background: transparent;
+  z-index: 10;
+  width: calc(100% + (var(--spacing-lg) * 2));
 }
 
 .submitButton {
   background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-dark) 100%) !important;
   color: var(--text-light) !important;
-  padding: 1.25rem 2rem !important;
-  border-radius: 16px !important;
-  font-size: 1.15rem !important;
+  padding: 1.5rem 2rem !important;
+  border-radius: 0 !important;
+  border-bottom-left-radius: 32px !important;
+  border-bottom-right-radius: 32px !important;
+  font-size: 1.2rem !important;
   font-weight: 700 !important;
   text-transform: none !important;
   box-shadow: 
@@ -285,6 +283,10 @@
   align-items: center !important;
   justify-content: center !important;
   gap: 0.75rem !important;
+  width: 100% !important;
+  border: none !important;
+  margin: 0 !important;
+  position: relative;
 }
 
 .submitButton:hover {
@@ -308,14 +310,17 @@
     gap: var(--spacing-sm);
   }
 
-  .serviceBadge {
-    font-size: 1rem;
-    padding: 0.6rem 1.2rem;
+  .formActions {
+    margin-left: calc(var(--spacing-md) * -1);
+    margin-right: calc(var(--spacing-md) * -1);
+    margin-bottom: calc(var(--spacing-md) * -1);
   }
 
   .submitButton {
-    padding: 1rem 1.5rem !important;
-    font-size: 1.05rem !important;
+    padding: 1.25rem 1.5rem !important;
+    font-size: 1.1rem !important;
+    border-bottom-left-radius: 24px !important;
+    border-bottom-right-radius: 24px !important;
   }
 }
 

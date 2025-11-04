@@ -116,13 +116,6 @@ export function BookingForm({
       <LoadingOverlay show={showLoading} />
       
       <form onSubmit={handleSubmit} className={styles.bookingForm}>
-        <div className={styles.serviceInfo}>
-          <div className={styles.serviceBadge}>
-            <i className="fa-solid fa-leaf"></i>
-            <span>{serviceName}</span>
-          </div>
-        </div>
-
         <div className={styles.formSection}>
           <label className={styles.sectionLabel}>
             <i className="fa-solid fa-clock label-icon"></i>

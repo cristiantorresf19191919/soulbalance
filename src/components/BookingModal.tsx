@@ -36,11 +36,7 @@ export function BookingModal({
         className: styles.dialogPaper
       }}
       BackdropProps={{
-        style: {
-          backgroundColor: 'transparent',
-          backdropFilter: 'none',
-          WebkitBackdropFilter: 'none'
-        }
+        className: styles.backdrop
       }}
     >
       <div className={styles.modalWrapper}>
@@ -54,7 +50,7 @@ export function BookingModal({
         <div className={styles.modalHeader}>
           <DialogTitle className={styles.modalTitle}>
             <div className={styles.titleContent}>
-              <i className={`fa-solid fa-sparkles ${styles.titleIcon}`}></i>
+              <i className={`fa-solid fa-leaf ${styles.titleIcon}`}></i>
               <span>Reservar {serviceName}</span>
             </div>
           </DialogTitle>
