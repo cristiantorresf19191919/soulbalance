@@ -8,9 +8,14 @@ interface Lead {
   email: string
   phone: string
   service: string
+  serviceName?: string
   message: string
   subject?: string
   createdAt: Date
+  // Booking fields
+  bookingDate?: Date | any
+  duration?: string
+  price?: string
 }
 
 interface LeadModalProps {
@@ -35,19 +40,15 @@ export function LeadModal({ lead, onClose, onDelete }: LeadModalProps) {
     })
   }
 
-  const getServiceName = (serviceKey: string) => {
-    const services: Record<string, string> = {
-      relajante: 'Masaje Relajante',
-      descontracturante: 'Masaje Descontracturante',
-      piedras: 'Masaje con Piedras Volcánicas',
-      prenatal: 'Masaje Prenatal',
-      '4manos': 'Masaje a 4 Manos',
-      piernas: 'Masaje Piernas Cansadas',
-      pareja: 'Masaje en Pareja',
-      soulbalance: 'Masaje Soul Balance - Cuatro Elementos',
-      otro: 'Otro servicio'
-    }
-    return services[serviceKey] || serviceKey || 'No especificado'
+  const formatBookingDate = (date: Date | any) => {
+    if (!date) return 'No especificada'
+    const bookingDate = date instanceof Date ? date : new Date(date)
+    return bookingDate.toLocaleDateString('es-ES', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    })
   }
 
   return (
@@ -93,10 +94,49 @@ export function LeadModal({ lead, onClose, onDelete }: LeadModalProps) {
               <h3>Servicio de Interés</h3>
               <div className={styles.serviceDetail}>
                 <span className={`${styles.serviceBadge} ${styles.large}`}>
-                  {getServiceName(lead.service)}
+                  {lead.serviceName || lead.service || 'No especificado'}
                 </span>
               </div>
             </div>
+
+            {(lead.bookingDate || lead.duration || lead.price) && (
+              <div className={styles.detailSection}>
+                <h3>Detalles de Reserva</h3>
+                <div className={styles.detailGrid}>
+                  {lead.bookingDate && (
+                    <div className={styles.detailItem}>
+                      <span className={styles.detailLabel}>
+                        <i className="fa-solid fa-calendar-days"></i> Fecha de Reserva:
+                      </span>
+                      <span className={styles.detailValue}>
+                        {formatBookingDate(lead.bookingDate)}
+                      </span>
+                    </div>
+                  )}
+                  {lead.duration && (
+                    <div className={styles.detailItem}>
+                      <span className={styles.detailLabel}>
+                        <i className="fa-solid fa-clock"></i> Duración:
+                      </span>
+                      <span className={styles.detailValue}>{lead.duration}</span>
+                    </div>
+                  )}
+                </div>
+                {lead.price && (
+                  <div className={styles.priceHighlight}>
+                    <div className={styles.priceHighlightContent}>
+                      <div className={styles.priceHighlightLabel}>
+                        <i className="fa-solid fa-dollar-sign"></i>
+                        <span>Precio Total</span>
+                      </div>
+                      <div className={styles.priceHighlightValue}>
+                        {lead.price}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
 
             {lead.message && (
               <div className={styles.detailSection}>

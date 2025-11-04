@@ -1,0 +1,204 @@
+.breadcrumb {
+  padding: var(--spacing-md) 0 var(--spacing-sm);
+  position: relative;
+  z-index: 2;
+  background: transparent;
+  transition: all 0.3s ease;
+}
+
+.breadcrumb:not(.sticky) {
+  margin-top: 80px; /* Account for fixed navbar when not sticky */
+}
+
+/* Sticky breadcrumb */
+.breadcrumb.sticky {
+  position: sticky;
+  top: 80px;
+  z-index: 1001;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 10px rgba(7, 82, 87, 0.1);
+  padding: var(--spacing-sm) 0;
+  margin-top: 0;
+  margin-bottom: var(--spacing-sm);
+}
+
+.breadcrumbList {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+.breadcrumbItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.breadcrumbLink {
+  color: var(--text-medium);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+  font-weight: 500;
+}
+
+.breadcrumbLink:hover {
+  color: var(--primary-green);
+  text-decoration: underline;
+}
+
+.breadcrumbCurrent {
+  color: var(--primary-green);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.breadcrumbSeparator {
+  color: var(--text-medium);
+  font-size: 0.85rem;
+  opacity: 0.6;
+  user-select: none;
+}
+
+/* Mobile breadcrumb with collapse/expand */
+.breadcrumbMobile {
+  display: none;
+}
+
+.breadcrumbMobileToggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.75rem;
+  color: var(--primary-green);
+  font-size: 0.9rem;
+  font-weight: 600;
+  align-items: center;
+  gap: 0.5rem;
+  transition: var(--transition-smooth);
+  width: 100%;
+  justify-content: space-between;
+  border-radius: 8px;
+}
+
+.breadcrumbMobileToggle:hover {
+  background: rgba(7, 82, 87, 0.05);
+  color: var(--primary-green-dark);
+}
+
+.breadcrumbMobileToggle i {
+  transition: transform 0.3s ease;
+  font-size: 0.8rem;
+}
+
+.breadcrumbMobileToggle.expanded i {
+  transform: rotate(180deg);
+}
+
+.breadcrumbMobileContent {
+  display: none;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-top: var(--spacing-sm);
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.breadcrumbMobileContent.expanded {
+  display: flex;
+}
+
+.breadcrumbMobileItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: rgba(7, 82, 87, 0.05);
+  border-radius: 8px;
+  transition: var(--transition-smooth);
+}
+
+.breadcrumbMobileItem:hover {
+  background: rgba(7, 82, 87, 0.1);
+}
+
+  @media (max-width: 768px) {
+  .breadcrumb {
+    padding: var(--spacing-sm) 0;
+    margin-top: 0;
+  }
+
+  .breadcrumb.sticky {
+    position: sticky;
+    top: 80px;
+    margin-top: 0;
+    padding: var(--spacing-sm) 0;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(15px);
+    z-index: 1001;
+  }
+
+  .breadcrumbList {
+    padding: 0 var(--spacing-sm);
+    gap: 0.35rem;
+  }
+
+  .breadcrumbLink,
+  .breadcrumbCurrent {
+    font-size: 0.85rem;
+  }
+
+  .breadcrumbSeparator {
+    font-size: 0.8rem;
+    display: inline;
+  }
+
+  /* Hide desktop breadcrumb on small screens */
+  .breadcrumbList {
+    display: none;
+  }
+
+  .breadcrumbMobile {
+    display: block;
+    padding: 0 var(--spacing-md);
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .breadcrumbMobileToggle {
+    display: flex;
+  }
+
+  .breadcrumbMobileContent {
+    padding: 0 var(--spacing-sm);
+  }
+
+  .breadcrumbMobileItem {
+    font-size: 0.85rem;
+  }
+
+  /* Hide separators on mobile when collapsed */
+  .breadcrumbSeparator {
+    display: none;
+  }
+}
+

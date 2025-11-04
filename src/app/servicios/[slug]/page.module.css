@@ -1,0 +1,318 @@
+.serviceDetailPage {
+  flex: 1;
+  background: linear-gradient(180deg, var(--bg-cream) 0%, var(--bg-warm) 100%);
+  padding: var(--spacing-xl) 0;
+  padding-top: calc(80px + var(--spacing-md));
+  position: relative;
+}
+
+.serviceDetailPage::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(77, 77, 77, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 90% 80%, rgba(7, 82, 87, 0.03) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+  position: relative;
+  z-index: 1;
+}
+
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: var(--spacing-md);
+}
+
+.loadingSpinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(7, 82, 87, 0.1);
+  border-top-color: var(--primary-green);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.serviceDetailCard {
+  background: var(--bg-white);
+  border-radius: 32px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px var(--shadow-medium);
+  border: 1px solid rgba(7, 82, 87, 0.2);
+  margin-top: var(--spacing-lg);
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 0;
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.serviceImage {
+  width: 100%;
+  height: 100%;
+  min-height: 600px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: var(--spacing-lg);
+  background-attachment: scroll;
+}
+
+.imageOverlay {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.serviceBadge {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 600;
+  color: var(--primary-green);
+  font-size: 0.95rem;
+  box-shadow: 0 4px 15px rgba(7, 82, 87, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.serviceBadge::before {
+  content: '✓';
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: var(--primary-green);
+  color: white;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 20px;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.serviceContent {
+  padding: var(--spacing-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.serviceTitle {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--primary-green);
+  margin: 0;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.5px;
+}
+
+.serviceDescription {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: var(--text-dark);
+  margin: 0;
+  flex: 1;
+}
+
+.pricingSection {
+  margin-top: var(--spacing-md);
+}
+
+.pricingTitle {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  color: var(--primary-green);
+  margin-bottom: var(--spacing-md);
+  font-weight: 600;
+}
+
+.pricingGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.priceCard {
+  background: linear-gradient(135deg, rgba(7, 82, 87, 0.05) 0%, rgba(7, 82, 87, 0.1) 100%);
+  border: 2px solid rgba(7, 82, 87, 0.15);
+  border-radius: 20px;
+  padding: var(--spacing-lg) var(--spacing-md);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(7, 82, 87, 0.08);
+}
+
+.priceCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-green) 0%, var(--primary-green-light) 100%);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.priceCard:hover::before {
+  transform: scaleX(1);
+}
+
+.priceCard:hover {
+  background: linear-gradient(135deg, rgba(7, 82, 87, 0.12) 0%, rgba(7, 82, 87, 0.18) 100%);
+  border-color: var(--primary-green);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 35px rgba(7, 82, 87, 0.25);
+}
+
+.priceDuration {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-dark);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.priceDuration i {
+  color: var(--primary-green);
+  font-size: 1rem;
+}
+
+.priceAmount {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--primary-green);
+  font-family: var(--font-serif);
+  letter-spacing: 0.5px;
+  position: relative;
+}
+
+.reserveButton {
+  padding: 1.25rem 2rem;
+  background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-dark) 100%);
+  color: var(--text-light);
+  border: none;
+  border-radius: 16px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  box-shadow:
+    0 8px 25px rgba(7, 82, 87, 0.3),
+    0 4px 12px rgba(7, 82, 87, 0.2);
+  font-family: var(--font-sans);
+  text-transform: none;
+  letter-spacing: 0.5px;
+  margin-top: auto;
+}
+
+.reserveButton:hover {
+  background: linear-gradient(135deg, var(--primary-green-dark) 0%, var(--primary-green) 100%);
+  transform: translateY(-2px);
+  box-shadow:
+    0 12px 35px rgba(7, 82, 87, 0.4),
+    0 6px 18px rgba(7, 82, 87, 0.3);
+}
+
+.reserveButton:active {
+  transform: translateY(0);
+}
+
+.reserveButton i {
+  font-size: 1.2rem;
+}
+
+@media (max-width: 968px) {
+  .serviceDetailCard {
+    grid-template-columns: 1fr;
+    max-width: 100%;
+  }
+
+  .serviceImage {
+    min-height: 400px;
+  }
+
+  .serviceContent {
+    padding: var(--spacing-lg);
+  }
+
+  .pricingGrid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: var(--spacing-sm);
+  }
+}
+
+@media (max-width: 768px) {
+  .serviceDetailPage {
+    padding: var(--spacing-lg) 0;
+    padding-top: calc(80px + var(--spacing-sm));
+  }
+
+  .serviceImage {
+    min-height: 300px;
+    padding: var(--spacing-md);
+  }
+
+  .serviceContent {
+    padding: var(--spacing-md);
+  }
+
+  .serviceTitle {
+    font-size: 1.75rem;
+  }
+
+  .serviceDescription {
+    font-size: 1rem;
+  }
+
+  .pricingGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .reserveButton {
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+  }
+}
+

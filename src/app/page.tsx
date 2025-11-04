@@ -18,13 +18,15 @@ export default function Home() {
 
   return (
     <>
-      <Navbar />
-      <HeroSection />
-      <AboutSection />
-      <ServicesGrid />
-      <PremiumExperiences />
-      <CorporateSection />
-      <ContactSection />
+      <main style={{ flex: 1 }}>
+        <Navbar />
+        <HeroSection />
+        <AboutSection />
+        <ServicesGrid />
+        <PremiumExperiences />
+        <CorporateSection />
+        <ContactSection />
+      </main>
       <Footer />
       <WhatsAppFloat />
       <ToastContainer />

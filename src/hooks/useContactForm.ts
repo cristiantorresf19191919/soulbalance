@@ -2,14 +2,19 @@
 
 import { useState, FormEvent } from 'react'
 import { firestore } from '@/lib/firebase'
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
+import { collection, addDoc, serverTimestamp, Timestamp } from 'firebase/firestore'
 
-interface FormData {
+export interface FormData {
   name: string
   email: string
   phone: string
   service: string
   message: string
+  // Booking fields (optional for regular contact form)
+  bookingDate?: Date | null
+  duration?: string
+  price?: string
+  serviceName?: string
 }
 
 export function useContactForm() {
@@ -57,7 +62,7 @@ export function useContactForm() {
       }
 
       // Prepare Firestore data
-      const firestoreData = {
+      const firestoreData: any = {
         name: data.name,
         email: data.email,
         phone: data.phone || '',
@@ -65,6 +70,23 @@ export function useContactForm() {
         message: data.message || '',
         subject: data.service ? `Consulta sobre: ${data.service}` : 'Consulta general',
         createdAt: serverTimestamp()
+      }
+
+      // Add booking details if present
+      if (data.bookingDate) {
+        // Convert Date to Firestore Timestamp
+        const bookingTimestamp = Timestamp.fromDate(data.bookingDate)
+        firestoreData.bookingDate = bookingTimestamp
+        firestoreData.bookingDateTimestamp = data.bookingDate.getTime()
+      }
+      if (data.duration) {
+        firestoreData.duration = data.duration
+      }
+      if (data.price) {
+        firestoreData.price = data.price
+      }
+      if (data.serviceName) {
+        firestoreData.serviceName = data.serviceName
       }
 
       // Save to Firestore

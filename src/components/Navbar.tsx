@@ -78,9 +78,14 @@ export function Navbar() {
           </Link>
         </div>
         {isAuthenticated ? (
-          <button onClick={handleLogout} className={styles.logoutNavBtn}>
-            Cerrar Sesión
-          </button>
+          <div className={styles.authButtons}>
+            <Link href="/admin" className={styles.adminNavBtn}>
+              Admin
+            </Link>
+            <button onClick={handleLogout} className={styles.logoutNavBtn}>
+              Cerrar Sesión
+            </button>
+          </div>
         ) : (
           <Link href="/login" className={styles.loginNavBtn}>Login</Link>
         )}

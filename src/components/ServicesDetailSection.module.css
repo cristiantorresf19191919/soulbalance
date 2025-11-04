@@ -1,5 +1,5 @@
 .servicesDetailSection {
-  padding: calc(var(--spacing-xl) * 1.5) 0;
+  padding: calc(80px + var(--spacing-xl)) 0 calc(var(--spacing-xl) * 1.5) 0;
   background: linear-gradient(180deg, var(--bg-ivory) 0%, var(--bg-cream) 50%, var(--bg-warm) 100%);
 }
 
@@ -39,12 +39,11 @@
 .categoryDivider {
   width: 100%;
   height: 2px;
-  background: linear-gradient(90deg, 
-    transparent 0%, 
-    var(--primary-green) 20%, 
-    var(--primary-green) 80%, 
-    transparent 100%
-  );
+  background: linear-gradient(90deg,
+      transparent 0%,
+      var(--primary-green) 20%,
+      var(--primary-green) 80%,
+      transparent 100%);
   margin: var(--spacing-md) auto var(--spacing-lg);
   max-width: 200px;
   position: relative;
@@ -104,10 +103,13 @@
   transition: var(--transition-smooth);
   border: 1px solid rgba(7, 82, 87, 0.2);
   position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .serviceCardDetailed:hover {
-  transform: translateY(-12px);
+  transform: translateY(-5px);
   box-shadow: 0 20px 60px var(--shadow-medium);
   border-color: var(--primary-sage);
 }
@@ -119,10 +121,11 @@
   background-position: center;
   position: relative;
   transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  flex-shrink: 0;
 }
 
 .serviceCardDetailed:hover .serviceImageDetailed {
-  transform: scale(1.08);
+  transform: scale(1.03);
 }
 
 .serviceImageOverlay {
@@ -149,6 +152,11 @@
 
 .serviceContentDetailed {
   padding: var(--spacing-lg);
+  padding-bottom: calc(var(--spacing-lg) + 80px);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
 }
 
 .serviceTitleDetailed {
@@ -158,6 +166,14 @@
   margin-bottom: var(--spacing-sm);
   font-weight: 700;
   line-height: 1.3;
+  min-height: 4.68rem;
+  /* Fixed height for 2 lines max (1.3 line-height * 1.8rem * 2) */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .serviceDescriptionDetailed {
@@ -165,21 +181,39 @@
   line-height: 1.8;
   color: var(--text-dark);
   margin-bottom: var(--spacing-md);
+  min-height: 5.4rem;
+  /* Fixed height for 3 lines (1.8 line-height * 1rem * 3) */
+  max-height: 5.4rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-shrink: 0;
 }
 
 .servicePricingDetailed {
   padding-top: var(--spacing-md);
   border-top: 1px solid var(--border-light);
-  margin-top: var(--spacing-md);
+  margin-top: auto;
+  /* Push pricing to bottom */
+  flex-shrink: 0;
 }
 
 .priceItemDetailed {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 0;
+  padding: 0.5rem 0.75rem;
   font-size: 1rem;
-  transition: var(--transition-fast);
+  transition: var(--transition-smooth);
+  border-radius: 8px;
+}
+
+.priceItemDetailed:hover {
+  background: rgba(7, 82, 87, 0.08);
+  transform: translateX(4px);
 }
 
 .priceItemDetailed:not(:last-child) {
@@ -195,6 +229,50 @@
   color: var(--primary-green);
   font-size: 1.15rem;
   font-weight: 700;
+}
+
+.reserveButton {
+  position: absolute;
+  bottom: 0;
+  left: calc(var(--spacing-lg) * -1);
+  right: calc(var(--spacing-lg) * -1);
+  padding: 1.15rem 1.75rem;
+  background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-dark) 100%);
+  color: var(--text-light);
+  border: none;
+  border-radius: 0;
+  border-bottom-left-radius: 24px;
+  border-bottom-right-radius: 24px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  box-shadow:
+    0 10px 35px rgba(7, 82, 87, 0.35),
+    0 4px 15px rgba(7, 82, 87, 0.2);
+  font-family: var(--font-sans);
+  text-transform: none;
+  letter-spacing: 0.5px;
+}
+
+.reserveButton:hover {
+  background: linear-gradient(135deg, var(--primary-green-dark) 0%, var(--primary-green) 100%);
+  transform: translateY(-3px);
+  box-shadow:
+    0 15px 45px rgba(7, 82, 87, 0.45),
+    0 6px 20px rgba(7, 82, 87, 0.3);
+}
+
+.reserveButton:active {
+  transform: translateY(-1px);
+}
+
+.reserveButton i {
+  font-size: 1.2rem;
 }
 
 @media (max-width: 1024px) {
@@ -228,4 +306,3 @@
     padding-bottom: var(--spacing-xl);
   }
 }
-

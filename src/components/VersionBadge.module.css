@@ -137,6 +137,8 @@
 @media (max-width: 768px) {
     .versionBadge.header {
         right: var(--spacing-sm);
+        top: var(--spacing-sm);
+        transform: none;
         font-size: 0.65rem;
     }
 

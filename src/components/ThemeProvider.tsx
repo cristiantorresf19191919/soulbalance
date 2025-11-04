@@ -90,7 +90,9 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   return (
     <MUIThemeProvider theme={theme}>
       <CssBaseline />
-      {children}
+      <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100%', height: '100%', flex: 1 }}>
+        {children}
+      </div>
     </MUIThemeProvider>
   )
 }

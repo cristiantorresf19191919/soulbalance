@@ -4,6 +4,9 @@
   padding: var(--spacing-lg) 0 var(--spacing-md);
   position: relative;
   overflow: visible;
+  margin-top: auto;
+  margin-bottom: 0;
+  z-index: 10;
 }
 
 .footer::before {

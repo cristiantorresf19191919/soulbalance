@@ -2,41 +2,34 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
+import { BlogArticle as BlogArticleType } from '@/lib/blogData'
 import styles from './BlogArticle.module.css'
 
-export function BlogArticle() {
-  return (
-    <section className={styles.blogSection} style={{ paddingTop: '100px' }}>
-      <div className={styles.container}>
-        <div className={styles.blogHeader}>
-          <h2 className={styles.sectionTitle}>Blog de Bienestar</h2>
-          <p className={styles.blogIntro}>
-            Reflexiones, historias y guías para potenciar tu experiencia de
-            bienestar
-          </p>
-        </div>
+interface BlogArticleProps {
+  article: BlogArticleType
+}
 
+export function BlogArticle({ article }: BlogArticleProps) {
+  const contentImages = article.contentImages || []
+
+  return (
+    <section className={styles.blogSection}>
+      <div className={styles.container}>
         <article className={styles.blogArticle}>
           <div className={styles.articleHeader}>
             <div className={styles.articleMeta}>
-              <span className={styles.articleCategory}>Ciencia del tacto</span>
-              <span className={styles.articleDate}>2024</span>
+              <span className={styles.articleCategory}>{article.category}</span>
+              <span className={styles.articleDate}>{article.date}</span>
             </div>
-            <h1 className={styles.articleTitle}>
-              Por qué el masaje funciona mejor cuando te entregas
-            </h1>
-            <p className={styles.articleExcerpt}>
-              Te has preguntado por qué algunas sesiones te dejan transformado y
-              otras solo &quot;alivian un poco&quot;. La diferencia no está solo en las
-              manos del terapeuta, sino también en cómo te entregas al proceso.
-            </p>
+            <h1 className={styles.articleTitle}>{article.title}</h1>
+            <p className={styles.articleExcerpt}>{article.excerpt}</p>
           </div>
 
           <div className={styles.articleHero}>
             <div className={styles.heroImageWrapper}>
               <Image
-                src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-                alt="Experiencia de masaje relajante y transformadora"
+                src={article.heroImage}
+                alt={article.heroImageAlt}
                 width={2070}
                 height={1380}
                 className={styles.heroImage}
@@ -91,15 +84,17 @@ export function BlogArticle() {
               ocurre de verdad.
             </p>
 
-            <div className={styles.contentImageBreak}>
-              <Image
-                src="https://images.unsplash.com/photo-1600334129128-685c5582fd35?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-                alt="Técnicas de respiración y relajación"
-                width={2070}
-                height={1380}
-                className={styles.contentImage}
-              />
-            </div>
+            {contentImages[0] && (
+              <div className={styles.contentImageBreak}>
+                <Image
+                  src={contentImages[0].src}
+                  alt={contentImages[0].alt}
+                  width={contentImages[0].width}
+                  height={contentImages[0].height}
+                  className={styles.contentImage}
+                />
+              </div>
+            )}
 
             <h2>La mente como interruptor del alivio</h2>
 
@@ -130,15 +125,17 @@ export function BlogArticle() {
               fuera extraño no tener que hacer nada. ¿Te ha pasado?
             </p>
 
-            <div className={styles.contentImageBreak}>
-              <Image
-                src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-                alt="Sesión de masaje terapéutico profesional"
-                width={2070}
-                height={1380}
-                className={styles.contentImage}
-              />
-            </div>
+            {contentImages[1] && (
+              <div className={styles.contentImageBreak}>
+                <Image
+                  src={contentImages[1].src}
+                  alt={contentImages[1].alt}
+                  width={contentImages[1].width}
+                  height={contentImages[1].height}
+                  className={styles.contentImage}
+                />
+              </div>
+            )}
 
             <h2>Lo que he aprendido de cientos de sesiones</h2>
 
@@ -170,15 +167,17 @@ export function BlogArticle() {
               cambios que duran días, incluso semanas.
             </p>
 
-            <div className={`${styles.contentImageBreak} ${styles.fullWidth}`}>
-              <Image
-                src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-                alt="Ambiente relajante y bienestar"
-                width={2070}
-                height={1380}
-                className={styles.contentImage}
-              />
-            </div>
+            {contentImages[2] && (
+              <div className={`${styles.contentImageBreak} ${contentImages[2].fullWidth ? styles.fullWidth : ''}`}>
+                <Image
+                  src={contentImages[2].src}
+                  alt={contentImages[2].alt}
+                  width={contentImages[2].width}
+                  height={contentImages[2].height}
+                  className={styles.contentImage}
+                />
+              </div>
+            )}
 
             <div className={styles.contentInsight}>
               <h3>Un pequeño ritual que puede cambiar todo</h3>
@@ -314,4 +313,3 @@ export function BlogArticle() {
     </section>
   )
 }
-

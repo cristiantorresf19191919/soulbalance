@@ -1,0 +1,157 @@
+.dialog {
+  z-index: 9999;
+}
+
+/* Remove backdrop transparency */
+.dialog :global(.MuiBackdrop-root) {
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.dialogPaper {
+  border-radius: 28px !important;
+  overflow: hidden !important;
+  background: transparent !important;
+  box-shadow:
+    0 20px 60px rgba(7, 82, 87, 0.25),
+    0 8px 25px rgba(77, 77, 77, 0.2) !important;
+  border: 2px solid rgba(7, 82, 87, 0.1) !important;
+  max-height: 90vh !important;
+}
+
+.modalWrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 2px solid rgba(7, 82, 87, 0.1);
+  position: relative;
+  z-index: 10;
+}
+
+.modalHeader::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-green) 0%, var(--primary-green-light) 50%, var(--primary-green) 100%);
+}
+
+.modalTitle {
+  font-family: var(--font-serif) !important;
+  font-size: 1.8rem !important;
+  color: var(--primary-green) !important;
+  font-weight: 700 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  text-shadow: 0 2px 4px rgba(255, 255, 255, 0.8);
+}
+
+.titleContent {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.titleIcon {
+  font-size: 1.5rem;
+  color: var(--primary-green);
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.2) rotate(180deg);
+    opacity: 0.8;
+  }
+}
+
+.closeButton {
+  color: var(--primary-green) !important;
+  transition: var(--transition-smooth) !important;
+}
+
+.closeButton:hover {
+  background: rgba(7, 82, 87, 0.1) !important;
+}
+
+.modalContentWrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.serviceImageBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 1;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.modalContent {
+  padding: var(--spacing-lg);
+  max-height: calc(90vh - 100px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.modalContent::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modalContent::-webkit-scrollbar-track {
+  background: rgba(7, 82, 87, 0.05);
+  border-radius: 4px;
+}
+
+.modalContent::-webkit-scrollbar-thumb {
+  background: var(--primary-green);
+  border-radius: 4px;
+}
+
+.modalContent::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-green-dark);
+}
+
+@media (max-width: 768px) {
+  .modalHeader {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  .modalTitle {
+    font-size: 1.4rem !important;
+  }
+
+  .modalContent {
+    padding: var(--spacing-md);
+  }
+}

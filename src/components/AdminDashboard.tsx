@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import Image from 'next/image'
 import { auth, firestore } from '@/lib/firebase'
 import { onAuthStateChanged, signOut } from 'firebase/auth'
@@ -16,10 +17,16 @@ interface Lead {
   email: string
   phone: string
   service: string
+  serviceName?: string
   message: string
   subject?: string
   createdAt: Date
   timestamp?: string
+  // Booking fields
+  bookingDate?: Date | any
+  bookingDateTimestamp?: number
+  duration?: string
+  price?: string
 }
 
 export function AdminDashboard() {
@@ -74,16 +81,31 @@ export function AdminDashboard() {
             ? data.createdAt.toDate() 
             : (data.createdAt ? new Date(data.createdAt) : new Date())
           
+          // Handle booking date
+          let bookingDate: Date | undefined
+          if (data.bookingDateTimestamp) {
+            bookingDate = new Date(data.bookingDateTimestamp)
+          } else if (data.bookingDate?.toDate) {
+            bookingDate = data.bookingDate.toDate()
+          } else if (data.bookingDate) {
+            bookingDate = new Date(data.bookingDate)
+          }
+          
           return {
             id: docSnapshot.id,
             name: data.name || '',
             email: data.email || '',
             phone: data.phone || '',
             service: data.service || '',
+            serviceName: data.serviceName || '',
             message: data.message || '',
             subject: data.subject || '',
             createdAt: createdAt,
-            timestamp: createdAt.toISOString()
+            timestamp: createdAt.toISOString(),
+            bookingDate: bookingDate,
+            bookingDateTimestamp: data.bookingDateTimestamp,
+            duration: data.duration || '',
+            price: data.price || ''
           }
         })
 
@@ -208,8 +230,16 @@ export function AdminDashboard() {
               height={40}
               className={styles.adminLogoImage}
             />
-            <span className={styles.adminLogoText}>SOUL BALANCE</span>
-            <span className={styles.adminBadge}>Admin</span>
+            <Link href="/" className={styles.adminLogoText}>
+              SOUL BALANCE
+            </Link>
+            <span 
+              className={styles.adminBadge}
+              onClick={() => router.push('/')}
+              style={{ cursor: 'pointer' }}
+            >
+              Admin
+            </span>
           </div>
           <div className={styles.adminUserInfo}>
             <span>{user?.email}</span>
@@ -303,83 +333,248 @@ export function AdminDashboard() {
                 <p>Los leads aparecerán aquí cuando los usuarios completen el formulario</p>
               </div>
             ) : (
-              <div className={styles.adminTableWrapper}>
-                <table className={styles.adminTable}>
-                  <thead>
-                    <tr>
-                      <th>Fecha</th>
-                      <th>Nombre</th>
-                      <th>Email</th>
-                      <th>Teléfono</th>
-                      <th>Servicio</th>
-                      <th>Mensaje</th>
-                      <th>Acciones</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredLeads.map((lead) => (
-                      <tr key={lead.id}>
-                        <td>
-                          <div className={styles.dateCell}>
-                            <span className={styles.dateValue}>{formatDate(lead.createdAt)}</span>
-                            <span className={styles.timeValue}>{formatTime(lead.createdAt)}</span>
+              <>
+                {/* Desktop Table View */}
+                <div className={styles.adminTableWrapper}>
+                  <table className={styles.adminTable}>
+                    <thead>
+                      <tr>
+                        <th>Fecha Registro</th>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Teléfono</th>
+                        <th>Servicio</th>
+                        <th>Fecha Reserva</th>
+                        <th>Duración</th>
+                        <th>Precio</th>
+                        <th>Mensaje</th>
+                        <th>Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredLeads.map((lead) => (
+                        <tr 
+                          key={lead.id}
+                          className={`${lead.bookingDate ? styles.bookingRow : ''} ${styles.clickableRow}`}
+                          onClick={() => handleViewDetail(lead)}
+                        >
+                          <td>
+                            <div className={styles.dateCell}>
+                              <span className={styles.dateValue}>{formatDate(lead.createdAt)}</span>
+                              <span className={styles.timeValue}>{formatTime(lead.createdAt)}</span>
+                            </div>
+                          </td>
+                          <td><strong>{lead.name || 'N/A'}</strong></td>
+                          <td>
+                            <a href={`mailto:${lead.email}`} className={styles.emailLink} onClick={(e) => e.stopPropagation()}>
+                              {lead.email || 'N/A'}
+                            </a>
+                          </td>
+                          <td>
+                            <a href={`tel:${lead.phone}`} className={styles.phoneLink} onClick={(e) => e.stopPropagation()}>
+                              {lead.phone || 'N/A'}
+                            </a>
+                          </td>
+                          <td>
+                            <div className={styles.serviceWrapper}>
+                              <i className="fa-solid fa-spa"></i>
+                              <span className={styles.serviceBadge}>
+                                {lead.serviceName || getServiceName(lead.service)}
+                              </span>
+                            </div>
+                          </td>
+                          <td>
+                            {lead.bookingDate ? (
+                              <div className={styles.bookingDateCell}>
+                                <div className={styles.bookingDateWrapper}>
+                                  <i className="fa-solid fa-calendar-days"></i>
+                                  <span className={styles.bookingDate}>
+                                    {formatDate(lead.bookingDate)}
+                                  </span>
+                                </div>
+                                <span className={styles.bookingTime}>
+                                  {formatTime(lead.bookingDate)}
+                                </span>
+                              </div>
+                            ) : (
+                              <span className={styles.noBooking}>Sin reserva</span>
+                            )}
+                          </td>
+                          <td>
+                            {lead.duration ? (
+                              <div className={styles.durationWrapper}>
+                                <i className="fa-solid fa-clock"></i>
+                                <span className={styles.durationBadge}>{lead.duration}</span>
+                              </div>
+                            ) : (
+                              <span className={styles.noBooking}>-</span>
+                            )}
+                          </td>
+                          <td>
+                            {lead.price ? (
+                              <div className={styles.priceWrapper}>
+                                <i className="fa-solid fa-dollar-sign"></i>
+                                <span className={styles.priceBadge}>{lead.price}</span>
+                              </div>
+                            ) : (
+                              <span className={styles.noBooking}>-</span>
+                            )}
+                          </td>
+                          <td>
+                            {lead.message ? (
+                              <span className={styles.hasMessage}>
+                                <i className="fa-solid fa-comment"></i> Tiene mensaje
+                              </span>
+                            ) : (
+                              <span className={styles.noMessage}>Sin mensaje</span>
+                            )}
+                          </td>
+                          <td>
+                            <div className={styles.actionButtons} onClick={(e) => e.stopPropagation()}>
+                              <a href={`tel:${lead.phone}`} className={`${styles.actionBtn} ${styles.callBtn}`} title="Llamar">
+                                <i className="fa-solid fa-phone"></i>
+                              </a>
+                              <a href={`mailto:${lead.email}`} className={`${styles.actionBtn} ${styles.emailBtn}`} title="Email">
+                                <i className="fa-regular fa-envelope"></i>
+                              </a>
+                              <button
+                                className={`${styles.actionBtn} ${styles.detailBtn}`}
+                                onClick={() => handleViewDetail(lead)}
+                                title="Ver detalles"
+                              >
+                                <i className="fa-regular fa-eye"></i>
+                              </button>
+                              <button
+                                className={`${styles.actionBtn} ${styles.deleteBtn}`}
+                                onClick={() => handleDelete(lead.id, lead.name)}
+                                title="Eliminar"
+                              >
+                                <i className="fa-solid fa-trash"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                {/* Mobile Card View */}
+                <div className={styles.leadsCardContainer}>
+                  {filteredLeads.map((lead) => (
+                    <div 
+                      key={lead.id}
+                      className={`${styles.leadCard} ${lead.bookingDate ? styles.bookingCard : ''}`}
+                      onClick={() => handleViewDetail(lead)}
+                    >
+                      <div className={styles.cardHeader}>
+                        <div className={styles.cardHeaderLeft}>
+                          <div className={styles.cardDate}>
+                            <i className="fa-solid fa-calendar"></i>
+                            <div>
+                              <span className={styles.cardDateValue}>{formatDate(lead.createdAt)}</span>
+                              <span className={styles.cardTimeValue}>{formatTime(lead.createdAt)}</span>
+                            </div>
                           </div>
-                        </td>
-                        <td><strong>{lead.name || 'N/A'}</strong></td>
-                        <td>
-                          <a href={`mailto:${lead.email}`} className={styles.emailLink}>
+                        </div>
+                        {lead.bookingDate && (
+                          <div className={styles.cardBookingBadge}>
+                            <i className="fa-solid fa-check-circle"></i>
+                            Reservado
+                          </div>
+                        )}
+                      </div>
+                      
+                      <div className={styles.cardBody}>
+                        <div className={styles.cardName}>
+                          <i className="fa-solid fa-user"></i>
+                          <strong>{lead.name || 'N/A'}</strong>
+                        </div>
+                        
+                        <div className={styles.cardContactInfo}>
+                          <a 
+                            href={`mailto:${lead.email}`} 
+                            className={styles.cardEmail}
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <i className="fa-regular fa-envelope"></i>
                             {lead.email || 'N/A'}
                           </a>
-                        </td>
-                        <td>
-                          <a href={`tel:${lead.phone}`} className={styles.phoneLink}>
+                          <a 
+                            href={`tel:${lead.phone}`} 
+                            className={styles.cardPhone}
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <i className="fa-solid fa-phone"></i>
                             {lead.phone || 'N/A'}
                           </a>
-                        </td>
-                        <td>
-                          <span className={styles.serviceBadge}>{getServiceName(lead.service)}</span>
-                        </td>
-                        <td>
-                          {lead.message ? (
-                            <button
-                              className={styles.viewMessageBtn}
-                              onClick={() => handleViewDetail(lead)}
-                            >
-                              Ver mensaje
-                            </button>
-                          ) : (
-                            <span className={styles.noMessage}>Sin mensaje</span>
-                          )}
-                        </td>
-                        <td>
-                          <div className={styles.actionButtons}>
-                            <a href={`tel:${lead.phone}`} className={`${styles.actionBtn} ${styles.callBtn}`} title="Llamar">
-                              <i className="fa-solid fa-phone"></i>
-                            </a>
-                            <a href={`mailto:${lead.email}`} className={`${styles.actionBtn} ${styles.emailBtn}`} title="Email">
-                              <i className="fa-regular fa-envelope"></i>
-                            </a>
-                            <button
-                              className={`${styles.actionBtn} ${styles.detailBtn}`}
-                              onClick={() => handleViewDetail(lead)}
-                              title="Ver detalles"
-                            >
-                              <i className="fa-regular fa-eye"></i>
-                            </button>
-                            <button
-                              className={`${styles.actionBtn} ${styles.deleteBtn}`}
-                              onClick={() => handleDelete(lead.id, lead.name)}
-                              title="Eliminar"
-                            >
-                              <i className="fa-solid fa-trash"></i>
-                            </button>
+                        </div>
+
+                        <div className={styles.cardService}>
+                          <i className="fa-solid fa-spa"></i>
+                          <span>{lead.serviceName || getServiceName(lead.service)}</span>
+                        </div>
+
+                        {lead.bookingDate && (
+                          <div className={styles.cardBookingInfo}>
+                            <div className={styles.cardBookingDate}>
+                              <i className="fa-solid fa-calendar-days"></i>
+                              <div>
+                                <span className={styles.cardBookingDateLabel}>Fecha Reserva</span>
+                                <span className={styles.cardBookingDateValue}>
+                                  {formatDate(lead.bookingDate)} {formatTime(lead.bookingDate)}
+                                </span>
+                              </div>
+                            </div>
+                            {lead.duration && (
+                              <div className={styles.cardDuration}>
+                                <i className="fa-solid fa-clock"></i>
+                                <span>{lead.duration}</span>
+                              </div>
+                            )}
+                            {lead.price && (
+                              <div className={styles.cardPrice}>
+                                <i className="fa-solid fa-dollar-sign"></i>
+                                <span className={styles.cardPriceValue}>{lead.price}</span>
+                              </div>
+                            )}
                           </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                        )}
+
+                        {lead.message && (
+                          <div className={styles.cardMessageIndicator}>
+                            <i className="fa-solid fa-comment"></i>
+                            <span>Tiene mensaje</span>
+                          </div>
+                        )}
+                      </div>
+
+                      <div className={styles.cardActions} onClick={(e) => e.stopPropagation()}>
+                        <a href={`tel:${lead.phone}`} className={`${styles.cardActionBtn} ${styles.cardCallBtn}`} title="Llamar">
+                          <i className="fa-solid fa-phone"></i>
+                        </a>
+                        <a href={`mailto:${lead.email}`} className={`${styles.cardActionBtn} ${styles.cardEmailBtn}`} title="Email">
+                          <i className="fa-regular fa-envelope"></i>
+                        </a>
+                        <button
+                          className={`${styles.cardActionBtn} ${styles.cardDetailBtn}`}
+                          onClick={() => handleViewDetail(lead)}
+                          title="Ver detalles"
+                        >
+                          <i className="fa-regular fa-eye"></i>
+                        </button>
+                        <button
+                          className={`${styles.cardActionBtn} ${styles.cardDeleteBtn}`}
+                          onClick={() => handleDelete(lead.id, lead.name)}
+                          title="Eliminar"
+                        >
+                          <i className="fa-solid fa-trash"></i>
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </>
             )}
           </div>
         </div>

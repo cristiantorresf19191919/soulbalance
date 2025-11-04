@@ -29,15 +29,17 @@
 .modalContent {
   background: var(--bg-white);
   border-radius: 28px;
-  max-width: 700px;
+  max-width: 900px;
   width: 100%;
   max-height: 90vh;
-  overflow-y: auto;
+  overflow: hidden;
   box-shadow:
     0 25px 70px rgba(0, 0, 0, 0.3),
     0 8px 25px rgba(0, 0, 0, 0.2);
   animation: slideUp 0.3s ease;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 @keyframes slideUp {
@@ -94,6 +96,37 @@
 
 .modalBody {
   padding: var(--spacing-lg);
+  padding-right: calc(var(--spacing-lg) + 8px);
+  overflow-y: auto;
+  flex: 1;
+  /* Custom scrollbar styling to match border radius */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(7, 82, 87, 0.3) transparent;
+  /* Ensure scrollbar respects border radius */
+  border-radius: 0 0 28px 28px;
+}
+
+.modalBody::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modalBody::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 0;
+  border-radius: 0 0 28px 0;
+}
+
+.modalBody::-webkit-scrollbar-thumb {
+  background: rgba(7, 82, 87, 0.3);
+  border-radius: 4px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  margin-right: 4px;
+}
+
+.modalBody::-webkit-scrollbar-thumb:hover {
+  background: rgba(7, 82, 87, 0.5);
+  background-clip: padding-box;
 }
 
 .leadDetail {
@@ -150,6 +183,53 @@
 
 .detailValue a:hover {
   text-decoration: underline;
+}
+
+.priceValue {
+  font-weight: 700;
+  color: var(--primary-green);
+  font-size: 1.1rem;
+}
+
+.priceHighlight {
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: linear-gradient(135deg, rgba(7, 82, 87, 0.1), rgba(7, 82, 87, 0.05));
+  border-radius: 16px;
+  border: 2px solid var(--primary-green);
+  box-shadow: 0 4px 12px rgba(7, 82, 87, 0.15);
+}
+
+.priceHighlightContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+  text-align: center;
+}
+
+.priceHighlightLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-medium);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.priceHighlightLabel i {
+  color: var(--primary-green);
+  font-size: 1rem;
+}
+
+.priceHighlightValue {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary-green);
+  font-family: var(--font-sans);
+  letter-spacing: -0.5px;
 }
 
 .serviceDetail {
@@ -237,6 +317,26 @@
 }
 
 @media (max-width: 768px) {
+  .modalOverlay {
+    padding: 0;
+    align-items: stretch;
+  }
+
+  .modalContent {
+    max-width: 100vw;
+    width: 100vw;
+    max-height: 100vh;
+    height: 100vh;
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .modalBody {
+    flex: 1;
+    overflow-y: auto;
+  }
+
   .detailActions {
     flex-direction: column;
   }
