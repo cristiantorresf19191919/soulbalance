@@ -140,6 +140,7 @@ export default function ServiceDetailPage() {
                           <i className="fa-solid fa-clock"></i>
                           <span>{price.duration}</span>
                         </div>
+                        <span className={styles.priceSeparator}>•</span>
                         <div className={styles.priceAmount}>
                           {price.price}
                         </div>

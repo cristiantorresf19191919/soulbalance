@@ -118,9 +118,12 @@
 
 .serviceContent {
   padding: var(--spacing-xl);
+  padding-bottom: 0;
   display: flex;
   flex-direction: column;
   gap: var(--spacing-lg);
+  position: relative;
+  min-height: 100%;
 }
 
 .serviceTitle {
@@ -142,86 +145,81 @@
 }
 
 .pricingSection {
-  margin-top: var(--spacing-md);
+  margin-top: var(--spacing-xs);
+  padding-bottom: calc(1.25rem + 2rem + 1.25rem + 2rem);
 }
 
 .pricingTitle {
   font-family: var(--font-serif);
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   color: var(--primary-green);
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-xs);
   font-weight: 600;
 }
 
 .pricingGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: var(--spacing-md);
-  margin-bottom: var(--spacing-lg);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0;
 }
 
 .priceCard {
-  background: linear-gradient(135deg, rgba(7, 82, 87, 0.05) 0%, rgba(7, 82, 87, 0.1) 100%);
-  border: 2px solid rgba(7, 82, 87, 0.15);
-  border-radius: 20px;
-  padding: var(--spacing-lg) var(--spacing-md);
+  background: rgba(7, 82, 87, 0.06);
+  border: 1.5px solid rgba(7, 82, 87, 0.2);
+  border-radius: 50px;
+  padding: 0.5rem 1rem;
   cursor: pointer;
   transition: var(--transition-smooth);
-  display: flex;
-  flex-direction: column;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--spacing-sm);
-  text-align: center;
+  gap: 0.5rem;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 4px 15px rgba(7, 82, 87, 0.08);
-}
-
-.priceCard::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--primary-green) 0%, var(--primary-green-light) 100%);
-  transform: scaleX(0);
-  transition: transform 0.3s ease;
-}
-
-.priceCard:hover::before {
-  transform: scaleX(1);
+  box-shadow: 0 1px 3px rgba(7, 82, 87, 0.08);
+  white-space: nowrap;
 }
 
 .priceCard:hover {
-  background: linear-gradient(135deg, rgba(7, 82, 87, 0.12) 0%, rgba(7, 82, 87, 0.18) 100%);
+  background: rgba(7, 82, 87, 0.12);
   border-color: var(--primary-green);
-  transform: translateY(-6px);
-  box-shadow: 0 12px 35px rgba(7, 82, 87, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 3px 8px rgba(7, 82, 87, 0.15);
+}
+
+.priceCard:active {
+  transform: translateY(0);
 }
 
 .priceDuration {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.3rem;
   color: var(--text-dark);
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   font-weight: 500;
 }
 
 .priceDuration i {
   color: var(--primary-green);
-  font-size: 1rem;
+  font-size: 0.8rem;
+}
+
+.priceSeparator {
+  color: rgba(7, 82, 87, 0.3);
+  font-size: 0.8rem;
+  margin: 0 0.2rem;
 }
 
 .priceAmount {
-  font-size: 1.75rem;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--primary-green);
   font-family: var(--font-serif);
-  letter-spacing: 0.5px;
+  letter-spacing: 0.2px;
   position: relative;
+  line-height: 1;
 }
 
 .reserveButton {
@@ -229,7 +227,11 @@
   background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-dark) 100%);
   color: var(--text-light);
   border: none;
-  border-radius: 16px;
+  border-radius: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 32px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
   font-size: 1.1rem;
   font-weight: 700;
   cursor: pointer;
@@ -244,7 +246,10 @@
   font-family: var(--font-sans);
   text-transform: none;
   letter-spacing: 0.5px;
-  margin-top: auto;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .reserveButton:hover {
@@ -278,8 +283,34 @@
   }
 
   .pricingGrid {
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: var(--spacing-sm);
+    gap: 0.4rem;
+  }
+  
+  .pricingSection {
+    padding-bottom: calc(1rem + 2rem + 1rem + 1.5rem);
+  }
+  
+  .pricingTitle {
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+  }
+  
+  .priceCard {
+    padding: 0.45rem 0.9rem;
+    border-radius: 50px;
+  }
+  
+  .priceDuration {
+    font-size: 0.8rem;
+    gap: 0.25rem;
+  }
+  
+  .priceDuration i {
+    font-size: 0.75rem;
+  }
+  
+  .priceAmount {
+    font-size: 0.95rem;
   }
 }
 
@@ -296,6 +327,15 @@
 
   .serviceContent {
     padding: var(--spacing-md);
+    padding-bottom: 0;
+  }
+  
+  .pricingSection {
+    padding-bottom: calc(1rem + 2rem + 1rem + 1.5rem);
+  }
+  
+  .reserveButton {
+    border-bottom-right-radius: 24px;
   }
 
   .serviceTitle {
@@ -307,7 +347,40 @@
   }
 
   .pricingGrid {
-    grid-template-columns: 1fr;
+    gap: 0.4rem;
+  }
+  
+  .pricingSection {
+    margin-top: var(--spacing-xs);
+    padding-bottom: calc(1rem + 2rem + 1rem + 1.5rem);
+  }
+  
+  .pricingTitle {
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+  }
+  
+  .priceCard {
+    padding: 0.4rem 0.8rem;
+    border-radius: 50px;
+  }
+  
+  .priceDuration {
+    font-size: 0.75rem;
+    gap: 0.25rem;
+  }
+  
+  .priceDuration i {
+    font-size: 0.7rem;
+  }
+  
+  .priceAmount {
+    font-size: 0.9rem;
+  }
+  
+  .priceSeparator {
+    font-size: 0.7rem;
+    margin: 0 0.15rem;
   }
 
   .reserveButton {
