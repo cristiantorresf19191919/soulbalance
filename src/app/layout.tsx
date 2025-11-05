@@ -18,6 +18,7 @@ const getSiteUrl = () => {
 }
 
 const siteUrl = getSiteUrl()
+// Ensure absolute URL for Open Graph image - required for social media sharing
 const imageUrl = `${siteUrl}/soulbalance.png`
 
 export const metadata: Metadata = {
@@ -58,10 +59,11 @@ export const metadata: Metadata = {
     description: 'Experiencias de bienestar diseñadas para restaurar la armonía entre cuerpo, mente y alma. Masajes terapéuticos y relajantes a domicilio con profesionales certificados.',
     images: [
       {
-        url: imageUrl,
+        url: imageUrl, // Absolute URL is required
         width: 1200,
         height: 630,
         alt: 'Soul Balance - Experiencias de Bienestar',
+        type: 'image/png',
       },
     ],
   },

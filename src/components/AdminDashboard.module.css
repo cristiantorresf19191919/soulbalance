@@ -559,6 +559,29 @@
 
 .adminTableWrapper {
   overflow-x: auto;
+  overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(7, 82, 87, 0.3) rgba(7, 82, 87, 0.05);
+}
+
+.adminTableWrapper::-webkit-scrollbar {
+  height: 8px;
+}
+
+.adminTableWrapper::-webkit-scrollbar-track {
+  background: rgba(7, 82, 87, 0.05);
+  border-radius: 4px;
+}
+
+.adminTableWrapper::-webkit-scrollbar-thumb {
+  background: rgba(7, 82, 87, 0.3);
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.adminTableWrapper::-webkit-scrollbar-thumb:hover {
+  background: rgba(7, 82, 87, 0.5);
 }
 
 .adminTable {
@@ -591,10 +614,10 @@
 }
 
 .adminTable th {
-  padding: 1.25rem 1.5rem;
+  padding: 1rem 1rem;
   text-align: left;
   font-weight: 700;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   letter-spacing: 1px;
   text-transform: uppercase;
   white-space: nowrap;
@@ -602,13 +625,88 @@
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
+.adminTable th:nth-child(1) { /* Fecha Registro */
+  min-width: 120px;
+  width: 120px;
+}
+
+.adminTable th:nth-child(2) { /* Nombre */
+  min-width: 140px;
+  width: 140px;
+}
+
+.adminTable th:nth-child(3) { /* Email */
+  min-width: 180px;
+  width: 180px;
+}
+
+.adminTable th:nth-child(4) { /* Teléfono */
+  min-width: 130px;
+  width: 130px;
+}
+
+.adminTable th:nth-child(5) { /* Servicio */
+  min-width: 160px;
+  width: 160px;
+}
+
+.adminTable th:nth-child(6) { /* Fecha Reserva */
+  min-width: 140px;
+  width: 140px;
+}
+
+.adminTable th:nth-child(7) { /* Duración */
+  min-width: 100px;
+  width: 100px;
+}
+
+.adminTable th:nth-child(8) { /* Precio */
+  min-width: 110px;
+  width: 110px;
+}
+
+.adminTable th:nth-child(9) { /* Mensaje */
+  min-width: 200px;
+  width: 200px;
+  max-width: 200px;
+}
+
+.adminTable th:nth-child(10) { /* Acciones */
+  min-width: 160px;
+  width: 160px;
+  text-align: center;
+}
+
 .adminTable td {
-  padding: 1.25rem 1.5rem;
+  padding: 1rem 1rem;
   border-bottom: 1px solid rgba(7, 82, 87, 0.08);
   vertical-align: middle;
-  font-size: 0.95rem;
-  line-height: 1.6;
+  font-size: 0.9rem;
+  line-height: 1.5;
   transition: all 0.2s ease;
+}
+
+.adminTable td:nth-child(2) { /* Nombre */
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.adminTable td:nth-child(3) { /* Email */
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.adminTable td:nth-child(9) { /* Mensaje */
+  max-width: 200px;
+  overflow: hidden;
+}
+
+.adminTable td:nth-child(10) { /* Acciones */
+  text-align: center;
 }
 
 .adminTable tbody tr {
@@ -799,8 +897,9 @@
   border-radius: 10px;
   color: var(--primary-green);
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   box-shadow: 0 2px 8px rgba(7, 82, 87, 0.15);
+  white-space: nowrap;
 }
 
 .noBooking {
@@ -833,6 +932,9 @@
   border: 1.5px solid rgba(7, 82, 87, 0.2);
   white-space: nowrap;
   box-shadow: 0 2px 6px rgba(7, 82, 87, 0.1);
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .viewMessageBtn {
@@ -859,10 +961,31 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  cursor: help;
+  padding: 0.4rem 0.6rem;
+  background: rgba(7, 82, 87, 0.06);
+  border-radius: 8px;
+  border: 1px solid rgba(7, 82, 87, 0.15);
+  transition: all 0.2s ease;
+  max-width: 100%;
+}
+
+.hasMessage:hover {
+  background: rgba(7, 82, 87, 0.1);
+  border-color: rgba(7, 82, 87, 0.25);
 }
 
 .hasMessage i {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.messagePreview {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+  max-width: calc(100% - 25px);
 }
 
 .noMessage {
@@ -1339,6 +1462,25 @@
 }
 
 /* Responsive Table Improvements */
+@media (max-width: 1400px) {
+  .adminTable th,
+  .adminTable td {
+    padding: 0.875rem 0.75rem;
+    font-size: 0.875rem;
+  }
+
+  .adminTable th:nth-child(1) { min-width: 110px; width: 110px; }
+  .adminTable th:nth-child(2) { min-width: 130px; width: 130px; }
+  .adminTable th:nth-child(3) { min-width: 160px; width: 160px; }
+  .adminTable th:nth-child(4) { min-width: 120px; width: 120px; }
+  .adminTable th:nth-child(5) { min-width: 150px; width: 150px; }
+  .adminTable th:nth-child(6) { min-width: 130px; width: 130px; }
+  .adminTable th:nth-child(7) { min-width: 90px; width: 90px; }
+  .adminTable th:nth-child(8) { min-width: 100px; width: 100px; }
+  .adminTable th:nth-child(9) { min-width: 180px; width: 180px; max-width: 180px; }
+  .adminTable th:nth-child(10) { min-width: 150px; width: 150px; }
+}
+
 @media (max-width: 1024px) {
   .adminTableWrapper {
     overflow-x: auto;
@@ -1346,13 +1488,13 @@
   }
 
   .adminTable {
-    min-width: 900px;
+    min-width: 1200px;
   }
 
   .adminTable th,
   .adminTable td {
-    padding: 0.875rem 1rem;
-    font-size: 0.875rem;
+    padding: 0.875rem 0.75rem;
+    font-size: 0.85rem;
   }
 }
 

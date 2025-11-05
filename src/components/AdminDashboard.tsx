@@ -414,7 +414,13 @@ export function AdminDashboard() {
                             {lead.price ? (
                               <div className={styles.priceWrapper}>
                                 <i className="fa-solid fa-dollar-sign"></i>
-                                <span className={styles.priceBadge}>{lead.price}</span>
+                                <span className={styles.priceBadge}>
+                                  {(() => {
+                                    // Clean price: remove double $, keep only numbers and decimal points
+                                    const cleaned = lead.price.replace(/\$\s*/g, '').replace(/[^0-9.,]/g, '')
+                                    return cleaned ? `$${cleaned}` : lead.price
+                                  })()}
+                                </span>
                               </div>
                             ) : (
                               <span className={styles.noBooking}>-</span>
@@ -422,8 +428,14 @@ export function AdminDashboard() {
                           </td>
                           <td>
                             {lead.message ? (
-                              <span className={styles.hasMessage}>
-                                <i className="fa-solid fa-comment"></i> Tiene mensaje
+                              <span 
+                                className={styles.hasMessage}
+                                title={lead.message.length > 50 ? lead.message.substring(0, 100) + '...' : lead.message}
+                              >
+                                <i className="fa-solid fa-comment"></i> 
+                                <span className={styles.messagePreview}>
+                                  {lead.message.length > 30 ? lead.message.substring(0, 30) + '...' : lead.message}
+                                </span>
                               </span>
                             ) : (
                               <span className={styles.noMessage}>Sin mensaje</span>
