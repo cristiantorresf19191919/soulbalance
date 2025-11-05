@@ -193,15 +193,21 @@ export function ContactForm() {
 
         <div className={styles.formTrust}>
           <div className={styles.trustItem}>
-            <i className="fa-solid fa-check trust-icon"></i>
+            <div className={styles.trustIcon}>
+              <i className="fa-solid fa-check"></i>
+            </div>
             <span>Respuesta en menos de 24 horas</span>
           </div>
           <div className={styles.trustItem}>
-            <i className="fa-solid fa-check trust-icon"></i>
+            <div className={styles.trustIcon}>
+              <i className="fa-solid fa-check"></i>
+            </div>
             <span>Profesionales certificados</span>
           </div>
           <div className={styles.trustItem}>
-            <i className="fa-solid fa-check trust-icon"></i>
+            <div className={styles.trustIcon}>
+              <i className="fa-solid fa-check"></i>
+            </div>
             <span>100% personalizado</span>
           </div>
         </div>

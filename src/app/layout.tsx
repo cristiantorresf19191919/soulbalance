@@ -4,6 +4,7 @@ import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
 import { ThemeProvider } from '@/components/ThemeProvider'
+import { FloatingChat } from '@/components/FloatingChat'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -43,6 +44,7 @@ export default function RootLayout({
         <div id="datepicker-portal"></div>
         <ThemeProvider>
           {children}
+          <FloatingChat />
         </ThemeProvider>
       </body>
     </html>

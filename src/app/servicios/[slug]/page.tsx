@@ -7,9 +7,13 @@ import { Footer } from '@/components/Footer'
 import { WhatsAppFloat } from '@/components/WhatsAppFloat'
 import { Breadcrumb } from '@/components/Breadcrumb'
 import { BookingModal } from '@/components/BookingModal'
+import { MassageStepper } from '@/components/MassageStepper'
 import { services } from '@/data/services'
 import type { Service } from '@/data/services'
 import styles from './page.module.css'
+
+const FROM_RECOMMENDATIONS_FLAG = 'from_recommendations'
+const STORAGE_KEY = 'massage_recommendation_previous'
 
 export default function ServiceDetailPage() {
   const params = useParams()
@@ -17,6 +21,8 @@ export default function ServiceDetailPage() {
   const slug = params?.slug as string
   
   const [service, setService] = useState<Service | null>(null)
+  const [showRecommendations, setShowRecommendations] = useState(false)
+  const [fromRecommendations, setFromRecommendations] = useState(false)
   const [bookingModal, setBookingModal] = useState<{
     open: boolean
     serviceId: string
@@ -42,6 +48,14 @@ export default function ServiceDetailPage() {
         // Service not found, redirect to services page
         router.push('/servicios')
       }
+    }
+    
+    // Check if user came from recommendations
+    const fromRec = localStorage.getItem(FROM_RECOMMENDATIONS_FLAG)
+    if (fromRec === 'true') {
+      setFromRecommendations(true)
+      // Clear the flag after checking
+      localStorage.removeItem(FROM_RECOMMENDATIONS_FLAG)
     }
   }, [slug, router])
 
@@ -73,6 +87,14 @@ export default function ServiceDetailPage() {
     })
   }
 
+  const handleBackToRecommendations = () => {
+    setShowRecommendations(true)
+  }
+
+  const handleCloseStepper = () => {
+    setShowRecommendations(false)
+  }
+
   if (!service) {
     return (
       <>
@@ -95,14 +117,28 @@ export default function ServiceDetailPage() {
         <Navbar />
         <div className={styles.serviceDetailPage}>
           <div className={styles.container}>
-            <Breadcrumb 
-              sticky={true}
-              items={[
-                { label: 'Inicio', href: '/' },
-                { label: 'Servicios', href: '/servicios' },
-                { label: service.name }
-              ]} 
-            />
+            <div className={styles.headerSection}>
+              {fromRecommendations && (
+                <div className={styles.backButtonWrapper}>
+                  <button 
+                    className={styles.backToRecommendationsButton}
+                    onClick={handleBackToRecommendations}
+                    aria-label="Ver recomendaciones"
+                  >
+                    <i className="fa-solid fa-arrow-left"></i>
+                    <span>Ver Recomendaciones</span>
+                  </button>
+                </div>
+              )}
+              <Breadcrumb 
+                sticky={true}
+                items={[
+                  { label: 'Inicio', href: '/' },
+                  { label: 'Servicios', href: '/servicios' },
+                  { label: service.name }
+                ]} 
+              />
+            </div>
             
             <div className={styles.serviceDetailCard}>
               <div 
@@ -175,6 +211,11 @@ export default function ServiceDetailPage() {
         serviceImage={bookingModal.serviceImage}
         pricing={bookingModal.pricing}
         selectedDuration={bookingModal.selectedDuration}
+      />
+
+      <MassageStepper
+        open={showRecommendations}
+        onClose={handleCloseStepper}
       />
       
       <Footer />

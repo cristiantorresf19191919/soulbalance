@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { services } from '@/data/services'
 import { serviceCategories } from '@/data/serviceCategories'
 import { BookingModal } from './BookingModal'
+import { MassageStepper } from './MassageStepper'
 import styles from './ServicesDetailSection.module.css'
 
 // Helper to get service data by ID
@@ -14,6 +15,7 @@ function getServiceById(serviceId: string) {
 
 export function ServicesDetailSection() {
   const router = useRouter()
+  const [stepperOpen, setStepperOpen] = useState(false)
   const [bookingModal, setBookingModal] = useState<{
     open: boolean
     serviceId: string
@@ -78,6 +80,27 @@ export function ServicesDetailSection() {
   return (
     <section className={styles.servicesDetailSection}>
       <div className={styles.container}>
+        <div className={styles.recommendationBanner}>
+          <div className={styles.recommendationBannerContent}>
+            <div className={styles.recommendationBannerIcon}>
+              <i className="fa-solid fa-sparkles"></i>
+            </div>
+            <div className={styles.recommendationBannerText}>
+              <h3 className={styles.recommendationBannerTitle}>¿No sabes qué masaje escoger?</h3>
+              <p className={styles.recommendationBannerSubtitle}>
+                Responde unas preguntas y te recomendaremos el masaje perfecto para ti
+              </p>
+            </div>
+            <button
+              className={styles.recommendationButton}
+              onClick={() => setStepperOpen(true)}
+            >
+              <i className="fa-solid fa-sparkles"></i>
+              Encontrar mi masaje ideal
+            </button>
+          </div>
+        </div>
+
         {categoriesWithServices.map((category) => (
           <div key={category.id} className={styles.serviceCategory}>
             <div className={styles.categoryHeader}>
@@ -156,6 +179,11 @@ export function ServicesDetailSection() {
         serviceImage={bookingModal.serviceImage}
         pricing={bookingModal.pricing}
         selectedDuration={bookingModal.selectedDuration}
+      />
+
+      <MassageStepper
+        open={stepperOpen}
+        onClose={() => setStepperOpen(false)}
       />
     </section>
   )

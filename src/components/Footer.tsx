@@ -57,7 +57,7 @@ export function Footer() {
         <div className={styles.footerBottom}>
           <div className={styles.footerCopyright}>
             <span>
-              &copy; 2024 Soul Balance. Todos los derechos reservados. |
+              &copy; 2025 Soul Balance. Todos los derechos reservados. |
               Experiencias de Bienestar
             </span>
             <VersionBadge variant="footer" />
@@ -77,6 +77,17 @@ export function Footer() {
               320 2632993
             </a>
           </p>
+          <div className={styles.developedBy}>
+            <span className={styles.developedByText}>Desarrollado por</span>
+            <a 
+              href="https://agencypartner.netlify.app/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className={styles.optimusLink}
+            >
+              <span className={styles.optimusDev}>Optimus Dev</span>
+            </a>
+          </div>
         </div>
       </div>
     </footer>

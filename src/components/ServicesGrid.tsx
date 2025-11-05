@@ -12,6 +12,7 @@ import { ExpandMore } from '@mui/icons-material'
 import { services } from '@/data/services'
 import { serviceCategories } from '@/data/serviceCategories'
 import { BookingModal } from './BookingModal'
+import { MassageStepper } from './MassageStepper'
 import styles from './ServicesGrid.module.css'
 
 // Helper to get service data by ID
@@ -22,6 +23,7 @@ function getServiceById(serviceId: string) {
 export function ServicesGrid() {
   const router = useRouter()
   const [expandedCategory, setExpandedCategory] = useState<string | null>('relajantes')
+  const [stepperOpen, setStepperOpen] = useState(false)
   const [bookingModal, setBookingModal] = useState<{
     open: boolean
     serviceId: string
@@ -96,9 +98,18 @@ export function ServicesGrid() {
           <h2 className={styles.sectionTitle}>
             Nuestros Servicios
           </h2>
-          <Link href="/servicios" className={styles.viewAllLink}>
-            Ver todos <span style={{ fontSize: '1.2rem' }}>→</span>
-          </Link>
+          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
+            <button
+              className={styles.recommendationButton}
+              onClick={() => setStepperOpen(true)}
+            >
+              <i className="fa-solid fa-sparkles"></i>
+              No sé qué masaje escoger
+            </button>
+            <Link href="/servicios" className={styles.viewAllLink}>
+              Ver todos <span style={{ fontSize: '1.2rem' }}>→</span>
+            </Link>
+          </div>
         </div>
 
         <div className={styles.categoriesContainer}>
@@ -190,6 +201,11 @@ export function ServicesGrid() {
         serviceImage={bookingModal.serviceImage}
         pricing={bookingModal.pricing}
         selectedDuration={bookingModal.selectedDuration}
+      />
+
+      <MassageStepper
+        open={stepperOpen}
+        onClose={() => setStepperOpen(false)}
       />
     </section>
   )
