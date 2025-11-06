@@ -1,12 +1,14 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import styles from './HeroSection.module.css'
+import { MassageStepper } from './MassageStepper'
 
 export function HeroSection() {
   const videoRef = useRef<HTMLVideoElement>(null)
+  const [stepperOpen, setStepperOpen] = useState(false)
 
   useEffect(() => {
     // Smooth scroll for anchor links
@@ -69,13 +71,25 @@ export function HeroSection() {
         <p className={styles.taglineSub}>
           Equilibrio entre cuerpo, mente y alma
         </p>
-        <Link href="#contacto" className={styles.ctaButton}>
-          Reserva tu experiencia
-        </Link>
+        <div className={styles.ctaButtons}>
+          <Link href="#contacto" className={styles.ctaButton}>
+            Reserva tu experiencia
+          </Link>
+          <button 
+            className={styles.ctaButtonSecondary}
+            onClick={() => setStepperOpen(true)}
+          >
+            No sé qué masaje escoger
+          </button>
+        </div>
       </div>
       <div className={styles.scrollIndicator}>
         <span></span>
       </div>
+      <MassageStepper
+        open={stepperOpen}
+        onClose={() => setStepperOpen(false)}
+      />
     </section>
   )
 }

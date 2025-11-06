@@ -179,7 +179,7 @@ export function ServicesGrid() {
                               }}
                             >
                               <i className="fa-solid fa-calendar-check"></i>
-                              <span>Reservar</span>
+                              <span>Consultar disponibilidad</span>
                             </button>
                           </div>
                         </div>

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import styles from './MassageStepper.module.css'
 import { MassageRecommendation } from './MassageRecommendation'
 import { BookingModal } from './BookingModal'
+import { ServiceTypeSelector } from './ServiceTypeSelector'
 
 interface MassageStepperProps {
   open: boolean
@@ -23,7 +24,8 @@ interface Question {
   placeholder?: string
 }
 
-const QUESTIONS: Question[] = [
+// Questions for individual/personal service
+const PERSONAL_QUESTIONS: Question[] = [
   {
     id: 1,
     question: '¿Cuál es el motivo principal por el que buscas un masaje hoy?',
@@ -163,11 +165,170 @@ const QUESTIONS: Question[] = [
   },
 ]
 
+// Questions for corporate/company service
+const CORPORATE_QUESTIONS: Question[] = [
+  {
+    id: 1,
+    question: '¿Cuál es el objetivo principal del programa de bienestar para tu equipo?',
+    type: 'multiple',
+    options: [
+      { text: 'Reducir el estrés laboral y mejorar el clima organizacional', value: 'reducir-estres' },
+      { text: 'Prevenir lesiones y fatiga por trabajo repetitivo', value: 'prevenir-lesiones' },
+      { text: 'Aumentar la productividad y concentración del equipo', value: 'aumentar-productividad' },
+      { text: 'Reconocimiento y motivación para los empleados', value: 'reconocimiento-motivacion' },
+      { text: 'Cumplir con programas de bienestar laboral (RSE)', value: 'rse-bienestar-laboral' },
+      { text: 'Evento especial o celebración corporativa', value: 'evento-especial' },
+      { text: 'Programa continuo de salud preventiva', value: 'programa-continuo' },
+      { text: 'Mejorar la retención de talento', value: 'retencion-talento' },
+    ],
+  },
+  {
+    id: 2,
+    question: '¿En qué áreas del cuerpo suelen tener más tensión o molestias los colaboradores?',
+    type: 'multiple',
+    options: [
+      { text: 'Cuello y hombros (por trabajo en computador)', value: 'cuello-hombros' },
+      { text: 'Espalda alta y media (postura laboral)', value: 'espalda-alta' },
+      { text: 'Espalda baja / zona lumbar', value: 'espalda-baja' },
+      { text: 'Piernas y pies (mucho tiempo de pie)', value: 'piernas-pies' },
+      { text: 'Brazos y manos (trabajo repetitivo)', value: 'brazos-manos' },
+      { text: 'Cabeza y rostro (tensión, dolores de cabeza)', value: 'cabeza-rostro' },
+      { text: 'Tensión general por estrés', value: 'tension-general' },
+      { text: 'No estoy seguro, necesito diagnóstico', value: 'no-seguro' },
+    ],
+  },
+  {
+    id: 3,
+    question: '¿Cómo describirías el ambiente laboral y las condiciones de trabajo?',
+    type: 'single',
+    options: [
+      { text: 'Mayoría del equipo trabaja sentado frente al computador (oficina)', value: 'trabajo-sentado' },
+      { text: 'Mucho tiempo de pie o caminando (atención al cliente, almacén)', value: 'trabajo-pie' },
+      { text: 'Esfuerzo físico moderado (logística, manufactura)', value: 'esfuerzo-moderado' },
+      { text: 'Alto nivel de estrés y presión constante', value: 'alto-estres' },
+      { text: 'Horarios extendidos o turnos rotativos', value: 'horarios-extendidos' },
+      { text: 'Ambiente tranquilo pero con poco movimiento', value: 'ambiente-tranquilo' },
+      { text: 'Combinación de diferentes tipos de trabajo', value: 'combinado' },
+    ],
+  },
+  {
+    id: 4,
+    question: 'En una escala de 1 a 10, ¿cómo calificarías el nivel general de estrés en tu equipo?',
+    type: 'scale',
+    options: [
+      { text: '1–3: Bajo estrés, ambiente laboral tranquilo', value: '1-3' },
+      { text: '4–6: Estrés moderado, manejable pero presente', value: '4-6' },
+      { text: '7–8: Alto estrés, afecta el rendimiento y bienestar', value: '7-8' },
+      { text: '9–10: Estrés muy alto, impacto significativo en la salud', value: '9-10' },
+    ],
+  },
+  {
+    id: 5,
+    question: '¿Qué tipo de programa de bienestar te interesa implementar?',
+    type: 'multiple',
+    options: [
+      { text: 'Jornada de masajes solamente', value: 'masajes-solamente' },
+      { text: 'Jornada de bienestar completa (masajes + formación)', value: 'jornada-completa' },
+      { text: 'Masajes en oficina (en silla ergonómica, sesiones cortas)', value: 'masajes-oficina' },
+      { text: 'Jornadas de bienestar mensuales o trimestrales', value: 'jornadas-bienestar' },
+      { text: 'Bonos de regalo para empleados (uso individual)', value: 'bonos-regalo' },
+      { text: 'Experiencias corporativas grupales (cuatro elementos, aromaterapia)', value: 'experiencias-grupales' },
+      { text: 'Programa de diagnóstico de bienestar con IA', value: 'diagnostico-ia' },
+      { text: 'Necesito orientación para diseñar el programa', value: 'necesito-orientacion' },
+    ],
+  },
+  {
+    id: 6,
+    question: 'Si te interesa la jornada completa, ¿qué tipo de formación en bienestar necesitaría tu equipo? (Puedes seleccionar varias opciones)',
+    type: 'multiple',
+    options: [
+      { text: 'Salud Mental - Gestión del estrés, ansiedad, bienestar emocional', value: 'salud-mental' },
+      { text: 'Buenos Hábitos - Alimentación, descanso, rutinas saludables', value: 'buenos-habitos' },
+      { text: 'Cuidado de Piel - Técnicas de cuidado facial y corporal', value: 'cuidado-piel' },
+      { text: 'Cuidado de Cuerpo - Ejercicios, estiramientos, postura', value: 'cuidado-cuerpo' },
+      { text: 'Equilibrate Posturas - Ergonomía y prevención de lesiones', value: 'equilibrate-posturas' },
+      { text: 'No estoy seguro, necesito recomendación', value: 'no-seguro-formacion' },
+    ],
+  },
+  {
+    id: 7,
+    question: '¿Con qué frecuencia te gustaría implementar el programa?',
+    type: 'single',
+    options: [
+      { text: 'Una vez (evento especial o lanzamiento)', value: 'una-vez' },
+      { text: 'Semanal', value: 'semanal' },
+      { text: 'Quincenal', value: 'quincenal' },
+      { text: 'Mensual', value: 'mensual' },
+      { text: 'Bimestral', value: 'bimestral' },
+      { text: 'Trimestral', value: 'trimestral' },
+      { text: 'A definir según propuesta', value: 'a-definir' },
+    ],
+  },
+  {
+    id: 8,
+    question: '¿Cuántos colaboradores aproximadamente participarían en el programa?',
+    type: 'single',
+    options: [
+      { text: '1-10 empleados', value: '1-10' },
+      { text: '11-25 empleados', value: '11-25' },
+      { text: '26-50 empleados', value: '26-50' },
+      { text: '51-100 empleados', value: '51-100' },
+      { text: '101-250 empleados', value: '101-250' },
+      { text: '251-500 empleados', value: '251-500' },
+      { text: 'Más de 500 empleados', value: '500+' },
+    ],
+  },
+  {
+    id: 9,
+    question: '¿Tienes algún presupuesto aproximado o rango en mente?',
+    type: 'single',
+    options: [
+      { text: 'Menos de $2.000.000', value: 'menos-2m' },
+      { text: '$2.000.000 - $5.000.000', value: '2m-5m' },
+      { text: '$5.000.000 - $10.000.000', value: '5m-10m' },
+      { text: '$10.000.000 - $20.000.000', value: '10m-20m' },
+      { text: 'Más de $20.000.000', value: 'mas-20m' },
+      { text: 'Prefiero recibir una propuesta personalizada', value: 'propuesta-personalizada' },
+      { text: 'A definir según el programa', value: 'a-definir-presupuesto' },
+    ],
+  },
+  {
+    id: 10,
+    question: '¿Hay algún horario o día específico preferido para las sesiones?',
+    type: 'multiple',
+    options: [
+      { text: 'Lunes a Viernes, horario laboral (8 AM - 6 PM)', value: 'lun-vie-laboral' },
+      { text: 'Mediodía o pausas activas (12 PM - 2 PM)', value: 'mediodia' },
+      { text: 'Fines de semana', value: 'fines-semana' },
+      { text: 'Flexible, según disponibilidad del equipo', value: 'flexible' },
+      { text: 'Eventos especiales o celebraciones', value: 'eventos-especiales' },
+      { text: 'Jornadas completas de bienestar', value: 'jornadas-completas' },
+    ],
+  },
+  {
+    id: 11,
+    question: '¿Hay alguna consideración especial o restricción que debamos conocer?',
+    type: 'multiple',
+    options: [
+      { text: 'Algunos empleados tienen alergias a aceites o aromas', value: 'alergias-aceites' },
+      { text: 'Empleadas embarazadas en el equipo', value: 'embarazo' },
+      { text: 'Espacios limitados en la oficina', value: 'espacios-limitados' },
+      { text: 'Necesitamos privacidad para las sesiones', value: 'privacidad' },
+      { text: 'Restricciones de tiempo (sesiones cortas)', value: 'sesiones-cortas' },
+      { text: 'Protocolos de bioseguridad específicos', value: 'bioseguridad' },
+      { text: 'Ninguna restricción conocida', value: 'ninguna' },
+      { text: 'Otras consideraciones (especificar en mensaje)', value: 'otras' },
+    ],
+  },
+]
+
 const STORAGE_KEY = 'massage_recommendation_previous'
+const STORAGE_KEY_CORPORATE = 'massage_recommendation_previous_corporate'
 
 export function MassageStepper({ open, onClose }: MassageStepperProps) {
+  const [serviceType, setServiceType] = useState<'persona' | 'empresa' | null>(null)
   const [currentStep, setCurrentStep] = useState(0)
-  const [answers, setAnswers] = useState<string[]>(new Array(10).fill(''))
+  const [answers, setAnswers] = useState<string[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [recommendation, setRecommendation] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -175,6 +336,17 @@ export function MassageStepper({ open, onClose }: MassageStepperProps) {
   const [showPreviousResult, setShowPreviousResult] = useState(false)
   const [previousRecommendation, setPreviousRecommendation] = useState<string | null>(null)
   const [hasStartedNew, setHasStartedNew] = useState(false)
+  
+  // Get the appropriate questions based on service type
+  const QUESTIONS = serviceType === 'empresa' ? CORPORATE_QUESTIONS : PERSONAL_QUESTIONS
+  
+  // Initialize answers array when service type is selected
+  useEffect(() => {
+    if (serviceType && answers.length !== QUESTIONS.length) {
+      setAnswers(new Array(QUESTIONS.length).fill(''))
+      setCurrentStep(0)
+    }
+  }, [serviceType, QUESTIONS.length])
 
   const loadingTips = [
     { icon: 'fa-solid fa-leaf', text: 'Un masaje regular ayuda a reducir el estrés y mejorar la calidad del sueño' },
@@ -187,19 +359,28 @@ export function MassageStepper({ open, onClose }: MassageStepperProps) {
     { icon: 'fa-solid fa-hand-sparkles', text: 'La aromaterapia durante el masaje activa múltiples sentidos para mayor relajación' }
   ]
 
-  // Check for previous recommendation when modal opens
+  // Reset when modal opens
   useEffect(() => {
     if (open) {
-      const savedRecommendation = localStorage.getItem(STORAGE_KEY)
-      if (savedRecommendation) {
-        setPreviousRecommendation(savedRecommendation)
-      } else {
-        setPreviousRecommendation(null)
-      }
+      setServiceType(null)
+      setCurrentStep(0)
+      setAnswers([])
+      setRecommendation(null)
+      setError(null)
       setShowPreviousResult(false)
       setHasStartedNew(false)
+      setPreviousRecommendation(null)
     }
   }, [open])
+  
+  // Check for previous recommendation when service type is selected
+  useEffect(() => {
+    if (serviceType && open) {
+      const storageKey = serviceType === 'empresa' ? STORAGE_KEY_CORPORATE : STORAGE_KEY
+      const savedRecommendation = localStorage.getItem(storageKey)
+      setPreviousRecommendation(savedRecommendation || null)
+    }
+  }, [serviceType, open])
 
   // Rotate tips when loading
   useEffect(() => {
@@ -229,8 +410,32 @@ export function MassageStepper({ open, onClose }: MassageStepperProps) {
 
   if (!open) return null
 
+  // Show service type selector first if not selected
+  if (serviceType === null) {
+    return (
+      <div className={styles.overlay} onClick={onClose}>
+        <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+          <button 
+            className={styles.closeButton} 
+            onClick={onClose} 
+            aria-label="Cerrar"
+          >
+            <i className="fa-solid fa-times"></i>
+          </button>
+          <ServiceTypeSelector
+            onSelect={(type) => {
+              setServiceType(type)
+            }}
+            title="¿Para quién es este servicio?"
+            subtitle="Selecciona el tipo de servicio para personalizar tu experiencia"
+          />
+        </div>
+      </div>
+    )
+  }
+
   const currentQuestion = QUESTIONS[currentStep]
-  const canGoNext = answers[currentStep].trim().length > 0
+  const canGoNext = answers[currentStep]?.trim().length > 0 || false
 
   // Get step state
   const getStepState = (index: number) => {
@@ -374,7 +579,10 @@ export function MassageStepper({ open, onClose }: MassageStepperProps) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ answers: formattedAnswers }),
+        body: JSON.stringify({ 
+          answers: formattedAnswers,
+          serviceType: serviceType || 'persona'
+        }),
       })
 
       if (!response.ok) {
@@ -384,8 +592,9 @@ export function MassageStepper({ open, onClose }: MassageStepperProps) {
 
       const data = await response.json()
       setRecommendation(data.recommendation)
-      // Save recommendation to localStorage
-      localStorage.setItem(STORAGE_KEY, data.recommendation)
+      // Save recommendation to localStorage based on service type
+      const storageKey = serviceType === 'empresa' ? STORAGE_KEY_CORPORATE : STORAGE_KEY
+      localStorage.setItem(storageKey, data.recommendation)
     } catch (err: any) {
       setError(err.message || 'Error al procesar tu solicitud. Por favor, inténtalo de nuevo.')
       console.error('Error submitting answers:', err)
@@ -395,8 +604,9 @@ export function MassageStepper({ open, onClose }: MassageStepperProps) {
   }
 
   const handleReset = () => {
+    setServiceType(null)
     setCurrentStep(0)
-    setAnswers(new Array(10).fill(''))
+    setAnswers([])
     setRecommendation(null)
     setError(null)
     setShowPreviousResult(false)
@@ -414,7 +624,7 @@ export function MassageStepper({ open, onClose }: MassageStepperProps) {
     setShowPreviousResult(false)
     setRecommendation(null)
     setCurrentStep(0)
-    setAnswers(new Array(10).fill(''))
+    setAnswers(new Array(QUESTIONS.length).fill(''))
     setError(null)
     setHasStartedNew(true)
   }
@@ -522,7 +732,11 @@ export function MassageStepper({ open, onClose }: MassageStepperProps) {
             <div className={styles.header}>
               <h2 className={styles.title}>
                 <i className={`fa-solid fa-leaf ${styles.titleIcon}`}></i>
-                <span>Encuentra tu Masaje Ideal</span>
+                <span>
+                  {serviceType === 'empresa' 
+                    ? 'Encuentra tu Programa de Bienestar Corporativo'
+                    : 'Encuentra tu Masaje Ideal'}
+                </span>
               </h2>
               <p className={styles.subtitle}>
                 Responde estas preguntas para recibir una recomendación personalizada
@@ -574,6 +788,9 @@ export function MassageStepper({ open, onClose }: MassageStepperProps) {
 
             {/* Current Question Content */}
             <div className={styles.questionContainer} style={{ display: isLoading ? 'none' : 'block' }}>
+              <div className={styles.questionHeader}>
+                <h3 className={styles.question}>{currentQuestion.question}</h3>
+              </div>
               <div className={styles.questionInput}>
                 {currentQuestion.type === 'scale' ? (
                   <div className={styles.scaleOptionsContainer}>

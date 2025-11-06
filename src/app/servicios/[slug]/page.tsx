@@ -195,7 +195,7 @@ export default function ServiceDetailPage() {
                   )}
                 >
                   <i className="fa-solid fa-calendar-check"></i>
-                  <span>Reservar Ahora</span>
+                  <span>Consultar disponibilidad</span>
                 </button>
               </div>
             </div>

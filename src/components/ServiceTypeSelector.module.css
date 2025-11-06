@@ -1,0 +1,261 @@
+.selectorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.selectorHeader {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.selectorIcon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+  background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-dark) 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(7, 82, 87, 0.25);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 8px 24px rgba(7, 82, 87, 0.25);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 12px 32px rgba(7, 82, 87, 0.35);
+  }
+}
+
+.selectorIcon i {
+  font-size: 2rem;
+  color: var(--text-light);
+}
+
+.selectorTitle {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  color: var(--primary-green);
+  margin: 0 0 0.75rem 0;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.selectorSubtitle {
+  color: var(--text-medium);
+  font-size: 1.1rem;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.optionsContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  width: 100%;
+}
+
+.optionCard {
+  background: linear-gradient(135deg, #FFFFFF 0%, #FAFAFA 100%);
+  border: 3px solid rgba(7, 82, 87, 0.15);
+  border-radius: 24px;
+  padding: 2.5rem 2rem;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 4px 20px rgba(7, 82, 87, 0.08),
+    0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.optionCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, 
+    var(--primary-green) 0%, 
+    var(--primary-green-light) 50%,
+    var(--primary-green) 100%);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.optionCard:hover {
+  transform: translateY(-8px);
+  border-color: var(--primary-green);
+  box-shadow: 
+    0 12px 40px rgba(7, 82, 87, 0.15),
+    0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.optionCard:hover::before {
+  transform: scaleX(1);
+}
+
+.optionCardSelected {
+  border-color: var(--primary-green);
+  background: linear-gradient(135deg, 
+    rgba(7, 82, 87, 0.04) 0%, 
+    rgba(7, 82, 87, 0.02) 50%,
+    #FFFFFF 100%);
+  box-shadow: 
+    0 12px 40px rgba(7, 82, 87, 0.2),
+    0 4px 12px rgba(0, 0, 0, 0.08),
+    inset 0 0 0 3px var(--primary-green);
+}
+
+.optionCardSelected::before {
+  transform: scaleX(1);
+}
+
+.optionIcon {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 1.5rem;
+  background: linear-gradient(135deg, 
+    rgba(7, 82, 87, 0.12) 0%, 
+    rgba(7, 82, 87, 0.06) 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(7, 82, 87, 0.2);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.optionCard:hover .optionIcon,
+.optionCardSelected .optionIcon {
+  background: linear-gradient(135deg, 
+    var(--primary-green) 0%, 
+    var(--primary-green-dark) 100%);
+  border-color: var(--primary-green);
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 6px 20px rgba(7, 82, 87, 0.3);
+}
+
+.optionIcon i {
+  font-size: 1.75rem;
+  color: var(--primary-green);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.optionCard:hover .optionIcon i,
+.optionCardSelected .optionIcon i {
+  color: var(--text-light);
+}
+
+.optionTitle {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  color: var(--primary-green);
+  margin: 0 0 1rem 0;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+
+.optionCard:hover .optionTitle,
+.optionCardSelected .optionTitle {
+  transform: translateY(-2px);
+}
+
+.optionDescription {
+  color: var(--text-medium);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0 0 1.5rem 0;
+}
+
+.optionFeatures {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.featureTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(7, 82, 87, 0.08);
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--primary-green);
+  border: 1.5px solid rgba(7, 82, 87, 0.15);
+  transition: all 0.3s ease;
+}
+
+.optionCard:hover .featureTag,
+.optionCardSelected .featureTag {
+  background: rgba(7, 82, 87, 0.12);
+  border-color: var(--primary-green);
+  transform: translateX(4px);
+}
+
+.featureTag i {
+  font-size: 0.75rem;
+}
+
+@media (max-width: 768px) {
+  .selectorContainer {
+    padding: 1.5rem;
+  }
+
+  .selectorIcon {
+    width: 64px;
+    height: 64px;
+  }
+
+  .selectorIcon i {
+    font-size: 1.5rem;
+  }
+
+  .selectorTitle {
+    font-size: 1.75rem;
+  }
+
+  .selectorSubtitle {
+    font-size: 1rem;
+  }
+
+  .optionsContainer {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .optionCard {
+    padding: 2rem 1.5rem;
+  }
+
+  .optionIcon {
+    width: 60px;
+    height: 60px;
+  }
+
+  .optionIcon i {
+    font-size: 1.5rem;
+  }
+
+  .optionTitle {
+    font-size: 1.35rem;
+  }
+}
+
+

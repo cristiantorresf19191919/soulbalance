@@ -17,10 +17,10 @@ interface Message {
 }
 
 const WELCOME_MESSAGES = [
-  '¡Hola! 👋 Bienvenido, so tu bot terapeuta Soul Balance. ¿Listo para relajarte? 😌',
-  '¡Hola! 🌸 Bienvenido, so tu bot terapeuta Soul Balance. ¿Cómo puedo ayudarte a encontrar tu zen? ✨',
-  '¡Bienvenido! 💆‍♀️ So tu bot terapeuta Soul Balance. ¿Preparado para desconectar y relajarte? 🧘',
-  '¡Hola! 🌿 Bienvenido, so tu bot terapeuta Soul Balance. ¿Qué necesitas para sentirte en equilibrio hoy? 💚'
+  '¡Hola! 👋 Bienvenido, soy tu asistente de bienestar de Soul Balance. ¿Listo para encontrar tu equilibrio? 😌',
+  '¡Hola! 🌸 Bienvenido, soy tu asistente de bienestar de Soul Balance. ¿Cómo puedo ayudarte hoy? ✨',
+  '¡Bienvenido! 💆‍♀️ Soy tu asistente de bienestar de Soul Balance. ¿Preparado para desconectar y relajarte? 🧘',
+  '¡Hola! 🌿 Bienvenido, soy tu asistente de bienestar de Soul Balance. ¿Qué necesitas para sentirte en equilibrio hoy? 💚'
 ]
 
 export function FloatingChat() {
