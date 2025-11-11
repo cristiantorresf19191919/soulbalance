@@ -18,13 +18,25 @@ export default function manifest(): MetadataRoute.Manifest {
         src: '/icons/icon-192x192.png',
         sizes: '192x192',
         type: 'image/png',
-        purpose: 'any maskable',
+        purpose: 'any',
+      },
+      {
+        src: '/icons/icon-192x192.png',
+        sizes: '192x192',
+        type: 'image/png',
+        purpose: 'maskable',
       },
       {
         src: '/icons/icon-512x512.png',
         sizes: '512x512',
         type: 'image/png',
-        purpose: 'any maskable',
+        purpose: 'any',
+      },
+      {
+        src: '/icons/icon-512x512.png',
+        sizes: '512x512',
+        type: 'image/png',
+        purpose: 'maskable',
       },
     ],
     screenshots: [
@@ -32,8 +44,6 @@ export default function manifest(): MetadataRoute.Manifest {
         src: '/soulbalance.png',
         type: 'image/png',
         sizes: '1200x630',
-        form_factor: 'wide',
-        label: 'Soul Balance experiencias de bienestar',
       },
     ],
     shortcuts: [
