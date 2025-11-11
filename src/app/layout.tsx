@@ -5,6 +5,7 @@ import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import { FloatingChat } from '@/components/FloatingChat'
+import { PWAInstallPrompt } from '@/components/PWAInstallPrompt'
 import './globals.css'
 
 // Get site URL from environment variable or use default
@@ -22,6 +23,7 @@ const siteUrl = getSiteUrl()
 const imageUrl = `${siteUrl}/soulbalance.png`
 
 export const metadata: Metadata = {
+  applicationName: 'Soul Balance Spa',
   title: 'Soul Balance - Experiencias de Bienestar a Domicilio',
   description: 'Experiencias de bienestar diseñadas para restaurar la armonía entre cuerpo, mente y alma. Masajes terapéuticos y relajantes a domicilio con profesionales certificados.',
   keywords: [
@@ -73,6 +75,12 @@ export const metadata: Metadata = {
     description: 'Experiencias de bienestar diseñadas para restaurar la armonía entre cuerpo, mente y alma. Masajes terapéuticos y relajantes a domicilio.',
     images: [imageUrl],
     creator: '@soulbalance', // Actualiza con el handle real de Twitter si lo tienes
+  },
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'Soul Balance',
   },
   robots: {
     index: true,
@@ -129,6 +137,7 @@ export default function RootLayout({
         <ThemeProvider>
           {children}
           <FloatingChat />
+          <PWAInstallPrompt />
         </ThemeProvider>
       </body>
     </html>
