@@ -7,9 +7,10 @@ import styles from './BlogListing.module.css'
 
 interface BlogListingProps {
   articles: BlogArticle[]
+  loading?: boolean
 }
 
-export function BlogListing({ articles }: BlogListingProps) {
+export function BlogListing({ articles, loading = false }: BlogListingProps) {
   return (
     <section className={styles.blogListingSection}>
       <div className={styles.container}>
@@ -21,7 +22,16 @@ export function BlogListing({ articles }: BlogListingProps) {
           </p>
         </div>
 
-        {articles.length === 0 ? (
+        {loading ? (
+          <div className={styles.emptyState}>
+            <div className={styles.loadingSpinner}>
+              <div className={styles.spinnerCircle}></div>
+              <div className={styles.spinnerCircle}></div>
+              <div className={styles.spinnerCircle}></div>
+            </div>
+            <p>Cargando artículos...</p>
+          </div>
+        ) : articles.length === 0 ? (
           <div className={styles.emptyState}>
             <p>No hay artículos disponibles en este momento.</p>
           </div>

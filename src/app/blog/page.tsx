@@ -1,19 +1,35 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { Navbar } from '@/components/Navbar'
 import { Footer } from '@/components/Footer'
 import { WhatsAppFloat } from '@/components/WhatsAppFloat'
 import { BlogListing } from '@/components/BlogListing'
-import { getAllBlogArticles } from '@/lib/blogData'
+import { getAllBlogArticles, BlogArticle } from '@/lib/blogData'
 
 export default function BlogPage() {
-  const articles = getAllBlogArticles()
+  const [articles, setArticles] = useState<BlogArticle[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function loadArticles() {
+      try {
+        const loadedArticles = await getAllBlogArticles()
+        setArticles(loadedArticles)
+      } catch (error) {
+        console.error('Error loading articles:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    loadArticles()
+  }, [])
 
   return (
     <>
       <main style={{ flex: 1 }}>
         <Navbar />
-        <BlogListing articles={articles} />
+        <BlogListing articles={articles} loading={loading} />
       </main>
       <Footer />
       <WhatsAppFloat />

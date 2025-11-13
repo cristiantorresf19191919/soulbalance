@@ -447,6 +447,20 @@
   }
 }
 
+.sectionDescription {
+  line-height: 1.8;
+  color: var(--text-dark);
+  margin-bottom: var(--spacing-lg);
+}
+
+.sectionDescription p {
+  margin-bottom: var(--spacing-md);
+}
+
+.sectionDescription p:last-child {
+  margin-bottom: 0;
+}
+
 @media (min-width: 769px) and (max-width: 1024px) {
   .container {
     padding: 0 var(--spacing-md);

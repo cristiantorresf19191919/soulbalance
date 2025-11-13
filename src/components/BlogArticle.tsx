@@ -11,6 +11,8 @@ interface BlogArticleProps {
 
 export function BlogArticle({ article }: BlogArticleProps) {
   const contentImages = article.contentImages || []
+  const sections = article.sections || []
+  const hasDynamicSections = sections.length > 0
 
   return (
     <section className={styles.blogSection}>
@@ -40,13 +42,44 @@ export function BlogArticle({ article }: BlogArticleProps) {
           </div>
 
           <div className={styles.articleContent}>
-            <p className={styles.articleOpening}>
-              Llevo años trabajando con el cuerpo y algo me queda claro: el
-              masaje es una danza entre técnica y presencia. No es solo lo que
-              hacen mis manos, sino lo que ocurre en el espacio entre nosotros.
-              Y tal vez te has preguntado, como muchos de mis clientes: ¿por qué
-              a veces siento tanto cambio y otras veces me voy igual que llegué?
-            </p>
+            {hasDynamicSections ? (
+              // Render dynamic sections from Firebase
+              sections.map((section, index) => (
+                <div key={index}>
+                  {section.image && (
+                    <div className={styles.contentImageBreak}>
+                      <Image
+                        src={section.image}
+                        alt={section.imageAlt || section.title || ''}
+                        width={2070}
+                        height={1380}
+                        className={styles.contentImage}
+                      />
+                    </div>
+                  )}
+                  {section.title && (
+                    <h2>{section.title}</h2>
+                  )}
+                  {section.description && (
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: section.description.replace(/\n/g, '<br />')
+                      }}
+                      className={styles.sectionDescription}
+                    />
+                  )}
+                </div>
+              ))
+            ) : (
+              // Render legacy hardcoded content
+              <>
+                <p className={styles.articleOpening}>
+                  Llevo años trabajando con el cuerpo y algo me queda claro: el
+                  masaje es una danza entre técnica y presencia. No es solo lo que
+                  hacen mis manos, sino lo que ocurre en el espacio entre nosotros.
+                  Y tal vez te has preguntado, como muchos de mis clientes: ¿por qué
+                  a veces siento tanto cambio y otras veces me voy igual que llegué?
+                </p>
 
             <p>
               La respuesta tiene que ver con algo que suena simple pero es
@@ -296,17 +329,19 @@ export function BlogArticle({ article }: BlogArticleProps) {
               traes la confianza. Juntos hacemos el resto.
             </p>
 
-            <div className={styles.contentCta}>
-              <h2>¿Listo para experimentarlo?</h2>
-              <p>
-                Reserva tu sesión y trae una intención breve. El resto lo
-                construimos juntos, con técnica, con presencia, y sobre todo,
-                con entrega.
-              </p>
-              <Link href="/#contacto" className={styles.ctaButton}>
-                Reserva tu experiencia
-              </Link>
-            </div>
+                <div className={styles.contentCta}>
+                  <h2>¿Listo para experimentarlo?</h2>
+                  <p>
+                    Reserva tu sesión y trae una intención breve. El resto lo
+                    construimos juntos, con técnica, con presencia, y sobre todo,
+                    con entrega.
+                  </p>
+                  <Link href="/#contacto" className={styles.ctaButton}>
+                    Reserva tu experiencia
+                  </Link>
+                </div>
+              </>
+            )}
           </div>
         </article>
       </div>

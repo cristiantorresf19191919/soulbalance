@@ -1,0 +1,13 @@
+.adminBlogsContainer {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #F8F6F2 0%, #F5F1E8 100%);
+  padding: calc(100px + 2.5rem) 2rem 2.5rem 2rem;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .adminBlogsContainer {
+    padding: calc(100px + 1.5rem) 1.5rem 1.5rem 1.5rem;
+  }
+}
+

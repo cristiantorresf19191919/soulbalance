@@ -253,10 +253,18 @@ export function AdminDashboard() {
       <main className={styles.adminMain}>
         <div className={styles.adminContainer}>
           <div className={styles.adminHeaderSection}>
-            <h1 className={styles.adminTitle}>Dashboard de Leads</h1>
-            <p className={styles.adminSubtitle}>
-              Gestiona y revisa todos los leads capturados desde el formulario de contacto
-            </p>
+            <div className={styles.headerRow}>
+              <div>
+                <h1 className={styles.adminTitle}>Dashboard de Leads</h1>
+                <p className={styles.adminSubtitle}>
+                  Gestiona y revisa todos los leads capturados desde el formulario de contacto
+                </p>
+              </div>
+              <Link href="/admin/blogs" className={styles.blogManagementBtn}>
+                <i className="fa-solid fa-blog"></i>
+                Gestión de Blogs
+              </Link>
+            </div>
           </div>
 
           <div className={styles.adminStats}>

@@ -57,6 +57,40 @@
     font-size: 1.1rem;
 }
 
+.loadingSpinner {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.spinnerCircle {
+    width: 16px;
+    height: 16px;
+    background: linear-gradient(135deg, var(--primary-terracotta), var(--primary-rose));
+    border-radius: 50%;
+    animation: bounce 1.4s ease-in-out infinite both;
+}
+
+.spinnerCircle:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.spinnerCircle:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+@keyframes bounce {
+    0%, 80%, 100% {
+        transform: scale(0.6);
+        opacity: 0.5;
+    }
+    40% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
 .articlesGrid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
