@@ -24,7 +24,10 @@ export function BlogArticle({ article }: BlogArticleProps) {
               <span className={styles.articleDate}>{article.date}</span>
             </div>
             <h1 className={styles.articleTitle}>{article.title}</h1>
-            <p className={styles.articleExcerpt}>{article.excerpt}</p>
+            <div 
+              className={styles.articleExcerpt}
+              dangerouslySetInnerHTML={{ __html: article.excerpt }}
+            />
           </div>
 
           <div className={styles.articleHero}>
@@ -63,7 +66,7 @@ export function BlogArticle({ article }: BlogArticleProps) {
                   {section.description && (
                     <div
                       dangerouslySetInnerHTML={{
-                        __html: section.description.replace(/\n/g, '<br />')
+                        __html: section.description
                       }}
                       className={styles.sectionDescription}
                     />

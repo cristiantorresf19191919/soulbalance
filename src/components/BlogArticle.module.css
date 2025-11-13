@@ -127,6 +127,30 @@
   font-weight: 300;
 }
 
+/* Rich text styling for excerpt */
+.articleExcerpt p {
+  margin-bottom: 0.75rem;
+}
+
+.articleExcerpt p:last-child {
+  margin-bottom: 0;
+}
+
+.articleExcerpt strong,
+.articleExcerpt b {
+  font-weight: 600;
+  color: rgba(255, 255, 255, 1);
+}
+
+.articleExcerpt em,
+.articleExcerpt i {
+  font-style: italic;
+}
+
+.articleExcerpt u {
+  text-decoration: underline;
+}
+
 .articleHero {
   width: 100%;
   position: relative;
@@ -455,10 +479,125 @@
 
 .sectionDescription p {
   margin-bottom: var(--spacing-md);
+  line-height: 1.9;
 }
 
 .sectionDescription p:last-child {
   margin-bottom: 0;
+}
+
+/* Rich text content styling */
+.sectionDescription h1,
+.sectionDescription h2,
+.sectionDescription h3 {
+  font-family: var(--font-serif);
+  color: var(--primary-green);
+  margin: calc(var(--spacing-lg) * 1.5) 0 var(--spacing-md);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.sectionDescription h1 {
+  font-size: clamp(1.8rem, 4vw, 2.2rem);
+}
+
+.sectionDescription h2 {
+  font-size: clamp(1.6rem, 3.5vw, 2rem);
+}
+
+.sectionDescription h3 {
+  font-size: clamp(1.4rem, 3vw, 1.8rem);
+}
+
+.sectionDescription strong,
+.sectionDescription b {
+  font-weight: 700;
+  color: var(--primary-dark);
+}
+
+.sectionDescription em,
+.sectionDescription i {
+  font-style: italic;
+}
+
+.sectionDescription u {
+  text-decoration: underline;
+}
+
+.sectionDescription ul,
+.sectionDescription ol {
+  margin: var(--spacing-md) 0;
+  padding-left: 1.5rem;
+  line-height: 1.9;
+}
+
+.sectionDescription li {
+  margin: 0.5rem 0;
+  line-height: 1.8;
+}
+
+.sectionDescription blockquote {
+  border-left: 4px solid var(--primary-green);
+  padding-left: var(--spacing-md);
+  margin: var(--spacing-lg) 0;
+  font-style: italic;
+  color: rgba(7, 82, 87, 0.8);
+  background: linear-gradient(135deg, rgba(7, 82, 87, 0.05) 0%, rgba(7, 82, 87, 0.02) 100%);
+  padding: var(--spacing-md);
+  border-radius: 8px;
+}
+
+.sectionDescription code {
+  background: rgba(7, 82, 87, 0.1);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+  color: var(--primary-dark);
+}
+
+.sectionDescription pre {
+  background: rgba(7, 82, 87, 0.05);
+  padding: var(--spacing-md);
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: var(--spacing-md) 0;
+  border-left: 4px solid var(--primary-green);
+}
+
+.sectionDescription pre code {
+  background: transparent;
+  padding: 0;
+}
+
+.sectionDescription a {
+  color: var(--primary-green);
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+.sectionDescription a:hover {
+  color: var(--primary-green-dark);
+}
+
+.sectionDescription img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin: var(--spacing-lg) 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.sectionDescription :global([style*="text-align: center"]) {
+  text-align: center;
+}
+
+.sectionDescription :global([style*="text-align: right"]) {
+  text-align: right;
+}
+
+.sectionDescription :global([style*="text-align: left"]) {
+  text-align: left;
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {

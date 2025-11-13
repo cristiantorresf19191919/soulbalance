@@ -8,6 +8,7 @@ import { auth, firestore } from '@/lib/firebase'
 import { onAuthStateChanged, signOut } from 'firebase/auth'
 import { collection, query, orderBy, onSnapshot, doc, deleteDoc } from 'firebase/firestore'
 import { LeadModal } from './LeadModal'
+import { AdminSidebar } from './AdminSidebar'
 import { allServiceOptions, getServiceLabel } from '@/data/serviceCategories'
 import styles from './AdminDashboard.module.css'
 
@@ -251,21 +252,18 @@ export function AdminDashboard() {
       </header>
 
       <main className={styles.adminMain}>
-        <div className={styles.adminContainer}>
-          <div className={styles.adminHeaderSection}>
-            <div className={styles.headerRow}>
-              <div>
-                <h1 className={styles.adminTitle}>Dashboard de Leads</h1>
-                <p className={styles.adminSubtitle}>
-                  Gestiona y revisa todos los leads capturados desde el formulario de contacto
-                </p>
+        <div className={styles.adminLayout}>
+          <AdminSidebar />
+          <div className={styles.adminContent}>
+            <div className={styles.adminContainer}>
+              <div className={styles.adminHeaderSection}>
+                <div>
+                  <h1 className={styles.adminTitle}>Dashboard de Leads</h1>
+                  <p className={styles.adminSubtitle}>
+                    Gestiona y revisa todos los leads capturados desde el formulario de contacto
+                  </p>
+                </div>
               </div>
-              <Link href="/admin/blogs" className={styles.blogManagementBtn}>
-                <i className="fa-solid fa-blog"></i>
-                Gestión de Blogs
-              </Link>
-            </div>
-          </div>
 
           <div className={styles.adminStats}>
             <div className={styles.statCard}>
@@ -438,12 +436,21 @@ export function AdminDashboard() {
                             {lead.message ? (
                               <span 
                                 className={styles.hasMessage}
-                                title={lead.message.length > 50 ? lead.message.substring(0, 100) + '...' : lead.message}
+                                onClick={(e) => e.stopPropagation()}
                               >
                                 <i className="fa-solid fa-comment"></i> 
                                 <span className={styles.messagePreview}>
-                                  {lead.message.length > 30 ? lead.message.substring(0, 30) + '...' : lead.message}
+                                  {lead.message.length > 40 ? lead.message.substring(0, 40) + '...' : lead.message}
                                 </span>
+                                <div className={styles.messageTooltip}>
+                                  <div className={styles.messageTooltipHeader}>
+                                    <i className="fa-solid fa-comment-dots"></i>
+                                    <span>Mensaje Completo</span>
+                                  </div>
+                                  <div className={styles.messageTooltipContent}>
+                                    {lead.message}
+                                  </div>
+                                </div>
                               </span>
                             ) : (
                               <span className={styles.noMessage}>Sin mensaje</span>
@@ -596,6 +603,8 @@ export function AdminDashboard() {
                 </div>
               </>
             )}
+          </div>
+            </div>
           </div>
         </div>
       </main>

@@ -1,0 +1,180 @@
+.richTextEditorWrapper {
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.richTextEditorWrapper:last-child {
+  margin-bottom: 0;
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--primary-dark);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.required {
+  color: #ef4444;
+}
+
+.editorContainer {
+  background: var(--bg-white);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.richTextEditor {
+  background: var(--bg-white);
+  border: 2px solid rgba(7, 82, 87, 0.12);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.richTextEditor:hover {
+  border-color: rgba(7, 82, 87, 0.2);
+}
+
+.richTextEditor:focus-within {
+  border-color: var(--primary-green);
+  box-shadow: 0 0 0 4px rgba(7, 82, 87, 0.1);
+}
+
+/* Quill Editor Styles */
+.richTextEditor :global(.ql-container) {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--text-dark);
+  min-height: 200px;
+  border: none;
+  border-top: 2px solid rgba(7, 82, 87, 0.12);
+}
+
+.richTextEditor :global(.ql-editor) {
+  min-height: 200px;
+  padding: 1rem 1.25rem;
+  line-height: 1.6;
+}
+
+.richTextEditor :global(.ql-editor.ql-blank::before) {
+  color: rgba(7, 82, 87, 0.5);
+  font-style: normal;
+  left: 1.25rem;
+}
+
+.richTextEditor :global(.ql-toolbar) {
+  border: none;
+  border-bottom: 2px solid rgba(7, 82, 87, 0.12);
+  padding: 0.75rem 1rem;
+  background: linear-gradient(135deg, rgba(7, 82, 87, 0.03) 0%, rgba(7, 82, 87, 0.01) 100%);
+}
+
+.richTextEditor :global(.ql-toolbar .ql-stroke) {
+  stroke: var(--primary-dark);
+}
+
+.richTextEditor :global(.ql-toolbar .ql-fill) {
+  fill: var(--primary-dark);
+}
+
+.richTextEditor :global(.ql-toolbar button:hover),
+.richTextEditor :global(.ql-toolbar button.ql-active) {
+  background: rgba(7, 82, 87, 0.1);
+  border-radius: 4px;
+}
+
+.richTextEditor :global(.ql-toolbar .ql-picker-label) {
+  color: var(--primary-dark);
+}
+
+.richTextEditor :global(.ql-toolbar .ql-picker-options) {
+  background: var(--bg-white);
+  border: 2px solid rgba(7, 82, 87, 0.12);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Custom styles for formatted content */
+.richTextEditor :global(.ql-editor h1) {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary-green);
+  margin: 1.5rem 0 1rem 0;
+}
+
+.richTextEditor :global(.ql-editor h2) {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-green);
+  margin: 1.25rem 0 0.75rem 0;
+}
+
+.richTextEditor :global(.ql-editor h3) {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--primary-dark);
+  margin: 1rem 0 0.5rem 0;
+}
+
+.richTextEditor :global(.ql-editor blockquote) {
+  border-left: 4px solid var(--primary-green);
+  padding-left: 1rem;
+  margin: 1rem 0;
+  font-style: italic;
+  color: rgba(7, 82, 87, 0.8);
+}
+
+.richTextEditor :global(.ql-editor code) {
+  background: rgba(7, 82, 87, 0.1);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+}
+
+.richTextEditor :global(.ql-editor pre) {
+  background: rgba(7, 82, 87, 0.05);
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+.richTextEditor :global(.ql-editor ul),
+.richTextEditor :global(.ql-editor ol) {
+  padding-left: 1.5rem;
+  margin: 0.75rem 0;
+}
+
+.richTextEditor :global(.ql-editor li) {
+  margin: 0.25rem 0;
+}
+
+.richTextEditor :global(.ql-editor a) {
+  color: var(--primary-green);
+  text-decoration: underline;
+}
+
+.richTextEditor :global(.ql-editor img) {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 1rem 0;
+}
+
+@media (max-width: 768px) {
+  .richTextEditor :global(.ql-toolbar) {
+    padding: 0.5rem;
+  }
+
+  .richTextEditor :global(.ql-toolbar .ql-formats) {
+    margin-right: 0.25rem;
+  }
+
+  .richTextEditor :global(.ql-editor) {
+    min-height: 150px;
+    padding: 0.75rem 1rem;
+  }
+}
+

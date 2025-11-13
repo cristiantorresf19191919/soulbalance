@@ -1,4 +1,4 @@
-.adminBlogsContainer {
+.adminShortsContainer {
   min-height: calc(100vh - 80px);
   background: linear-gradient(180deg, #FAF8F4 0%, #F5F1E8 50%, #F0EBE0 100%);
   position: relative;
@@ -20,7 +20,7 @@
   min-width: 0;
 }
 
-.adminBlogsContainer::before {
+.adminShortsContainer::before {
   content: '';
   position: absolute;
   top: 0;
@@ -34,7 +34,7 @@
   z-index: 0;
 }
 
-.adminBlogsContainer > * {
+.adminShortsContainer > * {
   position: relative;
   z-index: 1;
 }

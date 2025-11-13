@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { BlogArticle } from '@/lib/blogData'
+import { stripHtml } from '@/lib/utils'
 import styles from './BlogListing.module.css'
 
 interface BlogListingProps {
@@ -57,7 +58,7 @@ export function BlogListing({ articles, loading = false }: BlogListingProps) {
                       <span className={styles.date}>{article.date}</span>
                     </div>
                     <h2 className={styles.cardTitle}>{article.title}</h2>
-                    <p className={styles.cardExcerpt}>{article.excerpt}</p>
+                    <p className={styles.cardExcerpt}>{stripHtml(article.excerpt)}</p>
                     <div className={styles.readMore}>
                       <span>Leer más</span>
                       <svg

@@ -111,6 +111,9 @@ export function Navbar() {
             <Link href="/blog" onClick={(e) => handleLinkClick(e, '/blog')}>Blog</Link>
           </li>
           <li>
+            <Link href="/shorts" onClick={(e) => handleLinkClick(e, '/shorts')}>Shorts</Link>
+          </li>
+          <li>
             <Link href="/contacto" onClick={(e) => handleLinkClick(e, '/contacto')}>Contacto</Link>
           </li>
         </ul>

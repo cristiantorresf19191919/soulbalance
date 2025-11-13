@@ -4,12 +4,12 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { auth } from '@/lib/firebase'
 import { onAuthStateChanged } from 'firebase/auth'
-import { BlogManagement } from '@/components/BlogManagement'
+import { ShortsManagement } from '@/components/ShortsManagement'
 import { AdminSidebar } from '@/components/AdminSidebar'
 import { Navbar } from '@/components/Navbar'
-import styles from './blogs.module.css'
+import styles from './page.module.css'
 
-export default function AdminBlogsPage() {
+export default function AdminShortsPage() {
   const router = useRouter()
 
   useEffect(() => {
@@ -32,11 +32,11 @@ export default function AdminBlogsPage() {
   return (
     <>
       <Navbar />
-      <div className={styles.adminBlogsContainer}>
+      <div className={styles.adminShortsContainer}>
         <div className={styles.adminLayout}>
           <AdminSidebar />
           <div className={styles.adminContent}>
-            <BlogManagement />
+            <ShortsManagement />
           </div>
         </div>
       </div>

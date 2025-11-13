@@ -2,11 +2,9 @@
 
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { auth, firestore } from '@/lib/firebase'
-import { onAuthStateChanged, signOut } from 'firebase/auth'
-import { collection, query, orderBy, onSnapshot } from 'firebase/firestore'
+import { auth } from '@/lib/firebase'
+import { onAuthStateChanged } from 'firebase/auth'
 import { AdminDashboard } from '@/components/AdminDashboard'
-import { Navbar } from '@/components/Navbar'
 
 export default function AdminPage() {
   const router = useRouter()
@@ -30,10 +28,7 @@ export default function AdminPage() {
   }, [router])
 
   return (
-    <>
-      <Navbar />
-      <AdminDashboard />
-    </>
+    <AdminDashboard />
   )
 }
 

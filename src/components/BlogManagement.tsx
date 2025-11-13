@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { firestore } from '@/lib/firebase'
 import { collection, query, orderBy, onSnapshot, doc, deleteDoc } from 'firebase/firestore'
 import { BlogForm } from './BlogForm'
+import { stripHtml } from '@/lib/utils'
 import styles from './BlogManagement.module.css'
 
 interface BlogSection {
@@ -162,7 +163,7 @@ export function BlogManagement() {
                 </div>
                 <div className={styles.blogCardBody}>
                   <h3 className={styles.blogCardTitle}>{blog.title}</h3>
-                  <p className={styles.blogCardExcerpt}>{blog.excerpt}</p>
+                  <p className={styles.blogCardExcerpt}>{stripHtml(blog.excerpt)}</p>
                   <div className={styles.blogCardMeta}>
                     <span className={styles.blogDate}>
                       <i className="fa-solid fa-calendar"></i>

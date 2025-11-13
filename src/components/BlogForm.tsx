@@ -3,6 +3,8 @@
 import { useState, FormEvent } from 'react'
 import { firestore } from '@/lib/firebase'
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
+import { ImageUpload } from './ImageUpload'
+import { RichTextEditor } from './RichTextEditor'
 import styles from './BlogForm.module.css'
 
 export interface BlogSection {
@@ -37,6 +39,17 @@ export function BlogForm({ onSuccess, onCancel }: BlogFormProps) {
       .replace(/[\u0300-\u036f]/g, '')
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/^-+|-+$/g, '')
+  }
+
+  // Helper function to strip HTML tags for validation
+  const stripHtml = (html: string): string => {
+    if (typeof window === 'undefined') {
+      // Fallback for SSR: simple regex to remove HTML tags
+      return html.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').trim()
+    }
+    const tmp = document.createElement('DIV')
+    tmp.innerHTML = html
+    return tmp.textContent || tmp.innerText || ''
   }
 
   const addSection = () => {
@@ -74,33 +87,34 @@ export function BlogForm({ onSuccess, onCancel }: BlogFormProps) {
       if (!title.trim()) {
         throw new Error('El título es requerido')
       }
-      if (!excerpt.trim()) {
+      if (!excerpt.trim() || !stripHtml(excerpt).trim()) {
         throw new Error('La descripción es requerida')
       }
       if (!category.trim()) {
         throw new Error('La categoría es requerida')
       }
       if (!heroImage.trim()) {
-        throw new Error('La imagen principal es requerida')
+        throw new Error('La imagen principal es requerida. Por favor, sube una imagen o proporciona una URL.')
       }
 
       const slug = generateSlug(title)
       const date = new Date().getFullYear().toString()
 
       // Prepare blog data
+      // Store HTML content as-is for rich text formatting
       const blogData = {
         slug,
         title: title.trim(),
-        excerpt: excerpt.trim(),
+        excerpt: excerpt.trim(), // HTML content
         category: category.trim(),
         date,
         heroImage: heroImage.trim(),
         heroImageAlt: heroImageAlt.trim() || title.trim(),
         sections: sections
-          .filter(section => section.title.trim() || section.description.trim())
+          .filter(section => section.title.trim() || stripHtml(section.description).trim())
           .map(section => ({
             title: section.title.trim(),
-            description: section.description.trim(),
+            description: section.description.trim(), // HTML content
             image: section.image?.trim() || null,
             imageAlt: section.imageAlt?.trim() || section.title.trim() || ''
           })),
@@ -159,17 +173,13 @@ export function BlogForm({ onSuccess, onCancel }: BlogFormProps) {
             />
           </div>
 
-          <div className={styles.formGroup}>
-            <label htmlFor="excerpt">Descripción / Resumen *</label>
-            <textarea
-              id="excerpt"
-              value={excerpt}
-              onChange={(e) => setExcerpt(e.target.value)}
-              placeholder="Breve descripción del artículo que aparecerá en la lista de blogs..."
-              rows={4}
-              required
-            />
-          </div>
+          <RichTextEditor
+            value={excerpt}
+            onChange={setExcerpt}
+            label="Descripción / Resumen *"
+            placeholder="Breve descripción del artículo que aparecerá en la lista de blogs..."
+            required
+          />
 
           <div className={styles.formGroup}>
             <label htmlFor="category">Categoría / Etiqueta *</label>
@@ -188,42 +198,21 @@ export function BlogForm({ onSuccess, onCancel }: BlogFormProps) {
         <div className={styles.formSection}>
           <h3 className={styles.sectionTitle}>Imagen Principal</h3>
           
-          <div className={styles.formGroup}>
-            <label htmlFor="heroImage">URL de la Imagen *</label>
-            <input
-              type="url"
-              id="heroImage"
-              value={heroImage}
-              onChange={(e) => setHeroImage(e.target.value)}
-              placeholder="https://images.unsplash.com/photo-..."
-              required
-            />
-          </div>
-
-          <div className={styles.formGroup}>
-            <label htmlFor="heroImageAlt">Texto Alternativo de la Imagen</label>
-            <input
-              type="text"
-              id="heroImageAlt"
-              value={heroImageAlt}
-              onChange={(e) => setHeroImageAlt(e.target.value)}
-              placeholder="Descripción de la imagen para accesibilidad"
-            />
-          </div>
+          <ImageUpload
+            value={heroImage}
+            onChange={setHeroImage}
+            onAltChange={setHeroImageAlt}
+            altValue={heroImageAlt}
+            label="Imagen Principal"
+            altLabel="Texto Alternativo de la Imagen"
+            folder="blog-hero-images"
+            required
+          />
         </div>
 
         {/* Dynamic Sections */}
         <div className={styles.formSection}>
-          <div className={styles.sectionHeader}>
-            <h3 className={styles.sectionTitle}>Secciones del Blog</h3>
-            <button
-              type="button"
-              className={styles.addSectionBtn}
-              onClick={addSection}
-            >
-              <i className="fa-solid fa-plus"></i> Agregar Sección
-            </button>
-          </div>
+          <h3 className={styles.sectionTitle}>Secciones del Blog</h3>
 
           <div className={styles.sectionsContainer}>
             {sections.map((section, index) => (
@@ -253,39 +242,35 @@ export function BlogForm({ onSuccess, onCancel }: BlogFormProps) {
                   />
                 </div>
 
-                <div className={styles.formGroup}>
-                  <label>Descripción / Contenido</label>
-                  <textarea
-                    value={section.description}
-                    onChange={(e) => updateSection(section.id, 'description', e.target.value)}
-                    placeholder="Contenido de la sección..."
-                    rows={6}
-                  />
-                </div>
+                <RichTextEditor
+                  value={section.description}
+                  onChange={(value) => updateSection(section.id, 'description', value)}
+                  label="Descripción / Contenido"
+                  placeholder="Contenido de la sección..."
+                />
 
-                <div className={styles.formGroup}>
-                  <label>URL de la Imagen (Opcional)</label>
-                  <input
-                    type="url"
-                    value={section.image || ''}
-                    onChange={(e) => updateSection(section.id, 'image', e.target.value)}
-                    placeholder="https://images.unsplash.com/photo-..."
-                  />
-                </div>
-
-                {section.image && (
-                  <div className={styles.formGroup}>
-                    <label>Texto Alternativo de la Imagen</label>
-                    <input
-                      type="text"
-                      value={section.imageAlt || ''}
-                      onChange={(e) => updateSection(section.id, 'imageAlt', e.target.value)}
-                      placeholder="Descripción de la imagen"
-                    />
-                  </div>
-                )}
+                <ImageUpload
+                  value={section.image || ''}
+                  onChange={(url) => updateSection(section.id, 'image', url)}
+                  onAltChange={(alt) => updateSection(section.id, 'imageAlt', alt)}
+                  altValue={section.imageAlt || ''}
+                  label="Imagen de la Sección (Opcional)"
+                  altLabel="Texto Alternativo de la Imagen"
+                  folder="blog-section-images"
+                />
               </div>
             ))}
+            
+            {/* Add Section Button */}
+            <button
+              type="button"
+              className={styles.addSectionBtn}
+              onClick={addSection}
+              title="Agregar Sección"
+            >
+              <i className="fa-solid fa-plus"></i>
+              <span>Agregar Nueva Sección</span>
+            </button>
           </div>
         </div>
 
