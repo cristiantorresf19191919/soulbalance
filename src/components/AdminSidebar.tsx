@@ -21,6 +21,13 @@ const navItems: NavItem[] = [
     description: 'Gestiona y revisa todos los leads'
   },
   {
+    id: 'coupons',
+    label: 'Códigos de Descuento',
+    icon: 'fa-solid fa-ticket',
+    path: '/admin/coupons',
+    description: 'Revisa los códigos de descuento generados'
+  },
+  {
     id: 'blogs',
     label: 'Gestión de Blogs',
     icon: 'fa-solid fa-blog',
@@ -33,6 +40,13 @@ const navItems: NavItem[] = [
     icon: 'fa-solid fa-video',
     path: '/admin/shorts',
     description: 'Gestiona videos e imágenes de shorts'
+  },
+  {
+    id: 'settings',
+    label: 'Configuración',
+    icon: 'fa-solid fa-gear',
+    path: '/admin/settings',
+    description: 'Configuración general del sitio'
   }
 ]
 

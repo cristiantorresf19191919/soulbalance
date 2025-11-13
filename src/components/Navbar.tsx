@@ -6,6 +6,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { auth } from '@/lib/firebase'
 import { onAuthStateChanged, signOut } from 'firebase/auth'
+import { useJuegaSettings } from '@/hooks/useJuegaSettings'
 import { VersionBadge } from './VersionBadge'
 import styles from './Navbar.module.css'
 
@@ -13,6 +14,7 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const { enabled: juegaEnabled } = useJuegaSettings()
   const router = useRouter()
 
   useEffect(() => {
@@ -40,7 +42,7 @@ export function Navbar() {
       setMenuOpen(false)
       const element = document.querySelector(href)
       if (element) {
-        const navHeight = 80
+        const navHeight = 85
         const targetPosition = (element as HTMLElement).offsetTop - navHeight
         window.scrollTo({
           top: targetPosition,
@@ -51,6 +53,32 @@ export function Navbar() {
       setMenuOpen(false)
     }
   }
+
+  // Close menu when clicking outside on mobile
+  useEffect(() => {
+    if (!menuOpen) return
+
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as HTMLElement
+      if (!target.closest(`.${styles.navMenu}`) && !target.closest(`.${styles.menuToggle}`)) {
+        setMenuOpen(false)
+      }
+    }
+
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setMenuOpen(false)
+      }
+    }
+
+    document.addEventListener('click', handleClickOutside)
+    document.addEventListener('keydown', handleEscape)
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside)
+      document.removeEventListener('keydown', handleEscape)
+    }
+  }, [menuOpen])
 
   const handleLogout = async () => {
     try {
@@ -72,8 +100,8 @@ export function Navbar() {
       <VersionBadge variant="header" />
       <div className={styles.navContainer}>
         <div className={styles.logo}>
-          <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <Image src="/superLogo.png" alt="Soul Balance" width={70} height={70} className={styles.logoImage} />
+          <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <Image src="/superLogo.png" alt="Soul Balance" width={65} height={65} className={styles.logoImage} />
             <span className={styles.logoText}>SOUL BALANCE</span>
           </Link>
         </div>
@@ -89,7 +117,12 @@ export function Navbar() {
         ) : (
           <Link href="/login" className={styles.loginNavBtn}>Login</Link>
         )}
-        <button className={styles.menuToggle} onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">
+        <button 
+          className={`${styles.menuToggle} ${menuOpen ? styles.active : ''}`} 
+          onClick={() => setMenuOpen(!menuOpen)} 
+          aria-label="Toggle menu"
+          aria-expanded={menuOpen}
+        >
           <span></span>
           <span></span>
           <span></span>
@@ -113,6 +146,11 @@ export function Navbar() {
           <li>
             <Link href="/shorts" onClick={(e) => handleLinkClick(e, '/shorts')}>Shorts</Link>
           </li>
+          {juegaEnabled && (
+            <li>
+              <Link href="/juega" onClick={(e) => handleLinkClick(e, '/juega')}>Juega</Link>
+            </li>
+          )}
           <li>
             <Link href="/contacto" onClick={(e) => handleLinkClick(e, '/contacto')}>Contacto</Link>
           </li>

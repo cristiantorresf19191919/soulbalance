@@ -1,0 +1,533 @@
+.gameContainer {
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-around;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  background: #FFFFFF;
+  padding: 2rem 2.5rem;
+  border-radius: 24px;
+  box-shadow: 0 4px 20px rgba(7, 82, 87, 0.1);
+  border: 1px solid rgba(7, 82, 87, 0.08);
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.statLabel {
+  font-size: 0.9rem;
+  color: #666;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.statValue {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #075257;
+  line-height: 1;
+}
+
+.gameGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  padding: 0 0.5rem;
+}
+
+.card {
+  aspect-ratio: 1;
+  cursor: pointer;
+  perspective: 1500px;
+  perspective-origin: center center;
+}
+
+.cardInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.card.flipped .cardInner {
+  transform: rotateY(180deg);
+}
+
+.card.matched {
+  opacity: 1;
+  cursor: default;
+  pointer-events: none;
+}
+
+.card.matched .cardInner {
+  transform: rotateY(180deg);
+}
+
+.card.matched .cardBack {
+  border: 3px solid #075257;
+  box-sizing: border-box;
+  box-shadow: 0 8px 24px rgba(7, 82, 87, 0.3);
+  animation: matchGlow 0.8s ease-out;
+}
+
+@keyframes matchGlow {
+  0% {
+    box-shadow: 0 8px 24px rgba(7, 82, 87, 0.3);
+  }
+  50% {
+    box-shadow: 0 12px 32px rgba(7, 82, 87, 0.5);
+  }
+  100% {
+    box-shadow: 0 8px 24px rgba(7, 82, 87, 0.3);
+  }
+}
+
+.cardFront,
+.cardBack {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(7, 82, 87, 0.15);
+  transition: box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 2px solid rgba(7, 82, 87, 0.08);
+}
+
+.card:hover:not(.matched) .cardFront,
+.card:hover:not(.matched) .cardBack {
+  box-shadow: 0 12px 32px rgba(7, 82, 87, 0.25);
+}
+
+.cardFront {
+  background: linear-gradient(135deg, #075257 0%, #0A6B72 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotateY(0deg);
+}
+
+.cardBack {
+  transform: rotateY(180deg);
+  position: relative;
+}
+
+.cardBack img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.3s;
+}
+
+.card:active:not(.matched) .cardBack img {
+  transform: scale(0.98);
+}
+
+.cardBackPattern {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  color: white;
+  font-size: 3.5rem;
+  text-align: center;
+  opacity: 1;
+}
+
+.cardBackPattern i {
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.cardBackPattern span {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 3px;
+  opacity: 0.95;
+  text-transform: uppercase;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.cardOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.4), transparent);
+  padding: 1.25rem 1rem;
+  color: white;
+  backdrop-filter: blur(2px);
+}
+
+.cardName {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: center;
+  display: block;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+  line-height: 1.3;
+  letter-spacing: 0.3px;
+}
+
+/* Modals */
+.gameOverModal,
+.winModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modalContent {
+  background: white;
+  padding: 3rem;
+  border-radius: 20px;
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.4s;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modalContent h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.modalContent p {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.celebrationTitle {
+  font-size: 2.5rem !important;
+  background: linear-gradient(135deg, #075257 0%, #0A6B72 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem !important;
+}
+
+.celebrationText {
+  font-size: 1.2rem !important;
+  color: #333 !important;
+  font-weight: 500;
+}
+
+.loadingCoupon {
+  padding: 2rem 0;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #075257;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.couponForm {
+  text-align: left;
+}
+
+.couponCodeDisplay {
+  background: linear-gradient(135deg, #075257 0%, #0A6B72 100%);
+  padding: 1.5rem;
+  border-radius: 16px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(7, 82, 87, 0.2);
+}
+
+.couponLabel {
+  display: block;
+  color: white;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  opacity: 0.9;
+}
+
+.couponCode {
+  display: block;
+  color: white;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  font-family: 'Courier New', monospace;
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #333;
+  font-weight: 500;
+}
+
+.formGroup input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+  box-sizing: border-box;
+}
+
+.formGroup input:focus {
+  outline: none;
+  border-color: #075257;
+  box-shadow: 0 0 0 3px rgba(7, 82, 87, 0.1);
+}
+
+.saveButton,
+.resetButton {
+  background: linear-gradient(135deg, #075257 0%, #0A6B72 100%);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  width: 100%;
+  box-shadow: 0 4px 16px rgba(7, 82, 87, 0.2);
+}
+
+.saveButton:hover:not(:disabled),
+.resetButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(7, 82, 87, 0.35);
+}
+
+.saveButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.couponSaved {
+  padding: 1rem 0;
+}
+
+.couponSaved h3 {
+  font-size: 1.5rem;
+  color: #075257;
+  margin-bottom: 1rem;
+}
+
+.couponSaved p {
+  margin-bottom: 0.5rem;
+  color: #666;
+}
+
+.couponSaved strong {
+  color: #075257;
+  font-size: 1.2rem;
+}
+
+.resetButton {
+  margin-top: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: auto;
+  padding: 0.75rem 1.5rem;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .gameContainer {
+    max-width: 900px;
+    padding: 2rem 1.25rem;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .gameGrid {
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .gameContainer {
+    padding: 1.5rem 1rem;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .gameGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    padding: 0;
+    margin-bottom: 2rem;
+  }
+
+  .stats {
+    padding: 1.5rem 1.25rem;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .statValue {
+    font-size: 1.5rem;
+  }
+
+  .statLabel {
+    font-size: 0.75rem;
+  }
+
+  .modalContent {
+    padding: 2rem 1.5rem;
+    margin: 1rem;
+  }
+
+  .celebrationTitle {
+    font-size: 2rem !important;
+  }
+
+  .couponCode {
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+  }
+
+  .cardBackPattern {
+    font-size: 2.5rem;
+    gap: 0.5rem;
+  }
+
+  .cardBackPattern span {
+    font-size: 0.65rem;
+    letter-spacing: 1.5px;
+  }
+  
+  .cardOverlay {
+    padding: 1rem 0.75rem;
+  }
+  
+  .cardName {
+    font-size: 0.75rem;
+  }
+
+  .card {
+    perspective: 1200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .gameContainer {
+    padding: 1rem 0.75rem;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .gameGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.875rem;
+    margin-bottom: 2rem;
+  }
+  
+  .stats {
+    padding: 1.25rem 1rem;
+    gap: 1.5rem;
+    flex-direction: column;
+    margin-bottom: 2rem;
+  }
+
+  .statItem {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .statValue {
+    font-size: 1.75rem;
+  }
+
+  .statLabel {
+    font-size: 0.7rem;
+  }
+
+  .card {
+    perspective: 1000px;
+  }
+
+  .cardFront,
+  .cardBack {
+    border-radius: 16px;
+  }
+
+  .resetButton {
+    width: 100%;
+    padding: 0.875rem 1.25rem;
+  }
+}
+
