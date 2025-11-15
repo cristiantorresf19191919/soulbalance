@@ -4,7 +4,6 @@ import { useParams, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { Navbar } from '@/components/Navbar'
 import { Footer } from '@/components/Footer'
-import { WhatsAppFloat } from '@/components/WhatsAppFloat'
 import { Breadcrumb } from '@/components/Breadcrumb'
 import { BookingModal } from '@/components/BookingModal'
 import { MassageStepper } from '@/components/MassageStepper'
@@ -106,7 +105,6 @@ export default function ServiceDetailPage() {
           </div>
         </main>
         <Footer />
-        <WhatsAppFloat />
       </>
     )
   }
@@ -219,7 +217,6 @@ export default function ServiceDetailPage() {
       />
       
       <Footer />
-      <WhatsAppFloat />
     </>
   )
 }

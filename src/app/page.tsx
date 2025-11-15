@@ -9,7 +9,6 @@ import { PremiumExperiences } from '@/components/PremiumExperiences'
 import { CorporateSection } from '@/components/CorporateSection'
 import { ContactSection } from '@/components/ContactSection'
 import { Footer } from '@/components/Footer'
-import { WhatsAppFloat } from '@/components/WhatsAppFloat'
 import { ToastContainer } from '@/components/ToastNotifications'
 import { useScrollEffects } from '@/hooks/useScrollEffects'
 
@@ -28,7 +27,6 @@ export default function Home() {
         <ContactSection />
       </main>
       <Footer />
-      <WhatsAppFloat />
       <ToastContainer />
     </>
   )

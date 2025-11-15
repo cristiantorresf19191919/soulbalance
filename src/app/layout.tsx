@@ -4,6 +4,7 @@ import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
 import { ThemeProvider } from '@/components/ThemeProvider'
+import { LanguageProvider } from '@/lib/language-context'
 import { FloatingChat } from '@/components/FloatingChat'
 import { PWAInstallPrompt } from '@/components/PWAInstallPrompt'
 import './globals.css'
@@ -23,16 +24,16 @@ const siteUrl = getSiteUrl()
 const imageUrl = `${siteUrl}/soulbalance.png`
 
 export const metadata: Metadata = {
-  applicationName: 'Soul Balance Spa',
-  title: 'Soul Balance - Experiencias de Bienestar a Domicilio',
-  description: 'Experiencias de bienestar diseñadas para restaurar la armonía entre cuerpo, mente y alma. Masajes terapéuticos y relajantes a domicilio con profesionales certificados.',
+  applicationName: 'Aura Spa',
+  title: 'Aura Spa - Reserva Servicios Terapéuticos a Domicilio',
+  description: 'Reserva servicios terapéuticos profesionales a domicilio. Masajes terapéuticos y relajantes con profesionales certificados.',
   keywords: [
     'masaje spa',
     'masaje a domicilio',
     'masaje terapéutico',
     'bienestar',
     'relajación',
-    'Soul Balance',
+    'Aura Spa',
     'spa a domicilio',
     'masajes profesionales',
     'terapias alternativas',
@@ -43,9 +44,9 @@ export const metadata: Metadata = {
     'masaje con piedras volcánicas',
     'bambú terapia',
   ],
-  authors: [{ name: 'Soul Balance' }],
-  creator: 'Soul Balance',
-  publisher: 'Soul Balance',
+  authors: [{ name: 'Aura Spa' }],
+  creator: 'Aura Spa',
+  publisher: 'Aura Spa',
   formatDetection: {
     email: false,
     address: false,
@@ -56,31 +57,30 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'es_ES',
     url: siteUrl,
-    siteName: 'Soul Balance',
-    title: 'Soul Balance - Experiencias de Bienestar a Domicilio',
-    description: 'Experiencias de bienestar diseñadas para restaurar la armonía entre cuerpo, mente y alma. Masajes terapéuticos y relajantes a domicilio con profesionales certificados.',
+    siteName: 'Aura Spa',
+    title: 'Aura Spa - Reserva Servicios Terapéuticos a Domicilio',
+    description: 'Reserva servicios terapéuticos profesionales a domicilio. Masajes terapéuticos y relajantes con profesionales certificados.',
     images: [
       {
         url: imageUrl, // Absolute URL is required
         width: 1200,
         height: 630,
-        alt: 'Soul Balance - Experiencias de Bienestar',
+        alt: 'Aura Spa - Servicios Terapéuticos',
         type: 'image/png',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Soul Balance - Experiencias de Bienestar a Domicilio',
-    description: 'Experiencias de bienestar diseñadas para restaurar la armonía entre cuerpo, mente y alma. Masajes terapéuticos y relajantes a domicilio.',
+    title: 'Aura Spa - Reserva Servicios Terapéuticos a Domicilio',
+    description: 'Reserva servicios terapéuticos profesionales a domicilio. Masajes terapéuticos y relajantes con profesionales certificados.',
     images: [imageUrl],
-    creator: '@soulbalance', // Actualiza con el handle real de Twitter si lo tienes
   },
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
-    title: 'Soul Balance',
+    title: 'Aura Spa',
   },
   robots: {
     index: true,
@@ -134,11 +134,13 @@ export default function RootLayout({
       </head>
       <body>
         <div id="datepicker-portal"></div>
-        <ThemeProvider>
-          {children}
-          <FloatingChat />
-          <PWAInstallPrompt />
-        </ThemeProvider>
+        <LanguageProvider>
+          <ThemeProvider>
+            {children}
+            <FloatingChat />
+            <PWAInstallPrompt />
+          </ThemeProvider>
+        </LanguageProvider>
       </body>
     </html>
   )

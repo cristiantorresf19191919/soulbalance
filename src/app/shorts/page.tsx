@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import { Navbar } from '@/components/Navbar'
 import { Footer } from '@/components/Footer'
-import { WhatsAppFloat } from '@/components/WhatsAppFloat'
 import { firestore } from '@/lib/firebase'
 import { collection, query, orderBy, onSnapshot } from 'firebase/firestore'
 import styles from './page.module.css'
@@ -123,7 +122,6 @@ export default function ShortsPage() {
         </div>
       </main>
       <Footer />
-      <WhatsAppFloat />
     </>
   )
 }

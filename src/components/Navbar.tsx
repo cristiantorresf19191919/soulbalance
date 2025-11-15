@@ -42,7 +42,7 @@ export function Navbar() {
       setMenuOpen(false)
       const element = document.querySelector(href)
       if (element) {
-        const navHeight = 85
+        const navHeight = 75
         const targetPosition = (element as HTMLElement).offsetTop - navHeight
         window.scrollTo({
           top: targetPosition,
@@ -100,9 +100,9 @@ export function Navbar() {
       <VersionBadge variant="header" />
       <div className={styles.navContainer}>
         <div className={styles.logo}>
-          <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <Image src="/superLogo.png" alt="Soul Balance" width={65} height={65} className={styles.logoImage} />
-            <span className={styles.logoText}>SOUL BALANCE</span>
+          <Link href="/" className={styles.logoLink}>
+            <Image src="/superLogo.png" alt="Aura Spa" width={65} height={65} className={styles.logoImage} />
+            <span className={styles.logoText}>AURA SPA</span>
           </Link>
         </div>
         {isAuthenticated ? (

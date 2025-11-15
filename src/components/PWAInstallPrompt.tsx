@@ -116,7 +116,7 @@ export function PWAInstallPrompt() {
         <Box display="flex" justifyContent="space-between" alignItems="flex-start" gap={2}>
           <Box>
             <Typography variant="subtitle1" fontWeight={700} gutterBottom>
-              Instala Soul Balance
+              Instala Aura Spa
             </Typography>
             <Typography variant="body2" sx={{ opacity: 0.9 }}>
               Agrega la experiencia a tu pantalla de inicio y disfruta del asistente de bienestar en modo app.

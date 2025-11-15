@@ -4,7 +4,6 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Navbar } from '@/components/Navbar'
 import { Footer } from '@/components/Footer'
-import { WhatsAppFloat } from '@/components/WhatsAppFloat'
 import { MemoryGame } from '@/components/MemoryGame'
 import { useJuegaSettings } from '@/hooks/useJuegaSettings'
 import styles from './juega.module.css'
@@ -55,7 +54,6 @@ export default function JuegaPage() {
         </div>
       </main>
       <Footer />
-      <WhatsAppFloat />
     </>
   )
 }

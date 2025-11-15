@@ -11,11 +11,10 @@ export function AboutSection() {
             Tu bienestar, nuestra pasión
           </h2>
           <p className={styles.aboutText}>
-            En Soul Balance, creemos que cada persona merece momentos de paz y
-            renovación. Ofrecemos experiencias de bienestar diseñadas para
-            restaurar la armonía entre cuerpo, mente y alma. Con profesionales
-            certificados y técnicas especializadas, llevamos el spa directamente
-            a tu hogar.
+            En Aura Spa, ofrecemos servicios terapéuticos profesionales diseñados
+            para tu bienestar. Con terapeutas certificados y técnicas especializadas,
+            llevamos nuestros servicios directamente a tu hogar. Reserva tu cita
+            y disfruta de una experiencia personalizada.
           </p>
           <div className={styles.features}>
             <div className={styles.featureCard}>

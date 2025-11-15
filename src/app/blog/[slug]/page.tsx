@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'next/navigation'
 import { Navbar } from '@/components/Navbar'
 import { Footer } from '@/components/Footer'
-import { WhatsAppFloat } from '@/components/WhatsAppFloat'
 import { BlogArticle } from '@/components/BlogArticle'
 import { Breadcrumb } from '@/components/Breadcrumb'
 import { SuggestedArticles } from '@/components/SuggestedArticles'
@@ -50,7 +49,6 @@ export default function BlogArticlePage() {
           </div>
         </main>
         <Footer />
-        <WhatsAppFloat />
       </>
     )
   }
@@ -66,7 +64,6 @@ export default function BlogArticlePage() {
           </div>
         </main>
         <Footer />
-        <WhatsAppFloat />
       </>
     )
   }
@@ -88,7 +85,6 @@ export default function BlogArticlePage() {
         )}
       </main>
       <Footer />
-      <WhatsAppFloat />
     </>
   )
 }

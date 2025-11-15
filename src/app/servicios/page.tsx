@@ -2,7 +2,6 @@
 
 import { Navbar } from '@/components/Navbar'
 import { Footer } from '@/components/Footer'
-import { WhatsAppFloat } from '@/components/WhatsAppFloat'
 import { ServicesDetailSection } from '@/components/ServicesDetailSection'
 
 export default function ServiciosPage() {
@@ -13,7 +12,6 @@ export default function ServiciosPage() {
         <ServicesDetailSection />
       </main>
       <Footer />
-      <WhatsAppFloat />
     </>
   )
 }

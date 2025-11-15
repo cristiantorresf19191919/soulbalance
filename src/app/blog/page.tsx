@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import { Navbar } from '@/components/Navbar'
 import { Footer } from '@/components/Footer'
-import { WhatsAppFloat } from '@/components/WhatsAppFloat'
 import { BlogListing } from '@/components/BlogListing'
 import { getAllBlogArticles, BlogArticle } from '@/lib/blogData'
 
@@ -32,7 +31,6 @@ export default function BlogPage() {
         <BlogListing articles={articles} loading={loading} />
       </main>
       <Footer />
-      <WhatsAppFloat />
     </>
   )
 }

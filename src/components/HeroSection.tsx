@@ -59,21 +59,21 @@ export function HeroSection() {
         <div className={styles.logoLarge}>
           <Image
             src="/superLogo.png"
-            alt="Soul Balance"
+            alt="Aura Spa"
             width={280}
             height={280}
             className={styles.logoHeroImage}
             priority
           />
-          <h1 className={styles.brandName}>SOUL BALANCE</h1>
+          <h1 className={styles.brandName}>AURA SPA</h1>
         </div>
-        <p className={styles.taglineMain}>EXPERIENCIAS DE BIENESTAR</p>
+        <p className={styles.taglineMain}>RESERVA TUS SERVICIOS TERAPÉUTICOS</p>
         <p className={styles.taglineSub}>
-          Equilibrio entre cuerpo, mente y alma
+          Servicios profesionales a domicilio
         </p>
         <div className={styles.ctaButtons}>
           <Link href="#contacto" className={styles.ctaButton}>
-            Reserva tu experiencia
+            Reserva tu servicio
           </Link>
           <button 
             className={styles.ctaButtonSecondary}

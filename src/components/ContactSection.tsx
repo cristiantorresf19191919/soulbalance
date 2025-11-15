@@ -8,12 +8,12 @@ export function ContactSection() {
     <section id="contacto" className={styles.contact}>
       <div className={styles.container}>
         <h2 className={styles.sectionTitle}>
-          Hablemos de tu bienestar
+          Reserva tu servicio terapéutico
         </h2>
         <p className={styles.contactIntro}>
-          Estamos aquí para escucharte y crear la experiencia perfecta para ti.
-          Cuéntanos qué necesitas y con gusto te ayudaremos a encontrar el
-          servicio ideal.
+          Completa el formulario y nos pondremos en contacto contigo para confirmar
+          tu cita. Estamos aquí para ayudarte a encontrar el servicio terapéutico
+          ideal para tus necesidades.
         </p>
 
         <div className={styles.contactWrapper}>

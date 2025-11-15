@@ -63,11 +63,11 @@ export function ContactForm() {
       <form onSubmit={handleSubmit} className={styles.contactForm} id="contactForm">
         <div className={styles.formHeader}>
           <div className={styles.formIcon}>
-            <i className="fa-solid fa-sparkles"></i>
+            <i className="fa-solid fa-calendar-check"></i>
           </div>
-          <h3 className={styles.formTitle}>Reserva tu Experiencia de Bienestar</h3>
+          <h3 className={styles.formTitle}>Reserva tu Servicio Terapéutico</h3>
           <p className={styles.formSubtitle}>
-            Completa el formulario y te contactaremos en menos de 24 horas
+            Completa el formulario y te contactaremos en menos de 24 horas para confirmar tu cita
           </p>
         </div>
 
@@ -213,8 +213,8 @@ export function ContactForm() {
         </div>
 
         <button type="submit" className={styles.submitBtn}>
-          <span>Reservar mi Experiencia</span>
-          <i className="fa-solid fa-sparkles btn-icon"></i>
+          <span>Reservar mi Servicio</span>
+          <i className="fa-solid fa-paper-plane btn-icon"></i>
         </button>
       </form>
     </>
