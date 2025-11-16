@@ -72,7 +72,11 @@ export function BlogManagement() {
   }, [])
 
   const handleDelete = async (blogId: string, blogTitle: string) => {
-    if (!confirm(`¿Estás seguro de que deseas eliminar el blog "${blogTitle}"?\n\nEsta acción no se puede deshacer.`)) {
+    if (
+      !confirm(
+        `¿Estás seguro de que deseas eliminar el blog &quot;${blogTitle}&quot;?\n\nEsta acción no se puede deshacer.`
+      )
+    ) {
       return
     }
 

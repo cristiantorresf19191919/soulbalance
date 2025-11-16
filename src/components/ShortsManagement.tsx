@@ -56,7 +56,11 @@ export function ShortsManagement() {
   }, [])
 
   const handleDelete = async (shortId: string, shortTitle: string) => {
-    if (!confirm(`¿Estás seguro de que deseas eliminar el short "${shortTitle}"?\n\nEsta acción no se puede deshacer.`)) {
+    if (
+      !confirm(
+        `¿Estás seguro de que deseas eliminar el short &quot;${shortTitle}&quot;?\n\nEsta acción no se puede deshacer.`
+      )
+    ) {
       return
     }
 
