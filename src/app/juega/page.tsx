@@ -3,7 +3,6 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Navbar } from '@/components/Navbar'
-import { Footer } from '@/components/Footer'
 import { MemoryGame } from '@/components/MemoryGame'
 import { useJuegaSettings } from '@/hooks/useJuegaSettings'
 import styles from './juega.module.css'
@@ -30,7 +29,6 @@ export default function JuegaPage() {
             </div>
           </div>
         </main>
-        <Footer />
       </>
     )
   }
@@ -45,7 +43,12 @@ export default function JuegaPage() {
       <main className={styles.mainWrapper}>
         <div className={styles.container}>
           <div className={styles.header}>
-            <h1 className={styles.title}>🎮 Juega y Gana</h1>
+            <div className={styles.titleRow}>
+              <span className={styles.titleIcon}>
+                <i className="fa-solid fa-gamepad"></i>
+              </span>
+              <h1 className={styles.titleText}>Juega y Gana</h1>
+            </div>
             <p className={styles.subtitle}>
               Encuentra todas las parejas de masajes y obtén un código de descuento especial
             </p>
@@ -53,7 +56,6 @@ export default function JuegaPage() {
           <MemoryGame />
         </div>
       </main>
-      <Footer />
     </>
   )
 }

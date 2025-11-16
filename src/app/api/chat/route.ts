@@ -69,20 +69,24 @@ REGLAS DE ORO:
 
 Responde como si fueras ese amigo que siempre tiene la solución perfecta... y siempre termina recomendando un masaje 😄`
 
+// Helper para obtener la API key (solo desde variables de entorno)
+const getApiKey = () => {
+  return process.env.GEMINI_API_KEY || process.env.NEXT_PUBLIC_GEMINI_API_KEY || ''
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { message, history } = body
+    const { message, history } = body || {}
 
     if (!message || typeof message !== 'string' || !message.trim()) {
       return NextResponse.json(
-        { error: 'El mensaje es requerido' },
+        { error: 'El mensaje es requerido.' },
         { status: 400 }
       )
     }
 
-    // Validate API key
-    const apiKey = process.env.GEMINI_API_KEY || process.env.NEXT_PUBLIC_GEMINI_API_KEY
+    const apiKey = getApiKey()
     
     if (!apiKey) {
       console.error('Gemini API key not found')
@@ -93,33 +97,31 @@ export async function POST(request: NextRequest) {
     }
 
     try {
-      // Initialize Gemini AI
+      // Inicializar Gemini con el SDK oficial
       const genAI = new GoogleGenAI({ apiKey })
 
-      // Build the full prompt with system prompt and conversation context
+      // Construir prompt completo con contexto
       let fullPrompt = SYSTEM_PROMPT + '\n\n'
       
-      // Add conversation history if available
-      if (history && Array.isArray(history) && history.length > 0) {
+      if (Array.isArray(history) && history.length > 0) {
         fullPrompt += 'Historial de conversación:\n'
         history.forEach((msg: any) => {
           if (msg.role === 'user') {
-            fullPrompt += `Usuario: ${msg.parts[0]?.text || ''}\n`
+            fullPrompt += `Usuario: ${msg.parts?.[0]?.text || ''}\n`
           } else if (msg.role === 'assistant') {
-            fullPrompt += `Asistente: ${msg.parts[0]?.text || ''}\n`
+            fullPrompt += `Asistente: ${msg.parts?.[0]?.text || ''}\n`
           }
         })
         fullPrompt += '\n'
       }
 
-      // Add current user message
       fullPrompt += `Usuario: ${message.trim()}\n\nAsistente:`
 
-      // Try different models with fallback
+      // Solo usamos el modelo gratuito disponible
+      const modelsToTry = ['gemini-2.0-flash']
+
       let result
       let aiResponse = ''
-      
-      const modelsToTry = ['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-2.0-flash-exp']
       
       for (const modelName of modelsToTry) {
         try {
@@ -129,19 +131,18 @@ export async function POST(request: NextRequest) {
             contents: fullPrompt,
           })
           
-          aiResponse = result.text || ''
+          aiResponse = result?.text || ''
           
           if (aiResponse) {
             console.log(`Successfully generated response using ${modelName}`)
             break
           }
         } catch (modelError: any) {
-          console.log(`Model ${modelName} failed:`, modelError.message)
+          console.log(`Model ${modelName} failed:`, modelError?.message)
           if (modelName === modelsToTry[modelsToTry.length - 1]) {
-            // Last model failed, throw the error
+            // Último modelo falló, lanzamos el error
             throw modelError
           }
-          // Try next model
           continue
         }
       }
@@ -155,20 +156,21 @@ export async function POST(request: NextRequest) {
         timestamp: new Date().toISOString(),
         messageId: Date.now().toString(),
       })
-
     } catch (geminiError: any) {
       console.error('Gemini API error:', geminiError)
       console.error('Error details:', JSON.stringify(geminiError, null, 2))
       
-      // Return more specific error message
-      const errorMessage = geminiError?.message || geminiError?.toString() || 'Error desconocido'
+      const errorMessage =
+        geminiError?.message || geminiError?.toString() || 'Error desconocido'
       
-      return NextResponse.json({
+      return NextResponse.json(
+        {
         error: 'Error al procesar tu mensaje. Por favor, intenta de nuevo.',
         details: errorMessage,
-      }, { status: 500 })
+        },
+        { status: 500 }
+      )
     }
-
   } catch (error: any) {
     console.error('Error processing chat request:', error)
     

@@ -124,7 +124,13 @@
 }
 
 .homeServiceCard {
-  background: linear-gradient(135deg, rgba(201, 167, 118, 0.25) 0%, rgba(255, 255, 255, 0.2) 50%, rgba(201, 167, 118, 0.25) 100%);
+  /* Brand coffee color base (#4a260d) in a simple, clean gradient */
+  background: linear-gradient(
+    135deg,
+    #4a260d 0%,
+    #5a2f10 50%,
+    #2e1708 100%
+  );
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   border-radius: 24px;
@@ -135,16 +141,25 @@
   align-items: center;
   position: relative;
   z-index: 1;
-  border: 2px solid rgba(201, 167, 118, 0.4);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow:
+    0 16px 40px var(--shadow-warm),
+    0 0 0 1px rgba(255, 255, 255, 0.08);
   transition: var(--transition-smooth);
 }
 
 .homeServiceCard:hover {
-  background: linear-gradient(135deg, rgba(201, 167, 118, 0.35) 0%, rgba(255, 255, 255, 0.25) 50%, rgba(201, 167, 118, 0.35) 100%);
+  background: linear-gradient(
+    135deg,
+    #5a2f10 0%,
+    #4a260d 40%,
+    #1f0f05 100%
+  );
   transform: translateY(-5px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.2), 0 0 20px rgba(201, 167, 118, 0.3);
-  border-color: rgba(201, 167, 118, 0.6);
+  box-shadow:
+    0 20px 48px var(--shadow-strong),
+    0 0 0 1px rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.24);
 }
 
 .homeIcon {
@@ -157,13 +172,13 @@
 .homeContent h3 {
   font-family: var(--font-serif);
   font-size: 1.8rem;
-  color: var(--text-light);
+  color: var(--text-on-green);
   margin-bottom: var(--spacing-sm);
   font-weight: 600;
 }
 
 .homeContent p {
-  color: rgba(255, 255, 255, 0.95);
+  color: rgba(255, 255, 255, 0.96);
   line-height: 1.8;
 }
 

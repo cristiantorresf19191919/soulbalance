@@ -18,17 +18,46 @@
 }
 
 .header {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto 3.5rem auto;
+  padding: 2.25rem 2.5rem;
+  border-radius: 32px;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(7, 82, 87, 0.12) 0, transparent 55%),
+    radial-gradient(circle at 100% 120%, rgba(7, 82, 87, 0.18) 0, transparent 65%),
+    #ffffff;
+  box-shadow:
+    0 18px 45px rgba(15, 23, 42, 0.10),
+    0 0 0 1px rgba(15, 23, 42, 0.03);
   text-align: center;
-  margin-bottom: 3rem;
   color: #075257;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
 }
 
-.title {
-  font-size: 3rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
+.titleRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.titleIcon {
+  font-size: 2.2rem;
   color: #075257;
-  letter-spacing: -0.5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.titleText {
+  font-size: 2.8rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #075257;
 }
 
 .subtitle {
@@ -51,9 +80,19 @@
 
   .header {
     margin-bottom: 2rem;
+    padding: 1.75rem 1.5rem;
+    border-radius: 24px;
   }
 
-  .title {
+  .titleRow {
+    gap: 0.5rem;
+  }
+  
+  .titleIcon {
+    font-size: 1.8rem;
+  }
+
+  .titleText {
     font-size: 2rem;
   }
   

@@ -1,16 +1,81 @@
 'use client'
 
+import { useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { motion, useInView, type Variants } from 'framer-motion'
 import { VersionBadge } from './VersionBadge'
 import styles from './Footer.module.css'
 
+const footerContainerVariants: Variants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: [0.16, 1, 0.3, 1],
+      staggerChildren: 0.08,
+    },
+  },
+}
+
+const footerItemVariants: Variants = {
+  hidden: { opacity: 0, y: 18 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  },
+}
+
+const footerLinksListVariants: Variants = {
+  hidden: { opacity: 0, y: 10 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.45,
+      ease: [0.16, 1, 0.3, 1],
+      staggerChildren: 0.04,
+    },
+  },
+}
+
+const footerLinkItemVariants: Variants = {
+  hidden: { opacity: 0, y: 8, scale: 0.98 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.35,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  },
+}
+
 export function Footer() {
+  const containerRef = useRef<HTMLDivElement | null>(null)
+  const isInView = useInView(containerRef, {
+    once: true,
+    margin: '-80px 0px -40px 0px',
+  })
+
   return (
     <footer className={styles.footer}>
-      <div className={styles.container}>
+      <motion.div
+        ref={containerRef}
+        className={styles.container}
+        variants={footerContainerVariants}
+        initial="hidden"
+        animate={isInView ? 'visible' : 'hidden'}
+      >
         <div className={styles.footerContent}>
-          <div className={styles.footerBrand}>
+          <motion.div className={styles.footerBrand} variants={footerItemVariants}>
             <div className={styles.logo}>
               <div className={styles.logoWrapper}>
                 <Image
@@ -24,66 +89,68 @@ export function Footer() {
               <span className={styles.logoText}>AURA SPA</span>
             </div>
             <p className={styles.tagline}>Reserva tus servicios terapéuticos</p>
-          </div>
-          <div className={styles.footerLinks}>
-            <h4 className={styles.sectionTitle}>Enlaces</h4>
-            <ul className={styles.linksList}>
-              <li>
+          </motion.div>
+          <motion.div className={styles.footerLinks} variants={footerItemVariants}>
+            <motion.ul
+              className={styles.linksList}
+              variants={footerLinksListVariants}
+              initial="hidden"
+              animate={isInView ? 'visible' : 'hidden'}
+            >
+              <motion.li variants={footerLinkItemVariants}>
                 <Link href="/#inicio" className={styles.linkItem}>
                   <span>Inicio</span>
                 </Link>
-              </li>
-              <li>
+              </motion.li>
+              <motion.li variants={footerLinkItemVariants}>
                 <Link href="/servicios" className={styles.linkItem}>
                   <span>Servicios</span>
                 </Link>
-              </li>
-              <li>
+              </motion.li>
+              <motion.li variants={footerLinkItemVariants}>
                 <Link href="/#experiencias" className={styles.linkItem}>
                   <span>Experiencias</span>
                 </Link>
-              </li>
-              <li>
+              </motion.li>
+              <motion.li variants={footerLinkItemVariants}>
                 <Link href="/empresarial" className={styles.linkItem}>
                   <span>Empresarial</span>
                 </Link>
-              </li>
-              <li>
+              </motion.li>
+              <motion.li variants={footerLinkItemVariants}>
                 <Link href="/blog" className={styles.linkItem}>
                   <span>Blog</span>
                 </Link>
-              </li>
-              <li>
+              </motion.li>
+              <motion.li variants={footerLinkItemVariants}>
+                <Link href="/shorts" className={styles.linkItem}>
+                  <span>Shorts</span>
+                </Link>
+              </motion.li>
+              <motion.li variants={footerLinkItemVariants}>
+                <Link href="/juega" className={styles.linkItem}>
+                  <span>Juega</span>
+                </Link>
+              </motion.li>
+              <motion.li variants={footerLinkItemVariants}>
+                <Link href="/admin" className={styles.linkItem}>
+                  <span>Admin</span>
+                </Link>
+              </motion.li>
+              <motion.li variants={footerLinkItemVariants}>
+                <Link href="/login" className={styles.linkItem}>
+                  <span>Login</span>
+                </Link>
+              </motion.li>
+              <motion.li variants={footerLinkItemVariants}>
                 <Link href="/#contacto" className={styles.linkItem}>
                   <span>Contacto</span>
                 </Link>
-              </li>
-            </ul>
-          </div>
+              </motion.li>
+            </motion.ul>
+          </motion.div>
         </div>
-        <div className={styles.footerBottom}>
-          <div className={styles.contactInfo}>
-            <a
-              href="mailto:balancecol2024@gmail.com"
-              className={styles.contactLink}
-              aria-label="Email"
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" fill="currentColor"/>
-              </svg>
-              <span>balancecol2024@gmail.com</span>
-            </a>
-            <a
-              href="tel:+573202632993"
-              className={styles.contactLink}
-              aria-label="Phone"
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" fill="currentColor"/>
-              </svg>
-              <span>320 2632993</span>
-            </a>
-          </div>
+        <motion.div className={styles.footerBottom} variants={footerItemVariants}>
           <div className={styles.footerCopyright}>
             <span className={styles.copyrightText}>
               &copy; 2025 Aura Spa. Todos los derechos reservados.
@@ -92,17 +159,10 @@ export function Footer() {
           </div>
           <div className={styles.developedBy}>
             <span className={styles.developedByText}>Desarrollado por</span>
-            <a 
-              href="https://agencypartner.netlify.app/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className={styles.optimusLink}
-            >
-              <span className={styles.optimusDev}>Optimus Dev</span>
-            </a>
+            <span className={styles.optimusDev}>CristianSript Optimus Agency</span>
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </footer>
   )
 }

@@ -1,8 +1,14 @@
 /* Reset & Base Styles */
-* {
+html {
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    box-sizing: inherit;
 }
 
 :root {
@@ -75,25 +81,9 @@ body {
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
     letter-spacing: 0.01em;
-    height: 100%;
     min-height: 100vh;
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-}
-
-body>* {
-    flex-shrink: 0;
-}
-
-/* Ensure MUI ThemeProvider wrapper fills height and maintains flex layout */
-body>div:not(#datepicker-portal) {
-    display: flex;
-    flex-direction: column;
-    min-height: 100%;
-    height: 100%;
-    flex: 1 1 auto;
 }
 
 main {
@@ -104,6 +94,27 @@ main {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 var(--spacing-md);
+}
+
+/* Root and app shell layout:
+   - ensure full-height pages
+   - keep footer at the bottom
+   - draw a global golden frame */
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+.app-shell {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box !important;
+}
+
+.app-shell>main {
+    flex: 1 0 auto;
 }
 
 /* ============================================
@@ -156,7 +167,8 @@ main {
 
     /* Colores Legacy (mantenidos para compatibilidad gradual) */
     --primary-sage: #8FA578;
-    --primary-terracotta: #B8805A;
+    /* Secondary accent: deep wood brown to contrast with green */
+    --primary-terracotta: #8C5A30;
     --primary-gold: #C9A776;
     --primary-rose: #D9A890;
     --primary-dark: #075257;
@@ -165,6 +177,12 @@ main {
     /* Accent colors */
     --accent-warm: var(--beige-calido-dark);
     --accent-mint: var(--primary-sage);
+
+    /* Reusable deep green gradient background (footer / premium cards) */
+    --gradient-deep-green:
+        radial-gradient(circle at 0% 0%, rgba(255, 255, 255, 0.06) 0%, transparent 55%),
+        radial-gradient(circle at 100% 0%, rgba(255, 255, 255, 0.04) 0%, transparent 55%),
+        linear-gradient(180deg, var(--primary-green) 0%, var(--primary-green-dark) 55%, #03282c 100%);
 
     /* Border & Shadow con nueva paleta */
     --border-light: rgba(7, 82, 87, 0.15);

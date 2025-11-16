@@ -3,6 +3,7 @@
 import { useState, useRef, ChangeEvent } from 'react'
 import { storage } from '@/lib/firebase'
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
+import { Separator } from './Separator'
 import styles from './MediaUpload.module.css'
 
 interface MediaUploadProps {
@@ -202,9 +203,7 @@ export function MediaUpload({
         </div>
 
         {/* Or Divider */}
-        <div className={styles.divider}>
-          <span>o</span>
-        </div>
+        <Separator label="o" variant="light" compact mutedLabel />
 
         {/* URL Input */}
         <div className={styles.urlInput}>

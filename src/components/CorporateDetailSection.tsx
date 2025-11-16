@@ -1,9 +1,44 @@
 'use client'
 
 import Link from 'next/link'
+import { motion, useInView, type Variants } from 'framer-motion'
+import { useRef } from 'react'
 import styles from './CorporateDetailSection.module.css'
 
+const processContainerVariants: Variants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: [0.16, 1, 0.3, 1],
+      staggerChildren: 0.12,
+    },
+  },
+}
+
+const processStepVariants: Variants = {
+  hidden: { opacity: 0, y: 30, rotate: 6, scale: 0.9 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    rotate: 0,
+    scale: 1,
+    transition: {
+      duration: 0.55,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  },
+}
+
 export function CorporateDetailSection() {
+  const processRef = useRef<HTMLDivElement | null>(null)
+  const processInView = useInView(processRef, {
+    margin: '-20% 0px -20% 0px',
+    once: true,
+  })
+
   return (
     <section className={styles.corporateDetailSection}>
       <div className={styles.container}>
@@ -122,24 +157,30 @@ export function CorporateDetailSection() {
 
         <div className={styles.processSection}>
           <h3>Proceso Simple y Eficiente</h3>
-          <div className={styles.processSteps}>
-            <div className={styles.processStep}>
+          <motion.div
+            ref={processRef}
+            className={styles.processSteps}
+            variants={processContainerVariants}
+            initial="hidden"
+            animate={processInView ? 'visible' : 'hidden'}
+          >
+            <motion.div className={styles.processStep} variants={processStepVariants}>
               <div className={styles.processStepNumber}>1</div>
               <div className={styles.processStepLabel}>Consulta</div>
-            </div>
-            <div className={styles.processStep}>
+            </motion.div>
+            <motion.div className={styles.processStep} variants={processStepVariants}>
               <div className={styles.processStepNumber}>2</div>
               <div className={styles.processStepLabel}>Cotización</div>
-            </div>
-            <div className={styles.processStep}>
+            </motion.div>
+            <motion.div className={styles.processStep} variants={processStepVariants}>
               <div className={styles.processStepNumber}>3</div>
               <div className={styles.processStepLabel}>Ejecución</div>
-            </div>
-            <div className={styles.processStep}>
+            </motion.div>
+            <motion.div className={styles.processStep} variants={processStepVariants}>
               <div className={styles.processStepNumber}>4</div>
               <div className={styles.processStepLabel}>Resultados</div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
 
         <div className={styles.corporateGuarantee}>

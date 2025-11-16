@@ -245,7 +245,12 @@ FORMATO DE RESPUESTA (en español, claro y profesional):
 - Beneficios esperados: … (especialmente en productividad y bienestar)
 - Consideraciones especiales: …
 
-Ahora analiza RESPUESTAS_EMPRESA y genera la recomendación.`
+  Ahora analiza RESPUESTAS_EMPRESA y genera la recomendación.`
+
+// Helper para obtener la API key (solo desde variables de entorno)
+const getApiKey = () => {
+  return process.env.GEMINI_API_KEY || process.env.NEXT_PUBLIC_GEMINI_API_KEY || ''
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -260,8 +265,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Validate API key
-    const apiKey = process.env.GEMINI_API_KEY || 'AIzaSyBFpiO7VL4o-glXbpeXUdcs1N-3Q4jOfDU'
+    const apiKey = getApiKey()
     
     if (!apiKey) {
       console.error('Gemini API key not found')
@@ -310,13 +314,12 @@ export async function POST(request: NextRequest) {
       const responseLabel = isCorporate ? 'RESPUESTAS_EMPRESA' : 'RESPUESTAS_PACIENTE'
       const fullPrompt = `${systemPrompt}\n\n${responseLabel}:\n\n${answersText}`
 
-      // Generate response using Gemini
-      // Try different models with fallback
+      // Generate response using Gemini (solo modelo free tier)
       let result
       let aiResponse = ''
-      
-      const modelsToTry = ['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-2.0-flash-exp']
-      
+
+      const modelsToTry = ['gemini-2.0-flash']
+
       for (const modelName of modelsToTry) {
         try {
           console.log(`Attempting to use model: ${modelName}`)
@@ -324,20 +327,20 @@ export async function POST(request: NextRequest) {
             model: modelName,
             contents: fullPrompt,
           })
-          
-          aiResponse = result.text || ''
-          
+
+          aiResponse = result?.text || ''
+
           if (aiResponse) {
             console.log(`Successfully generated response using ${modelName}`)
             break
           }
         } catch (modelError: any) {
-          console.log(`Model ${modelName} failed:`, modelError.message)
+          console.log(`Model ${modelName} failed:`, modelError?.message)
           if (modelName === modelsToTry[modelsToTry.length - 1]) {
             // Last model failed, throw the error
             throw modelError
           }
-          // Try next model
+          // Try next model (aunque solo hay uno ahora)
           continue
         }
       }
@@ -350,23 +353,24 @@ export async function POST(request: NextRequest) {
         recommendation: aiResponse,
         timestamp: new Date().toISOString(),
       })
-
     } catch (geminiError: any) {
       console.error('Gemini API error:', geminiError)
       console.error('Error details:', JSON.stringify(geminiError, null, 2))
-      
-      // Return more specific error message
-      const errorMessage = geminiError?.message || geminiError?.toString() || 'Error desconocido'
-      
-      return NextResponse.json({
-        error: 'Error al procesar la recomendación. Por favor, inténtalo de nuevo.',
-        details: errorMessage,
-      }, { status: 500 })
-    }
 
+      const errorMessage =
+        geminiError?.message || geminiError?.toString() || 'Error desconocido'
+
+      return NextResponse.json(
+        {
+          error: 'Error al procesar la recomendación. Por favor, inténtalo de nuevo.',
+          details: errorMessage,
+        },
+        { status: 500 }
+      )
+    }
   } catch (error: any) {
     console.error('Error processing recommendation request:', error)
-    
+
     return NextResponse.json(
       { error: 'Error interno del servidor' },
       { status: 500 }

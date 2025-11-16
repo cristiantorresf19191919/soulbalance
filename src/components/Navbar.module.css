@@ -140,19 +140,6 @@
   border-radius: 2px;
 }
 
-.navMenu a::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.6);
-  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
-}
-
 .navMenu a:hover {
   opacity: 1;
   transform: translateY(-1px);
@@ -161,10 +148,6 @@
 
 .navMenu a:hover::before {
   width: 100%;
-}
-
-.navMenu a:hover::after {
-  width: 80%;
 }
 
 .menuToggle {

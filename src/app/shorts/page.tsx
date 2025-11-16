@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import { Navbar } from '@/components/Navbar'
-import { Footer } from '@/components/Footer'
 import { firestore } from '@/lib/firebase'
 import { collection, query, orderBy, onSnapshot } from 'firebase/firestore'
 import styles from './page.module.css'
@@ -57,9 +56,8 @@ export default function ShortsPage() {
 
   return (
     <>
-      <main style={{ flex: 1 }}>
-        <Navbar />
-        <div className={styles.shortsPage}>
+      <Navbar />
+      <div className={styles.shortsPage}>
           <div className={styles.shortsContainer}>
             <div className={styles.shortsHeader}>
               <h1 className={styles.shortsTitle}>Shorts</h1>
@@ -120,8 +118,6 @@ export default function ShortsPage() {
             )}
           </div>
         </div>
-      </main>
-      <Footer />
     </>
   )
 }

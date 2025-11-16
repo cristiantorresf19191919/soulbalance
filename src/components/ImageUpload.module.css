@@ -133,27 +133,6 @@
   margin-left: 0.5rem;
 }
 
-.divider {
-  display: flex;
-  align-items: center;
-  text-align: center;
-  margin: 0.5rem 0;
-  color: var(--text-medium);
-  font-size: 0.9rem;
-  font-weight: 600;
-}
-
-.divider::before,
-.divider::after {
-  content: '';
-  flex: 1;
-  border-bottom: 1px solid rgba(7, 82, 87, 0.15);
-}
-
-.divider span {
-  padding: 0 1rem;
-}
-
 .urlInput {
   display: flex;
   flex-direction: column;
