@@ -8,7 +8,9 @@ import {
   SelectChangeEvent,
   Button
 } from '@mui/material'
+import { collection, getDocs, query, where } from 'firebase/firestore'
 import { useContactForm } from '@/hooks/useContactForm'
+import { firestore } from '@/lib/firebase'
 import { LoadingOverlay } from './LoadingOverlay'
 import { showToast } from './ToastNotifications'
 import { DatePickerModal } from './DatePickerModal'
@@ -20,6 +22,21 @@ interface BookingFormProps {
   pricing: Array<{ duration: string; price: string }>
   selectedDuration?: string
   onSuccess?: () => void
+}
+
+interface PartnerAvailability {
+  [key: string]: {
+    morning: boolean
+    afternoon: boolean
+    evening: boolean
+  }
+}
+
+interface Partner {
+  id: string
+  fullName: string
+  availability: PartnerAvailability
+  primaryServiceCity?: string
 }
 
 export function BookingForm({ 
@@ -39,6 +56,8 @@ export function BookingForm({
   const [selectedDuration, setSelectedDuration] = useState<string>(initialDuration || '')
   const [selectedDate, setSelectedDate] = useState<Date | null>(null)
   const [showLoading, setShowLoading] = useState(false)
+  const [availableTherapists, setAvailableTherapists] = useState<Partner[]>([])
+  const [selectedTherapistId, setSelectedTherapistId] = useState<string>('')
   const { submitForm } = useContactForm()
 
   // Update selected duration when initialDuration prop changes
@@ -47,6 +66,68 @@ export function BookingForm({
       setSelectedDuration(initialDuration)
     }
   }, [initialDuration])
+
+  // Helper: map JS Date weekday to partner availability key
+  const getDayKey = (date: Date) => {
+    const day = date.getDay()
+    const mapping: { [key: number]: string } = {
+      0: 'sunday',
+      1: 'monday',
+      2: 'tuesday',
+      3: 'wednesday',
+      4: 'thursday',
+      5: 'friday',
+      6: 'saturday'
+    }
+    return mapping[day]
+  }
+
+  const isAvailableOnDate = (availability: PartnerAvailability | undefined, date: Date | null) => {
+    if (!availability || !date) return false
+    const key = getDayKey(date)
+    const day = availability[key]
+    if (!day) return false
+    return day.morning || day.afternoon || day.evening
+  }
+
+  // Load therapists that offer this service and have availability for selected date
+  useEffect(() => {
+    const fetchTherapists = async () => {
+      if (!firestore || !selectedDate || !serviceId) {
+        setAvailableTherapists([])
+        setSelectedTherapistId('')
+        return
+      }
+
+      try {
+        const partnersRef = collection(firestore, 'partners')
+        const q = query(partnersRef, where('servicesOffered', 'array-contains', serviceId))
+        const snapshot = await getDocs(q)
+
+        const therapists: Partner[] = snapshot.docs.map((doc) => {
+          const data = doc.data() as any
+          return {
+            id: doc.id,
+            fullName: data.fullName || data.name || data.displayName || data.email || 'Terapeuta',
+            availability: (data.availability || {}) as PartnerAvailability,
+            primaryServiceCity: data.primaryServiceCity || ''
+          }
+        })
+
+        const filtered = therapists.filter((t) => isAvailableOnDate(t.availability, selectedDate))
+        setAvailableTherapists(filtered)
+
+        // Reset therapist selection when list changes
+        setSelectedTherapistId('')
+      } catch (error) {
+        console.error('Error loading therapists:', error)
+        setAvailableTherapists([])
+        setSelectedTherapistId('')
+      }
+    }
+
+    fetchTherapists()
+  }, [selectedDate, serviceId])
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
@@ -61,10 +142,16 @@ export function BookingForm({
       return
     }
 
+    if (!selectedTherapistId) {
+      showToast('Error', 'Por favor selecciona un terapeuta disponible', 'error')
+      return
+    }
+
     setShowLoading(true)
 
     const selectedPrice = pricing.find(p => p.duration === selectedDuration)
     const message = formData.message || 'Sin mensaje adicional'
+    const therapist = availableTherapists.find((t) => t.id === selectedTherapistId)
 
     const result = await submitForm({
       ...formData,
@@ -73,7 +160,9 @@ export function BookingForm({
       bookingDate: selectedDate,
       duration: selectedDuration,
       price: selectedPrice?.price || '',
-      serviceName: serviceName
+      serviceName: serviceName,
+      therapistId: therapist?.id,
+      therapistName: therapist?.fullName
     })
 
     setShowLoading(false)
@@ -83,6 +172,8 @@ export function BookingForm({
       setFormData({ name: '', email: '', phone: '', message: '' })
       setSelectedDuration('')
       setSelectedDate(null)
+      setSelectedTherapistId('')
+      setAvailableTherapists([])
       if (onSuccess) {
         setTimeout(() => onSuccess(), 1500)
       }
@@ -177,6 +268,49 @@ export function BookingForm({
               filterDate={isWeekday}
             />
           </div>
+        </div>
+
+        <div className={styles.formSection}>
+          <label className={styles.sectionLabel}>
+            <i className="fa-solid fa-user-nurse label-icon"></i>
+            Selecciona el terapeuta
+          </label>
+          {!selectedDate ? (
+            <p className={styles.helperText}>
+              Primero selecciona una fecha para ver qué terapeutas están disponibles para este
+              servicio.
+            </p>
+          ) : availableTherapists.length === 0 ? (
+            <p className={styles.helperText}>
+              No hay terapeutas disponibles para este servicio en la fecha seleccionada. Prueba con
+              otra fecha.
+            </p>
+          ) : (
+            <div className={styles.therapistList}>
+              {availableTherapists.map((therapist) => (
+                <label
+                  key={therapist.id}
+                  className={`${styles.therapistOption} ${
+                    selectedTherapistId === therapist.id ? styles.therapistOptionSelected : ''
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="therapist"
+                    value={therapist.id}
+                    checked={selectedTherapistId === therapist.id}
+                    onChange={() => setSelectedTherapistId(therapist.id)}
+                  />
+                  <div className={styles.therapistInfo}>
+                    <span className={styles.therapistName}>{therapist.fullName}</span>
+                    {therapist.primaryServiceCity && (
+                      <span className={styles.therapistCity}>{therapist.primaryServiceCity}</span>
+                    )}
+                  </div>
+                </label>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className={styles.formSection}>

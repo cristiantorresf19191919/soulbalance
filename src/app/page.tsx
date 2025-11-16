@@ -8,6 +8,7 @@ import { ServicesGrid } from '@/components/ServicesGrid'
 import { PremiumExperiences } from '@/components/PremiumExperiences'
 import { CorporateSection } from '@/components/CorporateSection'
 import { ContactSection } from '@/components/ContactSection'
+import { AvailableServicesSection } from '@/components/AvailableServicesSection'
 import { ToastContainer } from '@/components/ToastNotifications'
 import { useScrollEffects } from '@/hooks/useScrollEffects'
 
@@ -20,6 +21,7 @@ export default function Home() {
       <HeroSection />
       <AboutSection />
       <ServicesGrid />
+      <AvailableServicesSection />
       <PremiumExperiences />
       <CorporateSection />
       <ContactSection />

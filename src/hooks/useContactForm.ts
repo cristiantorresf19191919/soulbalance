@@ -15,6 +15,8 @@ export interface FormData {
   duration?: string
   price?: string
   serviceName?: string
+  therapistId?: string
+  therapistName?: string
 }
 
 export function useContactForm() {
@@ -87,6 +89,12 @@ export function useContactForm() {
       }
       if (data.serviceName) {
         firestoreData.serviceName = data.serviceName
+      }
+      if (data.therapistId) {
+        firestoreData.therapistId = data.therapistId
+      }
+      if (data.therapistName) {
+        firestoreData.therapistName = data.therapistName
       }
 
       // Save to Firestore

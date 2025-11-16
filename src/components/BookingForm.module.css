@@ -202,6 +202,65 @@
   cursor: pointer;
 }
 
+.helperText {
+  font-size: 0.9rem;
+  color: var(--text-medium);
+  line-height: 1.4;
+}
+
+.therapistList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.therapistOption {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  border: 2px solid var(--border-light);
+  background: rgba(7, 82, 87, 0.02);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.therapistOption input {
+  accent-color: var(--primary-green);
+}
+
+.therapistOption:hover {
+  border-color: rgba(7, 82, 87, 0.35);
+  background: rgba(7, 82, 87, 0.06);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(7, 82, 87, 0.12);
+}
+
+.therapistOptionSelected {
+  border-color: var(--primary-green);
+  background: rgba(7, 82, 87, 0.08);
+  box-shadow:
+    0 0 0 3px rgba(7, 82, 87, 0.18),
+    0 6px 16px rgba(7, 82, 87, 0.18);
+}
+
+.therapistInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.therapistName {
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.therapistCity {
+  font-size: 0.85rem;
+  color: var(--text-medium);
+}
+
 /* Responsive styles for date input - modal handled by ChristianDatePicker */
 @media (max-width: 768px) {
   .datePicker {

@@ -105,18 +105,23 @@ export function Navbar() {
             <span className={styles.logoText}>AURA SPA</span>
           </Link>
         </div>
-        {isAuthenticated ? (
-          <div className={styles.authButtons}>
-            <Link href="/admin" className={styles.adminNavBtn}>
-              Admin
-            </Link>
-            <button onClick={handleLogout} className={styles.logoutNavBtn}>
-              Cerrar Sesión
-            </button>
-          </div>
-        ) : (
-          <Link href="/login" className={styles.loginNavBtn}>Login</Link>
-        )}
+        <div className={styles.authButtons}>
+          <Link href="/onboarding" className={styles.enrollNavBtn}>
+            Enroll With Us
+          </Link>
+          {isAuthenticated ? (
+            <>
+              <Link href="/admin" className={styles.adminNavBtn}>
+                Admin
+              </Link>
+              <button onClick={handleLogout} className={styles.logoutNavBtn}>
+                Cerrar Sesión
+              </button>
+            </>
+          ) : (
+            <Link href="/login" className={styles.loginNavBtn}>Login</Link>
+          )}
+        </div>
         <button 
           className={`${styles.menuToggle} ${menuOpen ? styles.active : ''}`} 
           onClick={() => setMenuOpen(!menuOpen)} 
