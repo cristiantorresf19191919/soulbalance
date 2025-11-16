@@ -390,7 +390,7 @@ export function MemoryGame() {
               <div className={styles.cardFront}>
                 <div className={styles.cardBackPattern}>
                   <i className="fas fa-spa"></i>
-                  <span>Soul Balance</span>
+                  <span>Aura Spa</span>
                 </div>
               </div>
               <div className={styles.cardBack}>
