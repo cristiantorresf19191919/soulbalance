@@ -140,7 +140,9 @@ export function BlogManagement() {
               <i className="fa-regular fa-file-lines"></i>
             </div>
             <h3>No hay blogs aún</h3>
-            <p>Crea tu primer blog haciendo clic en el botón "Crear Blog"</p>
+            <p>
+              Crea tu primer blog haciendo clic en el botón &quot;Crear Blog&quot;
+            </p>
           </div>
         ) : (
           <div className={styles.blogsGrid}>

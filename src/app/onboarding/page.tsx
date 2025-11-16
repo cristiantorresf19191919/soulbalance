@@ -213,6 +213,10 @@ export default function OnboardingPage() {
   }, [])
 
   const handleSubmit = useCallback(async () => {
+    if (!auth) {
+      setError('El servicio de autenticación no está disponible. Intenta de nuevo más tarde.')
+      return
+    }
     setLoading(true)
     setError('')
     try {
@@ -251,6 +255,10 @@ export default function OnboardingPage() {
   }, [formData, profilePicturePreview, router])
 
   const handleCreateLater = useCallback(async () => {
+    if (!auth) {
+      setError('El servicio de autenticación no está disponible. Intenta de nuevo más tarde.')
+      return
+    }
     setLoading(true)
     setError('')
     try {

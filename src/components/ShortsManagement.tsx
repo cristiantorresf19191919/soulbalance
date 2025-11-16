@@ -124,7 +124,9 @@ export function ShortsManagement() {
               <i className="fa-solid fa-video"></i>
             </div>
             <h3>No hay shorts aún</h3>
-            <p>Crea tu primer short haciendo clic en el botón "Crear Short"</p>
+            <p>
+              Crea tu primer short haciendo clic en el botón &quot;Crear Short&quot;
+            </p>
           </div>
         ) : (
           <div className={styles.shortsGrid}>
