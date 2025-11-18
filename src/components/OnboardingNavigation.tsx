@@ -1,6 +1,7 @@
 'use client'
 
 import { Box, Button } from '@mui/material'
+import { useLanguage } from '@/lib/language-context'
 import BrandButton from './BrandButton'
 
 interface OnboardingNavigationProps {
@@ -22,6 +23,7 @@ export default function OnboardingNavigation({
   loading,
   canProceed
 }: OnboardingNavigationProps) {
+  const { t } = useLanguage()
   return (
     <Box
       sx={{
@@ -42,7 +44,7 @@ export default function OnboardingNavigation({
           '&:disabled': { color: 'rgba(255, 255, 255, 0.3)' }
         }}
       >
-        Atrás
+        {t('onboarding.nav.back')}
       </Button>
 
       <Box sx={{ display: 'flex', gap: 2 }}>
@@ -55,7 +57,7 @@ export default function OnboardingNavigation({
               '&:hover': { color: 'white' }
             }}
           >
-            Completar Después
+            {t('onboarding.nav.completeLater')}
           </Button>
         )}
         {activeStep < 3 ? (
@@ -64,13 +66,20 @@ export default function OnboardingNavigation({
             onClick={onNext}
             disabled={!canProceed || loading}
             sx={{
-              bgcolor: 'white',
-              color: '#8B5CF6',
-              '&:hover': { bgcolor: 'rgba(255, 255, 255, 0.9)' },
-              '&:disabled': { bgcolor: 'rgba(255, 255, 255, 0.3)' }
+              background: 'linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-dark) 100%)',
+              color: 'white',
+              '&:hover': { 
+                background: 'linear-gradient(135deg, var(--primary-green-dark) 0%, var(--primary-green) 100%)',
+                transform: 'translateY(-2px)',
+                boxShadow: '0 8px 24px rgba(7, 82, 87, 0.4)'
+              },
+              '&:disabled': { 
+                background: 'rgba(7, 82, 87, 0.3)',
+                color: 'rgba(255, 255, 255, 0.5)'
+              }
             }}
           >
-            Siguiente
+            {t('onboarding.nav.next')}
           </BrandButton>
         ) : (
           <BrandButton
@@ -78,13 +87,20 @@ export default function OnboardingNavigation({
             onClick={onSubmit}
             disabled={!canProceed || loading}
             sx={{
-              bgcolor: 'white',
-              color: '#8B5CF6',
-              '&:hover': { bgcolor: 'rgba(255, 255, 255, 0.9)' },
-              '&:disabled': { bgcolor: 'rgba(255, 255, 255, 0.3)' }
+              background: 'linear-gradient(135deg, var(--primary-terracotta) 0%, rgba(140, 90, 48, 0.9) 100%)',
+              color: 'white',
+              '&:hover': { 
+                background: 'linear-gradient(135deg, rgba(140, 90, 48, 0.9) 0%, var(--primary-terracotta) 100%)',
+                transform: 'translateY(-2px)',
+                boxShadow: '0 8px 24px rgba(140, 90, 48, 0.4)'
+              },
+              '&:disabled': { 
+                background: 'rgba(140, 90, 48, 0.3)',
+                color: 'rgba(255, 255, 255, 0.5)'
+              }
             }}
           >
-            {loading ? 'Creando...' : 'Crear Cuenta'}
+            {loading ? t('onboarding.nav.creating') : t('onboarding.nav.createAccount')}
           </BrandButton>
         )}
       </Box>

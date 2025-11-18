@@ -3,6 +3,7 @@
 import { TextField, Box, Typography, Button, Avatar } from '@mui/material'
 import { MASSAGE_CATEGORIES } from '@/lib/massage-types'
 import { Checkbox, FormControlLabel, FormGroup } from '@mui/material'
+import { useLanguage } from '@/lib/language-context'
 
 interface OnboardingStep2Props {
   formData: any
@@ -19,6 +20,7 @@ export default function OnboardingStep2({
   handleProfilePictureChange,
   profilePicturePreview
 }: OnboardingStep2Props) {
+  const { t } = useLanguage()
   const handleServiceToggle = (service: string) => {
     const current = formData.servicesOffered || []
     const updated = current.includes(service)
@@ -30,7 +32,7 @@ export default function OnboardingStep2({
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
       <Typography variant="h5" sx={{ color: 'white', mb: 2, fontWeight: 700 }}>
-        Perfil Profesional
+        {t('onboarding.step2.title')}
       </Typography>
 
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
@@ -38,7 +40,7 @@ export default function OnboardingStep2({
           src={profilePicturePreview || undefined}
           sx={{ width: 120, height: 120, bgcolor: 'rgba(255, 255, 255, 0.2)' }}
         >
-          {!profilePicturePreview && 'Foto'}
+          {!profilePicturePreview && t('onboarding.step2.photo')}
         </Avatar>
         <Button
           variant="outlined"
@@ -49,7 +51,7 @@ export default function OnboardingStep2({
             '&:hover': { borderColor: 'white', bgcolor: 'rgba(255, 255, 255, 0.1)' }
           }}
         >
-          Subir Foto
+          {t('onboarding.step2.uploadPhoto')}
           <input
             type="file"
             hidden
@@ -60,7 +62,7 @@ export default function OnboardingStep2({
       </Box>
 
       <TextField
-        label="Título Profesional"
+        label={t('onboarding.step2.professionalTitle')}
         value={formData.professionalTitle}
         onChange={(e) => handleChange('professionalTitle', e.target.value)}
         error={!!errors.professionalTitle}
@@ -81,7 +83,7 @@ export default function OnboardingStep2({
       />
 
       <TextField
-        label="Sobre Mí"
+        label={t('onboarding.step2.aboutMe')}
         multiline
         rows={4}
         value={formData.aboutMe}
@@ -105,7 +107,7 @@ export default function OnboardingStep2({
 
       <Box>
         <Typography variant="subtitle1" sx={{ color: 'white', mb: 1 }}>
-          Servicios Ofrecidos
+          {t('onboarding.step2.servicesOffered')}
         </Typography>
         {errors.servicesOffered && (
           <Typography variant="caption" sx={{ color: 'error.main', display: 'block', mb: 1 }}>

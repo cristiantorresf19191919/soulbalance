@@ -2,6 +2,7 @@
 
 import { TextField, Box, Typography, Chip, Button } from '@mui/material'
 import { MassageCategory } from '@/lib/massage-types'
+import { useLanguage } from '@/lib/language-context'
 
 interface OnboardingStep3Props {
   formData: {
@@ -30,11 +31,12 @@ export default function OnboardingStep3({
   handlePricingChange,
   handleAvailabilityChange
 }: OnboardingStep3Props) {
+  const { t } = useLanguage()
   const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
   const timeSlots = [
-    { key: 'morning', label: 'Mañana' },
-    { key: 'afternoon', label: 'Tarde' },
-    { key: 'evening', label: 'Noche' }
+    { key: 'morning', label: t('onboarding.step3.morning') },
+    { key: 'afternoon', label: t('onboarding.step3.afternoon') },
+    { key: 'evening', label: t('onboarding.step3.evening') }
   ]
 
   const handleAreaAdd = (area: string) => {
@@ -50,11 +52,11 @@ export default function OnboardingStep3({
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
       <Typography variant="h5" sx={{ color: 'white', mb: 2, fontWeight: 700 }}>
-        Detalles de Práctica
+        {t('onboarding.step3.title')}
       </Typography>
 
       <TextField
-        label="Ciudad Principal de Servicio"
+        label={t('onboarding.step3.primaryCity')}
         value={formData.primaryServiceCity}
         onChange={(e) => handleChange('primaryServiceCity', e.target.value)}
         error={!!errors.primaryServiceCity}
@@ -76,7 +78,7 @@ export default function OnboardingStep3({
 
       <Box>
         <Typography variant="subtitle1" sx={{ color: 'white', mb: 1 }}>
-          Áreas de Servicio
+          {t('onboarding.step3.serviceAreas')}
         </Typography>
         {errors.serviceAreas && (
           <Typography variant="caption" sx={{ color: 'error.main', display: 'block', mb: 1 }}>
@@ -98,7 +100,7 @@ export default function OnboardingStep3({
           ))}
         </Box>
         <TextField
-          placeholder="Agregar área"
+          placeholder={t('onboarding.step3.addArea')}
           size="small"
           onKeyPress={(e) => {
             if (e.key === 'Enter') {
@@ -121,7 +123,7 @@ export default function OnboardingStep3({
 
       <Box>
         <Typography variant="subtitle1" sx={{ color: 'white', mb: 2 }}>
-          Precios por Servicio
+          {t('onboarding.step3.pricing')}
         </Typography>
         {errors.pricing && (
           <Typography variant="caption" sx={{ color: 'error.main', display: 'block', mb: 1 }}>
@@ -150,7 +152,7 @@ export default function OnboardingStep3({
 
       <Box>
         <Typography variant="subtitle1" sx={{ color: 'white', mb: 2 }}>
-          Disponibilidad
+          {t('onboarding.step3.availability')}
         </Typography>
         {errors.availability && (
           <Typography variant="caption" sx={{ color: 'error.main', display: 'block', mb: 1 }}>
@@ -160,7 +162,7 @@ export default function OnboardingStep3({
         {days.map((day) => (
           <Box key={day} sx={{ mb: 2 }}>
             <Typography variant="body2" sx={{ color: 'white', mb: 1, textTransform: 'capitalize' }}>
-              {day}
+              {t(`onboarding.day.${day}`)}
             </Typography>
             <Box sx={{ display: 'flex', gap: 1 }}>
               {timeSlots.map((slot) => (

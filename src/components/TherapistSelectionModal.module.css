@@ -1,0 +1,363 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.header {
+  padding-bottom: var(--spacing-md);
+  border-bottom: 2px solid var(--border-light);
+  margin-bottom: var(--spacing-lg);
+}
+
+.title {
+  font-weight: 700 !important;
+  color: var(--text-dark) !important;
+  font-size: 1.5rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.subtitle {
+  color: var(--text-medium) !important;
+  font-size: 0.95rem !important;
+}
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  padding-right: 0.5rem;
+}
+
+.content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.content::-webkit-scrollbar-track {
+  background: rgba(7, 82, 87, 0.05);
+  border-radius: 4px;
+}
+
+.content::-webkit-scrollbar-thumb {
+  background: var(--primary-green);
+  border-radius: 4px;
+}
+
+.content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-green-dark);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--primary-dark);
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.label i {
+  font-size: 1.1rem;
+  opacity: 0.8;
+  color: var(--primary-green);
+}
+
+.datePickerWrapper {
+  width: 100%;
+  position: relative;
+}
+
+.datePicker {
+  width: 100%;
+  padding: 1.25rem 1.5rem;
+  border: 2px solid var(--border-light);
+  border-radius: 16px;
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  color: var(--text-dark);
+  transition: var(--transition-smooth);
+  background: var(--bg-white);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  font-weight: 500;
+  min-height: 60px;
+}
+
+.datePicker:hover {
+  border-color: rgba(77, 77, 77, 0.3);
+  box-shadow: 0 4px 12px rgba(77, 77, 77, 0.1);
+  transform: translateY(-1px);
+}
+
+.datePicker:focus {
+  outline: none;
+  border-color: var(--primary-green);
+  box-shadow: 
+    0 0 0 4px rgba(7, 82, 87, 0.1),
+    0 6px 20px rgba(7, 82, 87, 0.15);
+  transform: translateY(-2px);
+}
+
+.datePicker::placeholder {
+  color: var(--text-medium);
+  font-size: 1.1rem;
+}
+
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-xl) 0;
+}
+
+.loadingText {
+  color: var(--text-medium) !important;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-xl) 0;
+  text-align: center;
+}
+
+.emptyState i {
+  font-size: 3rem;
+  color: var(--text-medium);
+  opacity: 0.5;
+}
+
+.emptyText {
+  color: var(--text-medium) !important;
+  font-weight: 500 !important;
+}
+
+.emptySubtext {
+  color: var(--text-medium) !important;
+  opacity: 0.7;
+}
+
+.therapistsSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.sectionTitle {
+  color: var(--text-dark) !important;
+  font-weight: 600 !important;
+  font-size: 1rem !important;
+}
+
+.therapistsList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.therapistCard {
+  padding: var(--spacing-md);
+  border: 2px solid var(--border-light);
+  border-radius: 16px;
+  background: var(--bg-white);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.therapistCard:hover {
+  border-color: rgba(7, 82, 87, 0.35);
+  background: rgba(7, 82, 87, 0.02);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(7, 82, 87, 0.12);
+}
+
+.therapistCardSelected {
+  border-color: var(--primary-green);
+  background: rgba(7, 82, 87, 0.08);
+  box-shadow:
+    0 0 0 3px rgba(7, 82, 87, 0.18),
+    0 6px 16px rgba(7, 82, 87, 0.18);
+}
+
+.therapistHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.avatar {
+  width: 60px !important;
+  height: 60px !important;
+  background: linear-gradient(135deg, var(--primary-green), var(--primary-green-dark)) !important;
+  font-weight: 700 !important;
+  font-size: 1.5rem !important;
+}
+
+.therapistInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.therapistName {
+  font-weight: 600 !important;
+  color: var(--text-dark) !important;
+  font-size: 1.1rem !important;
+}
+
+.therapistTitle {
+  color: var(--text-medium) !important;
+  font-size: 0.85rem !important;
+  font-style: italic;
+}
+
+.therapistCity {
+  color: var(--text-medium) !important;
+  font-size: 0.85rem !important;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.therapistCity i {
+  font-size: 0.75rem;
+}
+
+.timeSlotsSection {
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.timeSlotsLabel {
+  color: var(--text-medium) !important;
+  font-weight: 500 !important;
+  font-size: 0.85rem !important;
+}
+
+.timeSlots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.timeSlotChip {
+  border: 2px solid var(--border-light) !important;
+  background: var(--bg-white) !important;
+  color: var(--text-dark) !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  transition: var(--transition-smooth) !important;
+}
+
+.timeSlotChip:hover {
+  border-color: var(--primary-green) !important;
+  background: rgba(7, 82, 87, 0.05) !important;
+  transform: translateY(-1px) !important;
+}
+
+.timeSlotChipSelected {
+  border-color: var(--primary-green) !important;
+  background: var(--primary-green) !important;
+  color: var(--text-light) !important;
+  box-shadow: 0 2px 8px rgba(7, 82, 87, 0.2) !important;
+}
+
+.actions {
+  display: flex;
+  gap: var(--spacing-md);
+  padding-top: var(--spacing-lg);
+  margin-top: auto;
+  border-top: 2px solid var(--border-light);
+}
+
+.cancelButton {
+  flex: 1;
+  padding: 1rem !important;
+  border-radius: 14px !important;
+  border: 2px solid var(--border-light) !important;
+  color: var(--text-dark) !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+}
+
+.cancelButton:hover {
+  border-color: var(--primary-green) !important;
+  background: rgba(7, 82, 87, 0.05) !important;
+}
+
+.continueButton {
+  flex: 2;
+  padding: 1rem 2rem !important;
+  border-radius: 14px !important;
+  background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-dark) 100%) !important;
+  color: var(--text-light) !important;
+  font-weight: 700 !important;
+  text-transform: none !important;
+  box-shadow: 0 4px 12px rgba(7, 82, 87, 0.25) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.5rem !important;
+}
+
+.continueButton:hover {
+  background: linear-gradient(135deg, var(--primary-green-dark) 0%, var(--primary-green) 100%) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 16px rgba(7, 82, 87, 0.35) !important;
+}
+
+.continueButton:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+}
+
+.continueButton i {
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 1.25rem !important;
+  }
+
+  .therapistCard {
+    padding: var(--spacing-sm);
+  }
+
+  .avatar {
+    width: 50px !important;
+    height: 50px !important;
+    font-size: 1.25rem !important;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .continueButton {
+    flex: 1 !important;
+  }
+}
+

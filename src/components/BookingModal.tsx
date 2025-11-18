@@ -6,7 +6,24 @@ import { Close } from '@mui/icons-material'
 import { BookingForm } from './BookingForm'
 import { CorporateBookingForm } from './CorporateBookingForm'
 import { ServiceTypeSelector } from './ServiceTypeSelector'
+import { TherapistSelectionModal } from './TherapistSelectionModal'
 import styles from './BookingModal.module.css'
+
+interface Partner {
+  id: string
+  fullName: string
+  professionalTitle?: string
+  profilePictureUrl?: string
+  availability: {
+    [key: string]: {
+      morning: boolean
+      afternoon: boolean
+      evening: boolean
+    }
+  }
+  primaryServiceCity?: string
+  aboutMe?: string
+}
 
 interface BookingModalProps {
   open: boolean
@@ -28,19 +45,40 @@ export function BookingModal({
   selectedDuration
 }: BookingModalProps) {
   const [serviceType, setServiceType] = useState<'persona' | 'empresa' | null>(null)
+  const [selectedTherapist, setSelectedTherapist] = useState<{
+    therapist: Partner
+    date: Date
+    timeSlot: 'morning' | 'afternoon' | 'evening'
+  } | null>(null)
 
   const handleTypeSelect = (type: 'persona' | 'empresa') => {
     setServiceType(type)
   }
 
+  const handleTherapistSelect = (
+    therapist: Partner, 
+    date: Date, 
+    timeSlot: 'morning' | 'afternoon' | 'evening'
+  ) => {
+    setSelectedTherapist({ therapist, date, timeSlot })
+    setServiceType('persona')
+  }
+
   const handleClose = () => {
     setServiceType(null)
+    setSelectedTherapist(null)
     onClose()
   }
 
   const handleSuccess = () => {
     setServiceType(null)
+    setSelectedTherapist(null)
     onClose()
+  }
+
+  const handleBackToTherapistSelection = () => {
+    setSelectedTherapist(null)
+    setServiceType(null)
   }
 
   return (
@@ -70,11 +108,13 @@ export function BookingModal({
             <div className={styles.titleContent}>
               <i className={`fa-solid fa-leaf ${styles.titleIcon}`}></i>
               <span>
-                {serviceType === null 
+                {serviceType === null && !selectedTherapist
                   ? 'Consultar disponibilidad' 
                   : serviceType === 'empresa'
                     ? 'Solicitud Corporativa'
-                    : `Consultar ${serviceName}`}
+                    : selectedTherapist
+                      ? `Reservar ${serviceName}`
+                      : `Consultar ${serviceName}`}
               </span>
             </div>
           </DialogTitle>
@@ -89,7 +129,7 @@ export function BookingModal({
 
         <div className={styles.modalContentWrapper}>
           <div className={styles.modalContent}>
-            {serviceType === null ? (
+            {serviceType === null && !selectedTherapist ? (
               <ServiceTypeSelector
                 onSelect={handleTypeSelect}
                 title="¿Para quién es este servicio?"
@@ -101,15 +141,26 @@ export function BookingModal({
                 serviceName={serviceName}
                 onSuccess={handleSuccess}
               />
-            ) : (
+            ) : selectedTherapist ? (
               <BookingForm
                 serviceId={serviceId}
                 serviceName={serviceName}
                 pricing={pricing}
                 selectedDuration={selectedDuration}
+                selectedTherapist={selectedTherapist.therapist}
+                selectedDate={selectedTherapist.date}
+                selectedTimeSlot={selectedTherapist.timeSlot}
+                onBack={handleBackToTherapistSelection}
                 onSuccess={handleSuccess}
               />
-            )}
+            ) : serviceType === 'persona' ? (
+              <TherapistSelectionModal
+                serviceId={serviceId}
+                serviceName={serviceName}
+                onSelect={handleTherapistSelect}
+                onClose={handleClose}
+              />
+            ) : null}
           </div>
         </div>
       </div>

@@ -16,14 +16,6 @@ import { showToast } from './ToastNotifications'
 import { DatePickerModal } from './DatePickerModal'
 import styles from './BookingForm.module.css'
 
-interface BookingFormProps {
-  serviceId: string
-  serviceName: string
-  pricing: Array<{ duration: string; price: string }>
-  selectedDuration?: string
-  onSuccess?: () => void
-}
-
 interface PartnerAvailability {
   [key: string]: {
     morning: boolean
@@ -39,11 +31,27 @@ interface Partner {
   primaryServiceCity?: string
 }
 
+interface BookingFormProps {
+  serviceId: string
+  serviceName: string
+  pricing: Array<{ duration: string; price: string }>
+  selectedDuration?: string
+  selectedTherapist?: Partner
+  selectedDate?: Date
+  selectedTimeSlot?: 'morning' | 'afternoon' | 'evening'
+  onBack?: () => void
+  onSuccess?: () => void
+}
+
 export function BookingForm({ 
   serviceId, 
   serviceName, 
   pricing,
   selectedDuration: initialDuration,
+  selectedTherapist: preSelectedTherapist,
+  selectedDate: preSelectedDate,
+  selectedTimeSlot: preSelectedTimeSlot,
+  onBack,
   onSuccess 
 }: BookingFormProps) {
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false)
@@ -54,10 +62,10 @@ export function BookingForm({
     message: ''
   })
   const [selectedDuration, setSelectedDuration] = useState<string>(initialDuration || '')
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null)
+  const [selectedDate, setSelectedDate] = useState<Date | null>(preSelectedDate || null)
   const [showLoading, setShowLoading] = useState(false)
   const [availableTherapists, setAvailableTherapists] = useState<Partner[]>([])
-  const [selectedTherapistId, setSelectedTherapistId] = useState<string>('')
+  const [selectedTherapistId, setSelectedTherapistId] = useState<string>(preSelectedTherapist?.id || '')
   const { submitForm } = useContactForm()
 
   // Update selected duration when initialDuration prop changes
@@ -66,6 +74,16 @@ export function BookingForm({
       setSelectedDuration(initialDuration)
     }
   }, [initialDuration])
+
+  // Set pre-selected values
+  useEffect(() => {
+    if (preSelectedTherapist) {
+      setSelectedTherapistId(preSelectedTherapist.id)
+    }
+    if (preSelectedDate) {
+      setSelectedDate(preSelectedDate)
+    }
+  }, [preSelectedTherapist, preSelectedDate])
 
   // Helper: map JS Date weekday to partner availability key
   const getDayKey = (date: Date) => {
@@ -91,11 +109,19 @@ export function BookingForm({
   }
 
   // Load therapists that offer this service and have availability for selected date
+  // Only if therapist is not pre-selected
   useEffect(() => {
+    if (preSelectedTherapist) {
+      setAvailableTherapists([preSelectedTherapist])
+      return
+    }
+
     const fetchTherapists = async () => {
       if (!firestore || !selectedDate || !serviceId) {
         setAvailableTherapists([])
-        setSelectedTherapistId('')
+        if (!preSelectedTherapist) {
+          setSelectedTherapistId('')
+        }
         return
       }
 
@@ -117,17 +143,21 @@ export function BookingForm({
         const filtered = therapists.filter((t) => isAvailableOnDate(t.availability, selectedDate))
         setAvailableTherapists(filtered)
 
-        // Reset therapist selection when list changes
-        setSelectedTherapistId('')
+        // Reset therapist selection when list changes (unless pre-selected)
+        if (!preSelectedTherapist) {
+          setSelectedTherapistId('')
+        }
       } catch (error) {
         console.error('Error loading therapists:', error)
         setAvailableTherapists([])
-        setSelectedTherapistId('')
+        if (!preSelectedTherapist) {
+          setSelectedTherapistId('')
+        }
       }
     }
 
     fetchTherapists()
-  }, [selectedDate, serviceId])
+  }, [selectedDate, serviceId, preSelectedTherapist])
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
@@ -142,7 +172,7 @@ export function BookingForm({
       return
     }
 
-    if (!selectedTherapistId) {
+    if (!selectedTherapistId && !preSelectedTherapist) {
       showToast('Error', 'Por favor selecciona un terapeuta disponible', 'error')
       return
     }
@@ -239,79 +269,123 @@ export function BookingForm({
           </FormControl>
         </div>
 
-        <div className={styles.formSection}>
-          <label className={styles.sectionLabel}>
-            <i className="fa-solid fa-calendar-days label-icon"></i>
-            Selecciona la fecha
-          </label>
-          <div className={styles.datePickerWrapper}>
-            <input
-              type="text"
-              readOnly
-              value={selectedDate ? selectedDate.toLocaleDateString('es-ES', { 
+        {!preSelectedDate && (
+          <div className={styles.formSection}>
+            <label className={styles.sectionLabel}>
+              <i className="fa-solid fa-calendar-days label-icon"></i>
+              Selecciona la fecha
+            </label>
+            <div className={styles.datePickerWrapper}>
+              <input
+                type="text"
+                readOnly
+                value={selectedDate ? selectedDate.toLocaleDateString('es-ES', { 
+                  weekday: 'long', 
+                  year: 'numeric', 
+                  month: 'long', 
+                  day: 'numeric' 
+                }) : ''}
+                placeholder="Selecciona una fecha"
+                className={styles.datePicker}
+                onClick={() => setIsDatePickerOpen(true)}
+                required
+              />
+              <DatePickerModal
+                open={isDatePickerOpen}
+                onClose={() => setIsDatePickerOpen(false)}
+                selectedDate={selectedDate}
+                onChange={(date) => setSelectedDate(date)}
+                minDate={minDate}
+                filterDate={isWeekday}
+              />
+            </div>
+          </div>
+        )}
+
+        {preSelectedDate && (
+          <div className={styles.formSection}>
+            <label className={styles.sectionLabel}>
+              <i className="fa-solid fa-calendar-days label-icon"></i>
+              Fecha seleccionada
+            </label>
+            <div className={styles.selectedInfo}>
+              <i className="fa-solid fa-check-circle"></i>
+              <span>{selectedDate?.toLocaleDateString('es-ES', { 
                 weekday: 'long', 
                 year: 'numeric', 
                 month: 'long', 
                 day: 'numeric' 
-              }) : ''}
-              placeholder="Selecciona una fecha"
-              className={styles.datePicker}
-              onClick={() => setIsDatePickerOpen(true)}
-              required
-            />
-            <DatePickerModal
-              open={isDatePickerOpen}
-              onClose={() => setIsDatePickerOpen(false)}
-              selectedDate={selectedDate}
-              onChange={(date) => setSelectedDate(date)}
-              minDate={minDate}
-              filterDate={isWeekday}
-            />
-          </div>
-        </div>
-
-        <div className={styles.formSection}>
-          <label className={styles.sectionLabel}>
-            <i className="fa-solid fa-user-nurse label-icon"></i>
-            Selecciona el terapeuta
-          </label>
-          {!selectedDate ? (
-            <p className={styles.helperText}>
-              Primero selecciona una fecha para ver qué terapeutas están disponibles para este
-              servicio.
-            </p>
-          ) : availableTherapists.length === 0 ? (
-            <p className={styles.helperText}>
-              No hay terapeutas disponibles para este servicio en la fecha seleccionada. Prueba con
-              otra fecha.
-            </p>
-          ) : (
-            <div className={styles.therapistList}>
-              {availableTherapists.map((therapist) => (
-                <label
-                  key={therapist.id}
-                  className={`${styles.therapistOption} ${
-                    selectedTherapistId === therapist.id ? styles.therapistOptionSelected : ''
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    name="therapist"
-                    value={therapist.id}
-                    checked={selectedTherapistId === therapist.id}
-                    onChange={() => setSelectedTherapistId(therapist.id)}
-                  />
-                  <div className={styles.therapistInfo}>
-                    <span className={styles.therapistName}>{therapist.fullName}</span>
-                    {therapist.primaryServiceCity && (
-                      <span className={styles.therapistCity}>{therapist.primaryServiceCity}</span>
-                    )}
-                  </div>
-                </label>
-              ))}
+              })}</span>
+              {preSelectedTimeSlot && (
+                <span className={styles.timeSlotBadge}>
+                  {preSelectedTimeSlot === 'morning' ? 'Mañana' : 
+                   preSelectedTimeSlot === 'afternoon' ? 'Tarde' : 'Noche'}
+                </span>
+              )}
             </div>
-          )}
-        </div>
+          </div>
+        )}
+
+        {!preSelectedTherapist && (
+          <div className={styles.formSection}>
+            <label className={styles.sectionLabel}>
+              <i className="fa-solid fa-user-nurse label-icon"></i>
+              Selecciona el terapeuta
+            </label>
+            {!selectedDate ? (
+              <p className={styles.helperText}>
+                Primero selecciona una fecha para ver qué terapeutas están disponibles para este
+                servicio.
+              </p>
+            ) : availableTherapists.length === 0 ? (
+              <p className={styles.helperText}>
+                No hay terapeutas disponibles para este servicio en la fecha seleccionada. Prueba con
+                otra fecha.
+              </p>
+            ) : (
+              <div className={styles.therapistList}>
+                {availableTherapists.map((therapist) => (
+                  <label
+                    key={therapist.id}
+                    className={`${styles.therapistOption} ${
+                      selectedTherapistId === therapist.id ? styles.therapistOptionSelected : ''
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="therapist"
+                      value={therapist.id}
+                      checked={selectedTherapistId === therapist.id}
+                      onChange={() => setSelectedTherapistId(therapist.id)}
+                    />
+                    <div className={styles.therapistInfo}>
+                      <span className={styles.therapistName}>{therapist.fullName}</span>
+                      {therapist.primaryServiceCity && (
+                        <span className={styles.therapistCity}>{therapist.primaryServiceCity}</span>
+                      )}
+                    </div>
+                  </label>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {preSelectedTherapist && (
+          <div className={styles.formSection}>
+            <label className={styles.sectionLabel}>
+              <i className="fa-solid fa-user-nurse label-icon"></i>
+              Terapeuta seleccionado
+            </label>
+            <div className={styles.selectedInfo}>
+              <i className="fa-solid fa-check-circle"></i>
+              <span>{preSelectedTherapist.fullName}</span>
+              {preSelectedTherapist.primaryServiceCity && (
+                <span className={styles.therapistCity}>{preSelectedTherapist.primaryServiceCity}</span>
+              )}
+            </div>
+          </div>
+        )}
 
         <div className={styles.formSection}>
           <label htmlFor="name" className={styles.label}>
@@ -381,11 +455,23 @@ export function BookingForm({
         </div>
 
         <div className={styles.formActions}>
+          {onBack && (
+            <Button
+              type="button"
+              variant="outlined"
+              onClick={onBack}
+              className={styles.backButton}
+            >
+              <i className="fa-solid fa-arrow-left"></i>
+              <span>Volver</span>
+            </Button>
+          )}
           <Button
             type="submit"
             variant="contained"
             className={styles.submitButton}
-            fullWidth
+            fullWidth={!onBack}
+            style={onBack ? { flex: 1 } : {}}
           >
             <span>Confirmar Reserva</span>
             <i className="fa-solid fa-check"></i>

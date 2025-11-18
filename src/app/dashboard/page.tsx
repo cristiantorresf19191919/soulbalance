@@ -4,20 +4,19 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import {
   Box,
-  Chip,
-  Switch,
-  FormControlLabel,
   Typography,
   Grid,
   Paper,
-  Divider,
   CircularProgress,
   Alert,
   Button,
+  IconButton,
+  Tooltip,
 } from '@mui/material'
 import { collection, doc, getDoc, setDoc } from 'firebase/firestore'
 import { auth, firestore } from '@/lib/firebase'
 import { services } from '@/data/services'
+import styles from './dashboard.module.css'
 
 interface PartnerAvailability {
   [key: string]: {
@@ -44,21 +43,28 @@ const defaultAvailability: PartnerAvailability = {
   sunday: { morning: false, afternoon: false, evening: false },
 }
 
-const dayLabels: { key: keyof PartnerAvailability; label: string }[] = [
-  { key: 'monday', label: 'Lunes' },
-  { key: 'tuesday', label: 'Martes' },
-  { key: 'wednesday', label: 'Miércoles' },
-  { key: 'thursday', label: 'Jueves' },
-  { key: 'friday', label: 'Viernes' },
-  { key: 'saturday', label: 'Sábado' },
-  { key: 'sunday', label: 'Domingo' },
+const dayLabels: { key: keyof PartnerAvailability; label: string; short: string }[] = [
+  { key: 'monday', label: 'Lunes', short: 'L' },
+  { key: 'tuesday', label: 'Martes', short: 'M' },
+  { key: 'wednesday', label: 'Miércoles', short: 'X' },
+  { key: 'thursday', label: 'Jueves', short: 'J' },
+  { key: 'friday', label: 'Viernes', short: 'V' },
+  { key: 'saturday', label: 'Sábado', short: 'S' },
+  { key: 'sunday', label: 'Domingo', short: 'D' },
 ]
+
+const timeSlotLabels = {
+  morning: { label: 'Mañana', icon: 'fa-sun', hours: '8:00 - 12:00' },
+  afternoon: { label: 'Tarde', icon: 'fa-sun', hours: '12:00 - 17:00' },
+  evening: { label: 'Noche', icon: 'fa-moon', hours: '17:00 - 21:00' },
+}
 
 export default function DashboardPage() {
   const router = useRouter()
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [success, setSuccess] = useState(false)
   const [partner, setPartner] = useState<Partner | null>(null)
 
   useEffect(() => {
@@ -80,7 +86,6 @@ export default function DashboardPage() {
         const partnerRef = doc(collection(firestore, 'partners'), currentUser.uid)
         const snapshot = await getDoc(partnerRef)
         if (!snapshot.exists()) {
-          // If no partner document yet, redirect to onboarding
           router.push('/onboarding')
           return
         }
@@ -124,10 +129,27 @@ export default function DashboardPage() {
     setPartner({ ...partner, availability: nextAvailability })
   }
 
+  const toggleDayAll = (dayKey: keyof PartnerAvailability) => {
+    if (!partner) return
+    const day = partner.availability[dayKey]
+    const allSelected = day.morning && day.afternoon && day.evening
+    const nextAvailability: PartnerAvailability = {
+      ...defaultAvailability,
+      ...partner.availability,
+    }
+    nextAvailability[dayKey] = {
+      morning: !allSelected,
+      afternoon: !allSelected,
+      evening: !allSelected,
+    }
+    setPartner({ ...partner, availability: nextAvailability })
+  }
+
   const handleSave = async () => {
     if (!partner || !firestore) return
     setSaving(true)
     setError(null)
+    setSuccess(false)
     try {
       const partnerRef = doc(collection(firestore, 'partners'), partner.id)
       await setDoc(
@@ -139,6 +161,8 @@ export default function DashboardPage() {
         },
         { merge: true }
       )
+      setSuccess(true)
+      setTimeout(() => setSuccess(false), 3000)
     } catch (err) {
       console.error('Error saving dashboard changes:', err)
       setError('No se pudieron guardar los cambios. Intenta de nuevo.')
@@ -163,106 +187,129 @@ export default function DashboardPage() {
   }
 
   return (
-    <Box sx={{ py: 6, px: { xs: 2, md: 6 }, maxWidth: 1100, mx: 'auto' }}>
-      <Typography variant="h5" sx={{ fontWeight: 700, mb: 1 }}>
-        Hola, {partner.fullName}
-      </Typography>
-      <Typography variant="body1" sx={{ mb: 3, color: 'text.secondary' }}>
-        Gestiona los servicios que ofreces y tus horarios de disponibilidad. Los clientes solo verán
-        los servicios seleccionados y dentro de tus horarios activos.
-      </Typography>
+    <Box className={styles.dashboard}>
+      <Box className={styles.header}>
+        <Box>
+          <Typography variant="h4" className={styles.title}>
+            Hola, {partner.fullName}
+          </Typography>
+          <Typography variant="body1" className={styles.subtitle}>
+            Gestiona los servicios que ofreces y tus horarios de disponibilidad
+          </Typography>
+        </Box>
+      </Box>
 
       {error && (
-        <Box sx={{ mb: 3 }}>
-          <Alert severity="error">{error}</Alert>
-        </Box>
+        <Alert severity="error" className={styles.alert}>
+          {error}
+        </Alert>
+      )}
+
+      {success && (
+        <Alert severity="success" className={styles.alert}>
+          ¡Cambios guardados exitosamente!
+        </Alert>
       )}
 
       <Grid container spacing={3}>
-        <Grid item xs={12} md={6}>
-          <Paper elevation={3} sx={{ p: 3, borderRadius: 3 }}>
-            <Typography variant="h6" sx={{ fontWeight: 600, mb: 1.5 }}>
-              Servicios que ofreces
-            </Typography>
-            <Typography variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
-              Selecciona los servicios de nuestro catálogo que estás habilitado para ofrecer. Los
-              precios y duraciones son definidos por Aura Spa y no pueden modificarse aquí.
-            </Typography>
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+        {/* Services Section */}
+        <Grid item xs={12} lg={6}>
+          <Paper elevation={0} className={styles.card}>
+            <Box className={styles.cardHeader}>
+              <Box>
+                <Typography variant="h6" className={styles.cardTitle}>
+                  <i className="fa-solid fa-spa"></i>
+                  Servicios que ofreces
+                </Typography>
+                <Typography variant="body2" className={styles.cardSubtitle}>
+                  Selecciona los servicios que estás habilitado para ofrecer
+                </Typography>
+              </Box>
+              <Box className={styles.serviceCount}>
+                {partner.servicesOffered.length} / {services.length}
+              </Box>
+            </Box>
+            <Box className={styles.servicesGrid}>
               {services.map((service) => {
                 const selected = partner.servicesOffered.includes(service.id)
                 return (
-                  <Chip
+                  <Box
                     key={service.id}
-                    label={service.name}
-                    color={selected ? 'primary' : 'default'}
-                    variant={selected ? 'filled' : 'outlined'}
+                    className={`${styles.serviceCard} ${selected ? styles.serviceCardSelected : ''}`}
                     onClick={() => toggleService(service.id)}
-                    sx={{ borderRadius: '999px' }}
-                  />
+                  >
+                    <Box className={styles.serviceCardContent}>
+                      <Box className={styles.serviceCheckbox}>
+                        <i className={`fa-solid ${selected ? 'fa-check-circle' : 'fa-circle'}`}></i>
+                      </Box>
+                      <Box className={styles.serviceInfo}>
+                        <Typography variant="body1" className={styles.serviceName}>
+                          {service.name}
+                        </Typography>
+                        <Typography variant="caption" className={styles.servicePricing}>
+                          {service.pricing[0]?.price} - {service.pricing[service.pricing.length - 1]?.price}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </Box>
                 )
               })}
             </Box>
           </Paper>
         </Grid>
 
-        <Grid item xs={12} md={6}>
-          <Paper elevation={3} sx={{ p: 3, borderRadius: 3 }}>
-            <Typography variant="h6" sx={{ fontWeight: 600, mb: 1.5 }}>
-              Horarios de disponibilidad
-            </Typography>
-            <Typography variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
-              Marca en qué días y franjas horarias estás disponible para atender servicios. Tus
-              clientes solo podrán reservar en estas ventanas.
-            </Typography>
-            <Divider sx={{ mb: 2 }} />
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
-              {dayLabels.map(({ key, label }) => {
+        {/* Availability Section */}
+        <Grid item xs={12} lg={6}>
+          <Paper elevation={0} className={styles.card}>
+            <Box className={styles.cardHeader}>
+              <Box>
+                <Typography variant="h6" className={styles.cardTitle}>
+                  <i className="fa-solid fa-calendar-days"></i>
+                  Horarios de disponibilidad
+                </Typography>
+                <Typography variant="body2" className={styles.cardSubtitle}>
+                  Marca tus días y horarios disponibles
+                </Typography>
+              </Box>
+            </Box>
+            <Box className={styles.availabilityCalendar}>
+              {dayLabels.map(({ key, label, short }) => {
                 const day = partner.availability[key] || defaultAvailability[key]
+                const hasAny = day.morning || day.afternoon || day.evening
+                const allSelected = day.morning && day.afternoon && day.evening
+                
                 return (
-                  <Box
-                    key={key}
-                    sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      gap: 1.5,
-                    }}
-                  >
-                    <Typography variant="body2" sx={{ minWidth: 80, fontWeight: 500 }}>
-                      {label}
-                    </Typography>
-                    <Box sx={{ display: 'flex', gap: 1 }}>
-                      <FormControlLabel
-                        control={
-                          <Switch
-                            checked={!!day.morning}
-                            onChange={() => toggleAvailability(key, 'morning')}
-                            size="small"
-                          />
-                        }
-                        label="Mañana"
-                      />
-                      <FormControlLabel
-                        control={
-                          <Switch
-                            checked={!!day.afternoon}
-                            onChange={() => toggleAvailability(key, 'afternoon')}
-                            size="small"
-                          />
-                        }
-                        label="Tarde"
-                      />
-                      <FormControlLabel
-                        control={
-                          <Switch
-                            checked={!!day.evening}
-                            onChange={() => toggleAvailability(key, 'evening')}
-                            size="small"
-                          />
-                        }
-                        label="Noche"
-                      />
+                  <Box key={key} className={styles.dayRow}>
+                    <Box className={styles.dayHeader}>
+                      <Typography variant="body2" className={styles.dayLabel}>
+                        {label}
+                      </Typography>
+                      <Tooltip title={allSelected ? 'Desmarcar todo' : 'Marcar todo'}>
+                        <IconButton
+                          size="small"
+                          onClick={() => toggleDayAll(key)}
+                          className={styles.dayToggle}
+                        >
+                          <i className={`fa-solid ${allSelected ? 'fa-check-square' : 'fa-square'}`}></i>
+                        </IconButton>
+                      </Tooltip>
+                    </Box>
+                    <Box className={styles.timeSlots}>
+                      {(Object.keys(timeSlotLabels) as Array<'morning' | 'afternoon' | 'evening'>).map((slot) => {
+                        const slotInfo = timeSlotLabels[slot]
+                        const isSelected = day[slot]
+                        return (
+                          <Tooltip key={slot} title={slotInfo.hours}>
+                            <Box
+                              className={`${styles.timeSlot} ${isSelected ? styles.timeSlotSelected : ''}`}
+                              onClick={() => toggleAvailability(key, slot)}
+                            >
+                              <i className={`fa-solid ${slotInfo.icon}`}></i>
+                              <span>{slotInfo.label}</span>
+                            </Box>
+                          </Tooltip>
+                        )
+                      })}
                     </Box>
                   </Box>
                 )
@@ -272,13 +319,13 @@ export default function DashboardPage() {
         </Grid>
       </Grid>
 
-      <Box sx={{ mt: 4, display: 'flex', justifyContent: 'flex-end' }}>
+      <Box className={styles.actions}>
         <Button
           variant="contained"
-          color="primary"
           onClick={handleSave}
           disabled={saving}
-          sx={{ borderRadius: 999, px: 4 }}
+          className={styles.saveButton}
+          startIcon={saving ? <CircularProgress size={20} /> : <i className="fa-solid fa-floppy-disk"></i>}
         >
           {saving ? 'Guardando...' : 'Guardar cambios'}
         </Button>
@@ -286,5 +333,3 @@ export default function DashboardPage() {
     </Box>
   )
 }
-
-

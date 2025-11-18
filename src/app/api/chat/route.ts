@@ -1,6 +1,81 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { GoogleGenAI } from '@google/genai'
 
+// Cache for available models (refresh every 5 minutes)
+let modelsCache: { models: string[]; timestamp: number } | null = null
+const MODELS_CACHE_TTL = 5 * 60 * 1000 // 5 minutes
+
+/**
+ * List available models and return those that support generateContent
+ * Uses caching to avoid calling the API on every request
+ */
+async function getAvailableModels(apiKey: string): Promise<string[]> {
+  // Check cache first
+  if (modelsCache && Date.now() - modelsCache.timestamp < MODELS_CACHE_TTL) {
+    console.log('[Chat] Using cached models:', modelsCache.models)
+    return modelsCache.models
+  }
+
+  try {
+    console.log('[Chat] Fetching available models from API...')
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    )
+
+    if (!response.ok) {
+      console.error('[Chat] Failed to list models:', response.status, response.statusText)
+      const fallback = ['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-pro', 'gemini-2.0-flash']
+      modelsCache = { models: fallback, timestamp: Date.now() }
+      return fallback
+    }
+
+    const data = await response.json()
+    const availableModels: string[] = []
+
+    if (data.models && Array.isArray(data.models)) {
+      for (const model of data.models) {
+        if (
+          model.supportedGenerationMethods?.includes('generateContent') &&
+          model.name &&
+          !model.name.includes('vision') &&
+          !model.name.includes('embedding') &&
+          !model.name.includes('multimodal')
+        ) {
+          const modelName = model.name.replace('models/', '')
+          availableModels.push(modelName)
+        }
+      }
+    }
+
+    // Sort models: prefer flash models first
+    availableModels.sort((a, b) => {
+      if (a.includes('flash') && !b.includes('flash')) return -1
+      if (!a.includes('flash') && b.includes('flash')) return 1
+      return a.localeCompare(b)
+    })
+
+    console.log('[Chat] Available models:', availableModels)
+
+    const finalModels = availableModels.length > 0
+      ? availableModels
+      : ['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-pro', 'gemini-2.0-flash']
+
+    modelsCache = { models: finalModels, timestamp: Date.now() }
+    return finalModels
+  } catch (error) {
+    console.error('[Chat] Error listing models:', error)
+    const fallback = ['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-pro', 'gemini-2.0-flash']
+    modelsCache = { models: fallback, timestamp: Date.now() }
+    return fallback
+  }
+}
+
 // System prompt para el asistente de bienestar
 const SYSTEM_PROMPT = `Eres el asistente de Aura Spa 😌✨ Un spa a domicilio que ofrece servicios terapéuticos profesionales para reservar citas.
 
@@ -117,30 +192,87 @@ export async function POST(request: NextRequest) {
 
       fullPrompt += `Usuario: ${message.trim()}\n\nAsistente:`
 
-      // Solo usamos el modelo gratuito disponible
-      const modelsToTry = ['gemini-2.0-flash']
+      // Obtener modelos disponibles que soportan generateContent
+      const modelsToTry = await getAvailableModels(apiKey)
+      console.log('[Chat] Using available models:', modelsToTry)
 
-      let result
       let aiResponse = ''
-      
+      let successfulModel: string | null = null
+
       for (const modelName of modelsToTry) {
         try {
-          console.log(`Attempting to use model: ${modelName}`)
-          result = await genAI.models.generateContent({
+          console.log(`[Chat] Attempting to use model: ${modelName}`)
+          const result = await genAI.models.generateContent({
             model: modelName,
             contents: fullPrompt,
           })
-          
+
           aiResponse = result?.text || ''
-          
+
           if (aiResponse) {
-            console.log(`Successfully generated response using ${modelName}`)
+            successfulModel = modelName
+            console.log(
+              `✅ [Chat] SUCCESS! Successfully generated response using model: ${modelName}`
+            )
+            console.log(
+              `📊 [Chat] Model ${modelName} worked and returned ${aiResponse.length} characters`
+            )
             break
           }
-        } catch (modelError: any) {
-          console.log(`Model ${modelName} failed:`, modelError?.message)
+        } catch (modelError: unknown) {
+          const modelErrorMessage =
+            (modelError as { message?: string })?.message ?? String(modelError)
+          console.log(`[Chat] Model ${modelName} failed:`, modelErrorMessage)
+
+          // Si es un error 404, el modelo no está disponible - intentar REST API directo
+          if (modelErrorMessage.includes('404') || modelErrorMessage.includes('not found')) {
+            console.log(`[Chat] Model ${modelName} not available, trying REST API fallback...`)
+            try {
+              const restResponse = await fetch(
+                `https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${apiKey}`,
+                {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    contents: [{
+                      parts: [{ text: fullPrompt }]
+                    }]
+                  })
+                }
+              )
+
+              if (restResponse.ok) {
+                const restData = await restResponse.json()
+                aiResponse = restData.candidates?.[0]?.content?.parts?.[0]?.text || ''
+                if (aiResponse) {
+                  console.log('[Chat] REST API fallback succeeded')
+                  break
+                }
+              } else {
+                const errorData = await restResponse.json().catch(() => ({}))
+                console.log('[Chat] REST API error:', errorData)
+              }
+            } catch (restError) {
+              console.log('[Chat] REST API fallback also failed:', restError)
+            }
+
+            // Si el REST API también falló, continuar con el siguiente modelo
+            if (!aiResponse) {
+              if (modelName === modelsToTry[modelsToTry.length - 1]) {
+                throw modelError
+              }
+              continue
+            }
+            break
+          }
+
+          // Si es un error de quota, esperar un poco antes de intentar el siguiente
+          if (modelErrorMessage.includes('429') || modelErrorMessage.includes('quota')) {
+            console.log('[Chat] Rate limit hit, waiting before next attempt...')
+            await new Promise((resolve) => setTimeout(resolve, 2000))
+          }
+
           if (modelName === modelsToTry[modelsToTry.length - 1]) {
-            // Último modelo falló, lanzamos el error
             throw modelError
           }
           continue
@@ -149,6 +281,12 @@ export async function POST(request: NextRequest) {
 
       if (!aiResponse) {
         throw new Error('No se pudo generar una respuesta con ningún modelo disponible.')
+      }
+
+      if (successfulModel) {
+        console.log(
+          `🎉 [Chat] Final result: Used model "${successfulModel}" successfully`
+        )
       }
 
       return NextResponse.json({

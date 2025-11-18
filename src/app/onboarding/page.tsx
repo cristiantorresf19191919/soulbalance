@@ -8,14 +8,18 @@ import {
   Typography,
   Alert,
   CircularProgress,
-  Container
+  Container,
+  IconButton,
+  Tooltip
 } from '@mui/material'
+import { AutoAwesome } from '@mui/icons-material'
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import { auth } from '@/lib/firebase'
 import { UserRole } from '@/lib/user-roles'
 import { MassageCategory, MASSAGE_CATEGORIES } from '@/lib/massage-types'
 import { partnerService } from '@/lib/partner-service'
 import { useLanguage } from '@/lib/language-context'
+import { Navbar } from '@/components/Navbar'
 import BrandButton from '@/components/BrandButton'
 import BrandLoader from '@/components/BrandLoader'
 import InlineLoader from '@/components/InlineLoader'
@@ -192,12 +196,40 @@ export default function OnboardingPage() {
     }))
   }, [])
 
+  // Dev-only helper: Auto-fill step 1 with test data
+  const handleAutoFill = useCallback(() => {
+    if (activeStep === 1) {
+      setFormData(prev => ({
+        ...prev,
+        fullName: 'Dana Test',
+        email: 'dana@mail.com',
+        phone: '3237992985',
+        password: 'test123',
+        confirmPassword: 'test123'
+      }))
+      // Clear any existing errors for step 1 fields
+      setErrors(prev => {
+        const newErrors = { ...prev }
+        delete newErrors.fullName
+        delete newErrors.email
+        delete newErrors.phone
+        delete newErrors.password
+        delete newErrors.confirmPassword
+        return newErrors
+      })
+    }
+  }, [activeStep])
+
+  const isDevMode = process.env.NODE_ENV === 'development'
+
   const handleNext = useCallback(() => {
     let newErrors: Record<string, string> = {}
     if (activeStep === 1) {
-      newErrors = { ...validateStep1(), ...validateStep2() }
+      // Only validate step 1 when moving from step 1 to step 2
+      newErrors = validateStep1()
     } else if (activeStep === 2) {
-      newErrors = validateStep3()
+      // Only validate step 2 when moving from step 2 to step 3
+      newErrors = validateStep2()
     }
     if (Object.keys(newErrors).length === 0) {
       setActiveStep(prev => prev + 1)
@@ -205,7 +237,7 @@ export default function OnboardingPage() {
     } else {
       setErrors(newErrors)
     }
-  }, [activeStep, validateStep1, validateStep2, validateStep3])
+  }, [activeStep, validateStep1, validateStep2])
 
   const handleBack = useCallback(() => {
     setActiveStep(prev => prev - 1)
@@ -214,7 +246,7 @@ export default function OnboardingPage() {
 
   const handleSubmit = useCallback(async () => {
     if (!auth) {
-      setError('El servicio de autenticación no está disponible. Intenta de nuevo más tarde.')
+      setError(t('error.auth.unavailable'))
       return
     }
     setLoading(true)
@@ -248,15 +280,30 @@ export default function OnboardingPage() {
       }, 2000)
     } catch (error: any) {
       console.error('Error creating account:', error)
-      setError(error.message || 'Failed to create account. Please try again.')
+      // Try to translate common Firebase error messages
+      let errorMessage = t('error.account.create.generic')
+      if (error.code) {
+        // Map Firebase error codes to translated messages
+        const errorCodeMap: Record<string, string> = {
+          'auth/email-already-in-use': t('error.auth.email.in.use'),
+          'auth/invalid-email': t('error.auth.invalid.email'),
+          'auth/weak-password': t('error.auth.weak.password'),
+          'auth/network-request-failed': t('error.auth.network.failed')
+        }
+        errorMessage = errorCodeMap[error.code] || errorMessage
+      } else if (error.message) {
+        // If there's a message but no code, use the generic error
+        errorMessage = t('error.account.create.generic')
+      }
+      setError(errorMessage)
     } finally {
       setLoading(false)
     }
-  }, [formData, profilePicturePreview, router])
+  }, [formData, profilePicturePreview, router, t])
 
   const handleCreateLater = useCallback(async () => {
     if (!auth) {
-      setError('El servicio de autenticación no está disponible. Intenta de nuevo más tarde.')
+      setError(t('error.auth.unavailable'))
       return
     }
     setLoading(true)
@@ -290,18 +337,38 @@ export default function OnboardingPage() {
       }, 2000)
     } catch (error: any) {
       console.error('Error creating account:', error)
-      setError(error.message || 'Failed to create account. Please try again.')
+      // Try to translate common Firebase error messages
+      let errorMessage = t('error.account.create.generic')
+      if (error.code) {
+        // Map Firebase error codes to translated messages
+        const errorCodeMap: Record<string, string> = {
+          'auth/email-already-in-use': t('error.auth.email.in.use'),
+          'auth/invalid-email': t('error.auth.invalid.email'),
+          'auth/weak-password': t('error.auth.weak.password'),
+          'auth/network-request-failed': t('error.auth.network.failed')
+        }
+        errorMessage = errorCodeMap[error.code] || errorMessage
+      } else if (error.message) {
+        // If there's a message but no code, use the generic error
+        errorMessage = t('error.account.create.generic')
+      }
+      setError(errorMessage)
     } finally {
       setLoading(false)
     }
-  }, [formData, router])
+  }, [formData, router, t])
 
   const canProceed = useMemo(() => {
     if (activeStep === 1) {
+      // Only check step 1 validation for step 1
       const step1Errors = validateStep1()
-      const step2Errors = validateStep2()
-      return Object.keys(step1Errors).length === 0 && Object.keys(step2Errors).length === 0
+      return Object.keys(step1Errors).length === 0
     } else if (activeStep === 2) {
+      // Only check step 2 validation for step 2
+      const step2Errors = validateStep2()
+      return Object.keys(step2Errors).length === 0
+    } else if (activeStep === 3) {
+      // Check step 3 validation for step 3
       const step3Errors = validateStep3()
       return Object.keys(step3Errors).length === 0
     }
@@ -341,6 +408,7 @@ export default function OnboardingPage() {
 
   return (
     <Box sx={{ minHeight: '100vh', position: 'relative' }}>
+      <Navbar />
       <OnboardingVideoBackground />
       <Box sx={{
         position: 'relative',
@@ -348,7 +416,8 @@ export default function OnboardingPage() {
         minHeight: '100vh',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        pt: '80px'
       }}>
         <OnboardingFormContainer>
           <motion.div
@@ -472,6 +541,33 @@ export default function OnboardingPage() {
                 {error}
               </Alert>
             </motion.div>
+          )}
+
+          {/* Dev-only auto-fill helper button - only visible in development and on step 1 */}
+          {isDevMode && activeStep === 1 && (
+            <Tooltip title={t('dev.autofill.tooltip')} placement="left">
+              <IconButton
+                onClick={handleAutoFill}
+                sx={{
+                  position: 'absolute',
+                  bottom: { xs: 16, sm: 24 },
+                  right: { xs: 16, sm: 24 },
+                  backgroundColor: 'rgba(139, 92, 246, 0.2)',
+                  backdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(139, 92, 246, 0.4)',
+                  color: 'rgba(255, 255, 255, 0.9)',
+                  '&:hover': {
+                    backgroundColor: 'rgba(139, 92, 246, 0.4)',
+                    transform: 'scale(1.1)'
+                  },
+                  transition: 'all 0.2s ease',
+                  zIndex: 1000
+                }}
+                size="small"
+              >
+                <AutoAwesome fontSize="small" />
+              </IconButton>
+            </Tooltip>
           )}
         </OnboardingFormContainer>
       </Box>

@@ -1,0 +1,337 @@
+.dashboard {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+  padding: 2rem;
+}
+
+.header {
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-weight: 700 !important;
+  color: var(--primary-dark) !important;
+  margin-bottom: 0.5rem !important;
+  font-size: 2rem !important;
+}
+
+.subtitle {
+  color: var(--text-medium) !important;
+  font-size: 1rem !important;
+}
+
+.alert {
+  margin-bottom: 1.5rem !important;
+  border-radius: 12px !important;
+}
+
+.card {
+  background: white !important;
+  border-radius: 20px !important;
+  padding: 2rem !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+  border: 1px solid rgba(7, 82, 87, 0.1) !important;
+  transition: all 0.3s ease !important;
+  height: 100%;
+}
+
+.card:hover {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12) !important;
+  transform: translateY(-2px);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid rgba(7, 82, 87, 0.1);
+}
+
+.cardTitle {
+  font-weight: 700 !important;
+  color: var(--primary-dark) !important;
+  margin-bottom: 0.5rem !important;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.5rem !important;
+}
+
+.cardTitle i {
+  color: var(--primary-green);
+  font-size: 1.3rem;
+}
+
+.cardSubtitle {
+  color: var(--text-medium) !important;
+  font-size: 0.9rem !important;
+}
+
+.serviceCount {
+  background: linear-gradient(135deg, var(--primary-green), var(--primary-green-dark));
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  min-width: 60px;
+  text-align: center;
+}
+
+.servicesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+  max-height: 500px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.servicesGrid::-webkit-scrollbar {
+  width: 8px;
+}
+
+.servicesGrid::-webkit-scrollbar-track {
+  background: rgba(7, 82, 87, 0.05);
+  border-radius: 4px;
+}
+
+.servicesGrid::-webkit-scrollbar-thumb {
+  background: var(--primary-green);
+  border-radius: 4px;
+}
+
+.servicesGrid::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-green-dark);
+}
+
+.serviceCard {
+  border: 2px solid var(--border-light);
+  border-radius: 14px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.serviceCard:hover {
+  border-color: var(--primary-green);
+  background: rgba(7, 82, 87, 0.02);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(7, 82, 87, 0.1);
+}
+
+.serviceCardSelected {
+  border-color: var(--primary-green) !important;
+  background: rgba(7, 82, 87, 0.08) !important;
+  box-shadow: 0 0 0 3px rgba(7, 82, 87, 0.15) !important;
+}
+
+.serviceCardContent {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.serviceCheckbox {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.serviceCheckbox i {
+  font-size: 1.5rem;
+  color: var(--primary-green);
+  transition: all 0.2s ease;
+}
+
+.serviceCard:not(.serviceCardSelected) .serviceCheckbox i {
+  color: var(--text-medium);
+  opacity: 0.5;
+}
+
+.serviceInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.serviceName {
+  font-weight: 600 !important;
+  color: var(--text-dark) !important;
+  font-size: 0.95rem !important;
+}
+
+.servicePricing {
+  color: var(--text-medium) !important;
+  font-size: 0.8rem !important;
+}
+
+.availabilityCalendar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-height: 500px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.availabilityCalendar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.availabilityCalendar::-webkit-scrollbar-track {
+  background: rgba(7, 82, 87, 0.05);
+  border-radius: 4px;
+}
+
+.availabilityCalendar::-webkit-scrollbar-thumb {
+  background: var(--primary-green);
+  border-radius: 4px;
+}
+
+.availabilityCalendar::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-green-dark);
+}
+
+.dayRow {
+  padding: 1rem;
+  border: 2px solid var(--border-light);
+  border-radius: 14px;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+.dayRow:hover {
+  border-color: var(--primary-green);
+  background: rgba(7, 82, 87, 0.02);
+}
+
+.dayHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.dayLabel {
+  font-weight: 600 !important;
+  color: var(--text-dark) !important;
+  font-size: 1rem !important;
+}
+
+.dayToggle {
+  color: var(--primary-green) !important;
+  padding: 0.25rem !important;
+}
+
+.dayToggle:hover {
+  background: rgba(7, 82, 87, 0.1) !important;
+}
+
+.timeSlots {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.timeSlot {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  border: 2px solid var(--border-light);
+  border-radius: 10px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-dark);
+  flex: 1;
+  min-width: 100px;
+  justify-content: center;
+}
+
+.timeSlot:hover {
+  border-color: var(--primary-green);
+  background: rgba(7, 82, 87, 0.05);
+  transform: translateY(-1px);
+}
+
+.timeSlot i {
+  font-size: 0.9rem;
+  color: var(--text-medium);
+}
+
+.timeSlotSelected {
+  border-color: var(--primary-green) !important;
+  background: var(--primary-green) !important;
+  color: white !important;
+  box-shadow: 0 2px 8px rgba(7, 82, 87, 0.2) !important;
+}
+
+.timeSlotSelected i {
+  color: white !important;
+}
+
+.actions {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.saveButton {
+  background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-dark) 100%) !important;
+  color: white !important;
+  padding: 1rem 2.5rem !important;
+  border-radius: 50px !important;
+  font-weight: 700 !important;
+  font-size: 1rem !important;
+  text-transform: none !important;
+  box-shadow: 0 4px 15px rgba(7, 82, 87, 0.3) !important;
+  transition: all 0.3s ease !important;
+}
+
+.saveButton:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(7, 82, 87, 0.4) !important;
+}
+
+.saveButton:disabled {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+}
+
+@media (max-width: 960px) {
+  .dashboard {
+    padding: 1rem;
+  }
+
+  .title {
+    font-size: 1.5rem !important;
+  }
+
+  .card {
+    padding: 1.5rem !important;
+  }
+
+  .servicesGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .timeSlots {
+    flex-direction: column;
+  }
+
+  .timeSlot {
+    width: 100%;
+  }
+}
+

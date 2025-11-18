@@ -20,7 +20,7 @@ export default function OnboardingVideoBackground() {
           left: 0,
           width: '100%',
           height: '100%',
-          background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.9) 0%, rgba(236, 72, 153, 0.9) 100%)',
+          background: 'linear-gradient(135deg, rgba(7, 82, 87, 0.85) 0%, rgba(5, 63, 67, 0.9) 50%, rgba(140, 90, 48, 0.8) 100%)',
           zIndex: 2
         }
       }}

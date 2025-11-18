@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { auth } from '@/lib/firebase'
 import { onAuthStateChanged, signOut } from 'firebase/auth'
 import { useJuegaSettings } from '@/hooks/useJuegaSettings'
+import { useLanguage } from '@/lib/language-context'
 import { VersionBadge } from './VersionBadge'
 import styles from './Navbar.module.css'
 
@@ -15,6 +16,7 @@ export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const { enabled: juegaEnabled } = useJuegaSettings()
+  const { language, setLanguage, t } = useLanguage()
   const router = useRouter()
 
   useEffect(() => {
@@ -54,8 +56,14 @@ export function Navbar() {
     }
   }
 
-  // Close menu when clicking outside on mobile
+  // Close menu when clicking outside on mobile and prevent body scroll
   useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+
     if (!menuOpen) return
 
     const handleClickOutside = (e: MouseEvent) => {
@@ -77,6 +85,7 @@ export function Navbar() {
     return () => {
       document.removeEventListener('click', handleClickOutside)
       document.removeEventListener('keydown', handleEscape)
+      document.body.style.overflow = ''
     }
   }, [menuOpen])
 
@@ -95,6 +104,10 @@ export function Navbar() {
     }
   }
 
+  const toggleLanguage = () => {
+    setLanguage(language === 'es' ? 'en' : 'es')
+  }
+
   return (
     <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ''}`} id="navbar">
       <VersionBadge variant="header" />
@@ -106,20 +119,28 @@ export function Navbar() {
           </Link>
         </div>
         <div className={styles.authButtons}>
+          <button 
+            onClick={toggleLanguage}
+            className={styles.languageToggle}
+            aria-label="Toggle language"
+          >
+            <span className={styles.languageIcon}>🌐</span>
+            <span className={styles.languageText}>{language === 'es' ? 'EN' : 'ES'}</span>
+          </button>
           <Link href="/onboarding" className={styles.enrollNavBtn}>
-            Enroll With Us
+            {t('nav.enroll')}
           </Link>
           {isAuthenticated ? (
             <>
               <Link href="/admin" className={styles.adminNavBtn}>
-                Admin
+                {t('nav.admin')}
               </Link>
               <button onClick={handleLogout} className={styles.logoutNavBtn}>
-                Cerrar Sesión
+                {t('nav.logout')}
               </button>
             </>
           ) : (
-            <Link href="/login" className={styles.loginNavBtn}>Login</Link>
+            <Link href="/login" className={styles.loginNavBtn}>{t('nav.login')}</Link>
           )}
         </div>
         <button 
@@ -134,31 +155,69 @@ export function Navbar() {
         </button>
         <ul className={`${styles.navMenu} ${menuOpen ? styles.active : ''}`}>
           <li>
-            <Link href="/" onClick={(e) => handleLinkClick(e, '/')}>Inicio</Link>
+            <Link href="/" onClick={(e) => handleLinkClick(e, '/')}>{t('nav.home')}</Link>
           </li>
           <li>
-            <Link href="/servicios" onClick={(e) => handleLinkClick(e, '/servicios')}>Servicios</Link>
+            <Link href="/servicios" onClick={(e) => handleLinkClick(e, '/servicios')}>{t('nav.services')}</Link>
           </li>
           <li>
-            <Link href="/#experiencias" onClick={(e) => handleLinkClick(e, '#experiencias')}>Experiencias</Link>
+            <Link href="/empresarial" onClick={(e) => handleLinkClick(e, '/empresarial')}>{t('nav.corporate')}</Link>
           </li>
           <li>
-            <Link href="/empresarial" onClick={(e) => handleLinkClick(e, '/empresarial')}>Empresarial</Link>
+            <Link href="/blog" onClick={(e) => handleLinkClick(e, '/blog')}>{t('nav.blog')}</Link>
           </li>
           <li>
-            <Link href="/blog" onClick={(e) => handleLinkClick(e, '/blog')}>Blog</Link>
-          </li>
-          <li>
-            <Link href="/shorts" onClick={(e) => handleLinkClick(e, '/shorts')}>Shorts</Link>
+            <Link href="/shorts" onClick={(e) => handleLinkClick(e, '/shorts')}>{t('nav.shorts')}</Link>
           </li>
           {juegaEnabled && (
             <li>
-              <Link href="/juega" onClick={(e) => handleLinkClick(e, '/juega')}>Juega</Link>
+              <Link href="/juega" onClick={(e) => handleLinkClick(e, '/juega')}>{t('nav.play')}</Link>
             </li>
           )}
           <li>
-            <Link href="/contacto" onClick={(e) => handleLinkClick(e, '/contacto')}>Contacto</Link>
+            <Link href="/contacto" onClick={(e) => handleLinkClick(e, '/contacto')}>{t('nav.contact')}</Link>
           </li>
+          <li>
+            <button 
+              onClick={() => {
+                toggleLanguage()
+                setMenuOpen(false)
+              }}
+              className={styles.languageToggle}
+              aria-label="Toggle language"
+            >
+              <span className={styles.languageIcon}>🌐</span>
+              <span className={styles.languageText}>{language === 'es' ? 'EN' : 'ES'}</span>
+            </button>
+          </li>
+          <li className={styles.mobileAuthSeparator}>
+            <div className={styles.separator}></div>
+          </li>
+          <li className={styles.mobileAuthItem}>
+            <Link href="/onboarding" className={styles.mobileEnrollBtn} onClick={(e) => handleLinkClick(e, '/onboarding')}>
+              {t('nav.enroll')}
+            </Link>
+          </li>
+          {isAuthenticated ? (
+            <>
+              <li className={styles.mobileAuthItem}>
+                <Link href="/admin" className={styles.mobileAuthBtn} onClick={(e) => handleLinkClick(e, '/admin')}>
+                  {t('nav.admin')}
+                </Link>
+              </li>
+              <li className={styles.mobileAuthItem}>
+                <button onClick={handleLogout} className={styles.mobileAuthBtn}>
+                  {t('nav.logout')}
+                </button>
+              </li>
+            </>
+          ) : (
+            <li className={styles.mobileAuthItem}>
+              <Link href="/login" className={styles.mobileAuthBtn} onClick={(e) => handleLinkClick(e, '/login')}>
+                {t('nav.login')}
+              </Link>
+            </li>
+          )}
         </ul>
       </div>
     </nav>
