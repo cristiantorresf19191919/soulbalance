@@ -11,7 +11,16 @@ interface OnboardingStep1Props {
 export default function OnboardingStep1({ formData, errors, handleChange }: OnboardingStep1Props) {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-      <Typography variant="h5" sx={{ color: 'white', mb: 2, fontWeight: 700 }}>
+      <Typography 
+        variant="h4" 
+        sx={{ 
+          color: '#075257',
+          mb: 2, 
+          fontWeight: 700,
+          fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2rem' },
+          letterSpacing: '-0.02em'
+        }}
+      >
         Información Personal
       </Typography>
       
@@ -24,15 +33,36 @@ export default function OnboardingStep1({ formData, errors, handleChange }: Onbo
         fullWidth
         sx={{
           '& .MuiOutlinedInput-root': {
-            backgroundColor: 'rgba(255, 255, 255, 0.1)',
-            color: 'white',
-            '& fieldset': { borderColor: 'rgba(255, 255, 255, 0.3)' },
-            '&:hover fieldset': { borderColor: 'rgba(255, 255, 255, 0.5)' },
-            '&.Mui-focused fieldset': { borderColor: 'white' }
+            backgroundColor: 'rgba(255, 255, 255, 0.95)',
+            color: '#1a1a1a',
+            borderRadius: '12px',
+            '& fieldset': { 
+              borderColor: 'rgba(7, 82, 87, 0.2)',
+              borderWidth: '1.5px'
+            },
+            '&:hover fieldset': { 
+              borderColor: 'rgba(7, 82, 87, 0.4)'
+            },
+            '&.Mui-focused fieldset': { 
+              borderColor: '#075257',
+              borderWidth: '2px'
+            }
           },
-          '& .MuiInputLabel-root': { color: 'rgba(255, 255, 255, 0.7)' },
-          '& .MuiInputLabel-root.Mui-focused': { color: 'white' },
-          '& .MuiFormHelperText-root': { color: 'rgba(255, 255, 255, 0.7)' }
+          '& .MuiInputLabel-root': { 
+            color: 'rgba(7, 82, 87, 0.7)',
+            fontWeight: 500
+          },
+          '& .MuiInputLabel-root.Mui-focused': { 
+            color: '#075257',
+            fontWeight: 600
+          },
+          '& .MuiFormHelperText-root': { 
+            color: 'rgba(7, 82, 87, 0.65)',
+            fontSize: '0.875rem'
+          },
+          '& .MuiFormHelperText-root.Mui-error': {
+            color: '#d32f2f'
+          }
         }}
       />
 
@@ -46,15 +76,36 @@ export default function OnboardingStep1({ formData, errors, handleChange }: Onbo
         fullWidth
         sx={{
           '& .MuiOutlinedInput-root': {
-            backgroundColor: 'rgba(255, 255, 255, 0.1)',
-            color: 'white',
-            '& fieldset': { borderColor: 'rgba(255, 255, 255, 0.3)' },
-            '&:hover fieldset': { borderColor: 'rgba(255, 255, 255, 0.5)' },
-            '&.Mui-focused fieldset': { borderColor: 'white' }
+            backgroundColor: 'rgba(255, 255, 255, 0.95)',
+            color: '#1a1a1a',
+            borderRadius: '12px',
+            '& fieldset': { 
+              borderColor: 'rgba(7, 82, 87, 0.2)',
+              borderWidth: '1.5px'
+            },
+            '&:hover fieldset': { 
+              borderColor: 'rgba(7, 82, 87, 0.4)'
+            },
+            '&.Mui-focused fieldset': { 
+              borderColor: '#075257',
+              borderWidth: '2px'
+            }
           },
-          '& .MuiInputLabel-root': { color: 'rgba(255, 255, 255, 0.7)' },
-          '& .MuiInputLabel-root.Mui-focused': { color: 'white' },
-          '& .MuiFormHelperText-root': { color: 'rgba(255, 255, 255, 0.7)' }
+          '& .MuiInputLabel-root': { 
+            color: 'rgba(7, 82, 87, 0.7)',
+            fontWeight: 500
+          },
+          '& .MuiInputLabel-root.Mui-focused': { 
+            color: '#075257',
+            fontWeight: 600
+          },
+          '& .MuiFormHelperText-root': { 
+            color: 'rgba(7, 82, 87, 0.65)',
+            fontSize: '0.875rem'
+          },
+          '& .MuiFormHelperText-root.Mui-error': {
+            color: '#d32f2f'
+          }
         }}
       />
 
@@ -67,15 +118,36 @@ export default function OnboardingStep1({ formData, errors, handleChange }: Onbo
         fullWidth
         sx={{
           '& .MuiOutlinedInput-root': {
-            backgroundColor: 'rgba(255, 255, 255, 0.1)',
-            color: 'white',
-            '& fieldset': { borderColor: 'rgba(255, 255, 255, 0.3)' },
-            '&:hover fieldset': { borderColor: 'rgba(255, 255, 255, 0.5)' },
-            '&.Mui-focused fieldset': { borderColor: 'white' }
+            backgroundColor: 'rgba(255, 255, 255, 0.95)',
+            color: '#1a1a1a',
+            borderRadius: '12px',
+            '& fieldset': { 
+              borderColor: 'rgba(7, 82, 87, 0.2)',
+              borderWidth: '1.5px'
+            },
+            '&:hover fieldset': { 
+              borderColor: 'rgba(7, 82, 87, 0.4)'
+            },
+            '&.Mui-focused fieldset': { 
+              borderColor: '#075257',
+              borderWidth: '2px'
+            }
           },
-          '& .MuiInputLabel-root': { color: 'rgba(255, 255, 255, 0.7)' },
-          '& .MuiInputLabel-root.Mui-focused': { color: 'white' },
-          '& .MuiFormHelperText-root': { color: 'rgba(255, 255, 255, 0.7)' }
+          '& .MuiInputLabel-root': { 
+            color: 'rgba(7, 82, 87, 0.7)',
+            fontWeight: 500
+          },
+          '& .MuiInputLabel-root.Mui-focused': { 
+            color: '#075257',
+            fontWeight: 600
+          },
+          '& .MuiFormHelperText-root': { 
+            color: 'rgba(7, 82, 87, 0.65)',
+            fontSize: '0.875rem'
+          },
+          '& .MuiFormHelperText-root.Mui-error': {
+            color: '#d32f2f'
+          }
         }}
       />
 
@@ -89,15 +161,36 @@ export default function OnboardingStep1({ formData, errors, handleChange }: Onbo
         fullWidth
         sx={{
           '& .MuiOutlinedInput-root': {
-            backgroundColor: 'rgba(255, 255, 255, 0.1)',
-            color: 'white',
-            '& fieldset': { borderColor: 'rgba(255, 255, 255, 0.3)' },
-            '&:hover fieldset': { borderColor: 'rgba(255, 255, 255, 0.5)' },
-            '&.Mui-focused fieldset': { borderColor: 'white' }
+            backgroundColor: 'rgba(255, 255, 255, 0.95)',
+            color: '#1a1a1a',
+            borderRadius: '12px',
+            '& fieldset': { 
+              borderColor: 'rgba(7, 82, 87, 0.2)',
+              borderWidth: '1.5px'
+            },
+            '&:hover fieldset': { 
+              borderColor: 'rgba(7, 82, 87, 0.4)'
+            },
+            '&.Mui-focused fieldset': { 
+              borderColor: '#075257',
+              borderWidth: '2px'
+            }
           },
-          '& .MuiInputLabel-root': { color: 'rgba(255, 255, 255, 0.7)' },
-          '& .MuiInputLabel-root.Mui-focused': { color: 'white' },
-          '& .MuiFormHelperText-root': { color: 'rgba(255, 255, 255, 0.7)' }
+          '& .MuiInputLabel-root': { 
+            color: 'rgba(7, 82, 87, 0.7)',
+            fontWeight: 500
+          },
+          '& .MuiInputLabel-root.Mui-focused': { 
+            color: '#075257',
+            fontWeight: 600
+          },
+          '& .MuiFormHelperText-root': { 
+            color: 'rgba(7, 82, 87, 0.65)',
+            fontSize: '0.875rem'
+          },
+          '& .MuiFormHelperText-root.Mui-error': {
+            color: '#d32f2f'
+          }
         }}
       />
 
@@ -111,15 +204,36 @@ export default function OnboardingStep1({ formData, errors, handleChange }: Onbo
         fullWidth
         sx={{
           '& .MuiOutlinedInput-root': {
-            backgroundColor: 'rgba(255, 255, 255, 0.1)',
-            color: 'white',
-            '& fieldset': { borderColor: 'rgba(255, 255, 255, 0.3)' },
-            '&:hover fieldset': { borderColor: 'rgba(255, 255, 255, 0.5)' },
-            '&.Mui-focused fieldset': { borderColor: 'white' }
+            backgroundColor: 'rgba(255, 255, 255, 0.95)',
+            color: '#1a1a1a',
+            borderRadius: '12px',
+            '& fieldset': { 
+              borderColor: 'rgba(7, 82, 87, 0.2)',
+              borderWidth: '1.5px'
+            },
+            '&:hover fieldset': { 
+              borderColor: 'rgba(7, 82, 87, 0.4)'
+            },
+            '&.Mui-focused fieldset': { 
+              borderColor: '#075257',
+              borderWidth: '2px'
+            }
           },
-          '& .MuiInputLabel-root': { color: 'rgba(255, 255, 255, 0.7)' },
-          '& .MuiInputLabel-root.Mui-focused': { color: 'white' },
-          '& .MuiFormHelperText-root': { color: 'rgba(255, 255, 255, 0.7)' }
+          '& .MuiInputLabel-root': { 
+            color: 'rgba(7, 82, 87, 0.7)',
+            fontWeight: 500
+          },
+          '& .MuiInputLabel-root.Mui-focused': { 
+            color: '#075257',
+            fontWeight: 600
+          },
+          '& .MuiFormHelperText-root': { 
+            color: 'rgba(7, 82, 87, 0.65)',
+            fontSize: '0.875rem'
+          },
+          '& .MuiFormHelperText-root.Mui-error': {
+            color: '#d32f2f'
+          }
         }}
       />
     </Box>

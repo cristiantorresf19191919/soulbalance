@@ -49,7 +49,16 @@ export default function OnboardingStep3({
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-      <Typography variant="h5" sx={{ color: 'white', mb: 2, fontWeight: 700 }}>
+      <Typography 
+        variant="h4" 
+        sx={{ 
+          color: '#075257',
+          mb: 2, 
+          fontWeight: 700,
+          fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2rem' },
+          letterSpacing: '-0.02em'
+        }}
+      >
         Detalles de Práctica
       </Typography>
 
@@ -62,24 +71,61 @@ export default function OnboardingStep3({
         fullWidth
         sx={{
           '& .MuiOutlinedInput-root': {
-            backgroundColor: 'rgba(255, 255, 255, 0.1)',
-            color: 'white',
-            '& fieldset': { borderColor: 'rgba(255, 255, 255, 0.3)' },
-            '&:hover fieldset': { borderColor: 'rgba(255, 255, 255, 0.5)' },
-            '&.Mui-focused fieldset': { borderColor: 'white' }
+            backgroundColor: 'rgba(255, 255, 255, 0.95)',
+            color: '#1a1a1a',
+            borderRadius: '12px',
+            '& fieldset': { 
+              borderColor: 'rgba(7, 82, 87, 0.2)',
+              borderWidth: '1.5px'
+            },
+            '&:hover fieldset': { 
+              borderColor: 'rgba(7, 82, 87, 0.4)'
+            },
+            '&.Mui-focused fieldset': { 
+              borderColor: '#075257',
+              borderWidth: '2px'
+            }
           },
-          '& .MuiInputLabel-root': { color: 'rgba(255, 255, 255, 0.7)' },
-          '& .MuiInputLabel-root.Mui-focused': { color: 'white' },
-          '& .MuiFormHelperText-root': { color: 'rgba(255, 255, 255, 0.7)' }
+          '& .MuiInputLabel-root': { 
+            color: 'rgba(7, 82, 87, 0.7)',
+            fontWeight: 500
+          },
+          '& .MuiInputLabel-root.Mui-focused': { 
+            color: '#075257',
+            fontWeight: 600
+          },
+          '& .MuiFormHelperText-root': { 
+            color: 'rgba(7, 82, 87, 0.65)',
+            fontSize: '0.875rem'
+          },
+          '& .MuiFormHelperText-root.Mui-error': {
+            color: '#d32f2f'
+          }
         }}
       />
 
       <Box>
-        <Typography variant="subtitle1" sx={{ color: 'white', mb: 1 }}>
+        <Typography 
+          variant="subtitle1" 
+          sx={{ 
+            color: '#075257',
+            mb: 2,
+            fontWeight: 600,
+            fontSize: '1.1rem'
+          }}
+        >
           Áreas de Servicio
         </Typography>
         {errors.serviceAreas && (
-          <Typography variant="caption" sx={{ color: 'error.main', display: 'block', mb: 1 }}>
+          <Typography 
+            variant="caption" 
+            sx={{ 
+              color: '#d32f2f', 
+              display: 'block', 
+              mb: 1,
+              fontWeight: 500
+            }}
+          >
             {errors.serviceAreas}
           </Typography>
         )}
@@ -90,9 +136,13 @@ export default function OnboardingStep3({
               label={area}
               onDelete={() => handleAreaRemove(area)}
               sx={{
-                backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                color: 'white',
-                '& .MuiChip-deleteIcon': { color: 'white' }
+                backgroundColor: '#075257',
+                color: '#fff',
+                fontWeight: 500,
+                '& .MuiChip-deleteIcon': { 
+                  color: 'rgba(255, 255, 255, 0.8)',
+                  '&:hover': { color: '#fff' }
+                }
               }}
             />
           ))}
@@ -110,21 +160,51 @@ export default function OnboardingStep3({
           fullWidth
           sx={{
             '& .MuiOutlinedInput-root': {
-              backgroundColor: 'rgba(255, 255, 255, 0.1)',
-              color: 'white',
-              '& fieldset': { borderColor: 'rgba(255, 255, 255, 0.3)' }
+              backgroundColor: 'rgba(255, 255, 255, 0.95)',
+              color: '#1a1a1a',
+              borderRadius: '10px',
+              '& fieldset': { 
+                borderColor: 'rgba(7, 82, 87, 0.2)',
+                borderWidth: '1.5px'
+              },
+              '&:hover fieldset': { 
+                borderColor: 'rgba(7, 82, 87, 0.4)'
+              },
+              '&.Mui-focused fieldset': { 
+                borderColor: '#075257',
+                borderWidth: '2px'
+              }
             },
-            '& .MuiInputLabel-root': { color: 'rgba(255, 255, 255, 0.7)' }
+            '& .MuiInputBase-input::placeholder': {
+              color: 'rgba(7, 82, 87, 0.5)',
+              opacity: 1
+            }
           }}
         />
       </Box>
 
       <Box>
-        <Typography variant="subtitle1" sx={{ color: 'white', mb: 2 }}>
+        <Typography 
+          variant="subtitle1" 
+          sx={{ 
+            color: '#075257',
+            mb: 2,
+            fontWeight: 600,
+            fontSize: '1.1rem'
+          }}
+        >
           Precios por Servicio
         </Typography>
         {errors.pricing && (
-          <Typography variant="caption" sx={{ color: 'error.main', display: 'block', mb: 1 }}>
+          <Typography 
+            variant="caption" 
+            sx={{ 
+              color: '#d32f2f', 
+              display: 'block', 
+              mb: 1,
+              fontWeight: 500
+            }}
+          >
             {errors.pricing}
           </Typography>
         )}
@@ -138,46 +218,108 @@ export default function OnboardingStep3({
             fullWidth
             sx={{ mb: 2,
               '& .MuiOutlinedInput-root': {
-                backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                color: 'white',
-                '& fieldset': { borderColor: 'rgba(255, 255, 255, 0.3)' }
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                color: '#1a1a1a',
+                borderRadius: '12px',
+                '& fieldset': { 
+                  borderColor: 'rgba(7, 82, 87, 0.2)',
+                  borderWidth: '1.5px'
+                },
+                '&:hover fieldset': { 
+                  borderColor: 'rgba(7, 82, 87, 0.4)'
+                },
+                '&.Mui-focused fieldset': { 
+                  borderColor: '#075257',
+                  borderWidth: '2px'
+                }
               },
-              '& .MuiInputLabel-root': { color: 'rgba(255, 255, 255, 0.7)' }
+              '& .MuiInputLabel-root': { 
+                color: 'rgba(7, 82, 87, 0.7)',
+                fontWeight: 500
+              },
+              '& .MuiInputLabel-root.Mui-focused': { 
+                color: '#075257',
+                fontWeight: 600
+              }
             }}
           />
         ))}
       </Box>
 
       <Box>
-        <Typography variant="subtitle1" sx={{ color: 'white', mb: 2 }}>
+        <Typography 
+          variant="subtitle1" 
+          sx={{ 
+            color: '#075257',
+            mb: 2,
+            fontWeight: 600,
+            fontSize: '1.1rem'
+          }}
+        >
           Disponibilidad
         </Typography>
         {errors.availability && (
-          <Typography variant="caption" sx={{ color: 'error.main', display: 'block', mb: 1 }}>
+          <Typography 
+            variant="caption" 
+            sx={{ 
+              color: '#d32f2f', 
+              display: 'block', 
+              mb: 1,
+              fontWeight: 500
+            }}
+          >
             {errors.availability}
           </Typography>
         )}
         {days.map((day) => (
           <Box key={day} sx={{ mb: 2 }}>
-            <Typography variant="body2" sx={{ color: 'white', mb: 1, textTransform: 'capitalize' }}>
-              {day}
+            <Typography 
+              variant="body1" 
+              sx={{ 
+                color: '#075257', 
+                mb: 1.5, 
+                textTransform: 'capitalize',
+                fontWeight: 600,
+                fontSize: '0.95rem'
+              }}
+            >
+              {day === 'monday' ? 'Lunes' : 
+               day === 'tuesday' ? 'Martes' :
+               day === 'wednesday' ? 'Miércoles' :
+               day === 'thursday' ? 'Jueves' :
+               day === 'friday' ? 'Viernes' :
+               day === 'saturday' ? 'Sábado' : 'Domingo'}
             </Typography>
             <Box sx={{ display: 'flex', gap: 1 }}>
-              {timeSlots.map((slot) => (
-                <Button
-                  key={slot.key}
-                  variant={formData.availability[day]?.[slot.key as keyof typeof formData.availability[typeof day]] ? 'contained' : 'outlined'}
-                  onClick={() => handleAvailabilityChange(day, slot.key, !formData.availability[day]?.[slot.key as keyof typeof formData.availability[typeof day]])}
-                  size="small"
-                  sx={{
-                    color: formData.availability[day]?.[slot.key as keyof typeof formData.availability[typeof day]] ? 'white' : 'rgba(255, 255, 255, 0.7)',
-                    borderColor: 'rgba(255, 255, 255, 0.5)',
-                    bgcolor: formData.availability[day]?.[slot.key as keyof typeof formData.availability[typeof day]] ? 'rgba(255, 255, 255, 0.3)' : 'transparent'
-                  }}
-                >
-                  {slot.label}
-                </Button>
-              ))}
+              {timeSlots.map((slot) => {
+                const isSelected = formData.availability[day]?.[slot.key as keyof typeof formData.availability[typeof day]]
+                return (
+                  <Button
+                    key={slot.key}
+                    variant={isSelected ? 'contained' : 'outlined'}
+                    onClick={() => handleAvailabilityChange(day, slot.key, !isSelected)}
+                    size="small"
+                    sx={{
+                      color: isSelected ? '#fff' : '#075257',
+                      borderColor: '#075257',
+                      borderWidth: '2px',
+                      bgcolor: isSelected ? '#075257' : 'transparent',
+                      fontWeight: 600,
+                      textTransform: 'none',
+                      px: 2.5,
+                      py: 0.75,
+                      borderRadius: '8px',
+                      '&:hover': {
+                        bgcolor: isSelected ? '#054347' : 'rgba(7, 82, 87, 0.08)',
+                        borderColor: isSelected ? '#054347' : '#075257',
+                        borderWidth: '2px'
+                      }
+                    }}
+                  >
+                    {slot.label}
+                  </Button>
+                )
+              })}
             </Box>
           </Box>
         ))}

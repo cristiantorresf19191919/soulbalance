@@ -29,17 +29,28 @@ export default function OnboardingNavigation({
         justifyContent: 'space-between',
         gap: 2,
         p: { xs: 2, sm: 3, md: 4 },
-        borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-        backgroundColor: 'rgba(0, 0, 0, 0.1)'
+        borderTop: '1px solid rgba(7, 82, 87, 0.15)',
+        backgroundColor: 'rgba(7, 82, 87, 0.03)',
+        borderRadius: '0 0 28px 28px'
       }}
     >
       <Button
         onClick={onBack}
         disabled={activeStep === 1 || loading}
         sx={{
-          color: 'white',
-          borderColor: 'rgba(255, 255, 255, 0.5)',
-          '&:disabled': { color: 'rgba(255, 255, 255, 0.3)' }
+          color: '#075257',
+          fontWeight: 600,
+          textTransform: 'none',
+          fontSize: '1rem',
+          px: 3,
+          py: 1.25,
+          borderRadius: '10px',
+          '&:hover': {
+            backgroundColor: 'rgba(7, 82, 87, 0.08)'
+          },
+          '&:disabled': { 
+            color: 'rgba(7, 82, 87, 0.3)'
+          }
         }}
       >
         Atrás
@@ -51,8 +62,17 @@ export default function OnboardingNavigation({
             onClick={onCreateLater}
             disabled={loading}
             sx={{
-              color: 'rgba(255, 255, 255, 0.7)',
-              '&:hover': { color: 'white' }
+              color: 'rgba(7, 82, 87, 0.7)',
+              fontWeight: 500,
+              textTransform: 'none',
+              fontSize: '1rem',
+              px: 3,
+              py: 1.25,
+              borderRadius: '10px',
+              '&:hover': { 
+              color: '#075257',
+              backgroundColor: 'rgba(7, 82, 87, 0.08)'
+              }
             }}
           >
             Completar Después
@@ -64,10 +84,23 @@ export default function OnboardingNavigation({
             onClick={onNext}
             disabled={!canProceed || loading}
             sx={{
-              bgcolor: 'white',
-              color: '#8B5CF6',
-              '&:hover': { bgcolor: 'rgba(255, 255, 255, 0.9)' },
-              '&:disabled': { bgcolor: 'rgba(255, 255, 255, 0.3)' }
+              bgcolor: '#075257',
+              color: '#fff',
+              fontWeight: 600,
+              textTransform: 'none',
+              fontSize: '1rem',
+              px: 4,
+              py: 1.25,
+              borderRadius: '10px',
+              boxShadow: '0 4px 12px rgba(7, 82, 87, 0.25)',
+              '&:hover': { 
+              bgcolor: '#054347',
+              boxShadow: '0 6px 16px rgba(7, 82, 87, 0.35)'
+              },
+              '&:disabled': { 
+              bgcolor: 'rgba(7, 82, 87, 0.3)',
+              color: 'rgba(255, 255, 255, 0.6)'
+              }
             }}
           >
             Siguiente
@@ -78,10 +111,23 @@ export default function OnboardingNavigation({
             onClick={onSubmit}
             disabled={!canProceed || loading}
             sx={{
-              bgcolor: 'white',
-              color: '#8B5CF6',
-              '&:hover': { bgcolor: 'rgba(255, 255, 255, 0.9)' },
-              '&:disabled': { bgcolor: 'rgba(255, 255, 255, 0.3)' }
+              bgcolor: '#075257',
+              color: '#fff',
+              fontWeight: 600,
+              textTransform: 'none',
+              fontSize: '1rem',
+              px: 4,
+              py: 1.25,
+              borderRadius: '10px',
+              boxShadow: '0 4px 12px rgba(7, 82, 87, 0.25)',
+              '&:hover': { 
+              bgcolor: '#054347',
+              boxShadow: '0 6px 16px rgba(7, 82, 87, 0.35)'
+              },
+              '&:disabled': { 
+              bgcolor: 'rgba(7, 82, 87, 0.3)',
+              color: 'rgba(255, 255, 255, 0.6)'
+              }
             }}
           >
             {loading ? 'Creando...' : 'Crear Cuenta'}

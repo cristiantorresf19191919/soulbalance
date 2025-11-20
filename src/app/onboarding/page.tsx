@@ -364,12 +364,12 @@ export default function OnboardingPage() {
               px: 2
             }}>
               <Typography
-                variant="h5"
+                variant="h4"
                 sx={{
-                  color: 'rgba(255, 255, 255, 0.98)',
+                  color: '#075257',
                   fontWeight: 700,
-                  fontSize: { xs: '1rem', sm: '1.1rem', md: '1.2rem' },
-                  letterSpacing: '0.01em',
+                  fontSize: { xs: '1.25rem', sm: '1.5rem', md: '1.75rem' },
+                  letterSpacing: '-0.02em',
                   lineHeight: 1.3,
                   mb: 1
                 }}
@@ -379,13 +379,13 @@ export default function OnboardingPage() {
                   style={{
                     position: 'relative',
                     display: 'inline-block',
-                    marginLeft: '6px',
+                    marginLeft: '8px',
                     fontWeight: 700,
-                    color: 'rgba(255, 255, 255, 0.98)',
+                    color: '#075257',
                   }}
                   animate={{
                     scale: [1, 1.05, 1],
-                    opacity: [1, 0.95, 1]
+                    opacity: [1, 0.9, 1]
                   }}
                   transition={{
                     duration: 2,
