@@ -152,10 +152,17 @@ export function Footer() {
         </div>
         <motion.div className={styles.footerBottom} variants={footerItemVariants}>
           <div className={styles.footerCopyright}>
-            <span className={styles.copyrightText}>
-              &copy; 2025 SoulBalance. Todos los derechos reservados.
-            </span>
-            <VersionBadge variant="footer" />
+            <div className={styles.copyrightRow}>
+              <span className={styles.copyrightText}>
+                &copy; 2025 SoulBalance. Todos los derechos reservados.
+              </span>
+              <VersionBadge variant="footer" />
+            </div>
+            <div className={styles.contactInfo}>
+              <a href="mailto:balancecol2024@gmail.com" className={styles.contactLink}>
+                balancecol2024@gmail.com
+              </a>
+            </div>
           </div>
           <div className={styles.developedBy}>
             <span className={styles.developedByText}>Desarrollado por</span>

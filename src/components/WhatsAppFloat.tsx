@@ -6,7 +6,7 @@ import styles from './WhatsAppFloat.module.css'
 export function WhatsAppFloat() {
   return (
     <Link
-      href="https://wa.me/573202632993"
+      href="https://wa.me/573202632993?text=Hola%20SoulBalance%2C%20me%20gustar%C3%ADa%20m%C3%A1s%20informaci%C3%B3n%20sobre%20sus%20servicios"
       target="_blank"
       rel="noopener noreferrer"
       className={styles.whatsappFloat}

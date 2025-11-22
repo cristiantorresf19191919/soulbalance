@@ -28,7 +28,7 @@ CATÁLOGO DE SERVICIOS (y precios en COP)
   • 60 min: $150.000
   • 90 min: $190.000
 
-- Masaje Soul Balance – Cuatro Elementos (Premium)
+- Masaje SoulBalance – Cuatro Elementos (Premium)
   • 90 min: $250.000
 
 2. MASAJES TERAPÉUTICOS
@@ -167,7 +167,7 @@ CATÁLOGO DE SERVICIOS CORPORATIVOS
   • Experiencias personalizadas
 
 - Experiencias Corporativas Grupales
-  • Masaje Soul Balance - Cuatro Elementos
+  • Masaje SoulBalance - Cuatro Elementos
   • Aromaterapia corporativa
   • Experiencias de bienestar grupales
 

@@ -8,6 +8,7 @@ import { LanguageProvider } from '@/lib/language-context'
 import { FloatingChat } from '@/components/FloatingChat'
 import { PWAInstallPrompt } from '@/components/PWAInstallPrompt'
 import { Footer } from '@/components/Footer'
+import { WhatsAppFloat } from '@/components/WhatsAppFloat'
 import './globals.css'
 
 // Get site URL from environment variable or use default
@@ -143,6 +144,7 @@ export default function RootLayout({
               </main>
               <Footer />
               <FloatingChat />
+              <WhatsAppFloat />
               <PWAInstallPrompt />
             </div>
           </ThemeProvider>
