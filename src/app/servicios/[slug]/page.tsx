@@ -3,7 +3,6 @@
 import { useParams, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { Navbar } from '@/components/Navbar'
-import { Footer } from '@/components/Footer'
 import { Breadcrumb } from '@/components/Breadcrumb'
 import { BookingModal } from '@/components/BookingModal'
 import { MassageStepper } from '@/components/MassageStepper'
@@ -104,7 +103,6 @@ export default function ServiceDetailPage() {
             <p>Cargando servicio...</p>
           </div>
         </main>
-        <Footer />
       </>
     )
   }
@@ -215,8 +213,6 @@ export default function ServiceDetailPage() {
         open={showRecommendations}
         onClose={handleCloseStepper}
       />
-      
-      <Footer />
     </>
   )
 }

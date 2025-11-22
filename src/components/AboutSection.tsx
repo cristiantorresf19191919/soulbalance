@@ -11,7 +11,7 @@ export function AboutSection() {
             Tu bienestar, nuestra pasión
           </h2>
           <p className={styles.aboutText}>
-            En Aura Spa, ofrecemos servicios terapéuticos profesionales diseñados
+            En SoulBalance, ofrecemos servicios terapéuticos profesionales diseñados
             para tu bienestar. Con terapeutas certificados y técnicas especializadas,
             llevamos nuestros servicios directamente a tu hogar. Reserva tu cita
             y disfruta de una experiencia personalizada.

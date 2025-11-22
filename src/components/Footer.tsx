@@ -80,13 +80,13 @@ export function Footer() {
               <div className={styles.logoWrapper}>
                 <Image
                   src="/superLogo.png"
-                  alt="Aura Spa"
+                  alt="SoulBalance"
                   width={50}
                   height={50}
                   className={styles.logoImage}
                 />
               </div>
-              <span className={styles.logoText}>AURA SPA</span>
+              <span className={styles.logoText}>SOULBALANCE</span>
             </div>
             <p className={styles.tagline}>Reserva tus servicios terapéuticos</p>
           </motion.div>
@@ -153,7 +153,7 @@ export function Footer() {
         <motion.div className={styles.footerBottom} variants={footerItemVariants}>
           <div className={styles.footerCopyright}>
             <span className={styles.copyrightText}>
-              &copy; 2025 Aura Spa. Todos los derechos reservados.
+              &copy; 2025 SoulBalance. Todos los derechos reservados.
             </span>
             <VersionBadge variant="footer" />
           </div>

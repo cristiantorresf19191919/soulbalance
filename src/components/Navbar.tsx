@@ -101,8 +101,8 @@ export function Navbar() {
       <div className={styles.navContainer}>
         <div className={styles.logo}>
           <Link href="/" className={styles.logoLink}>
-            <Image src="/superLogo.png" alt="Aura Spa" width={65} height={65} className={styles.logoImage} />
-            <span className={styles.logoText}>AURA SPA</span>
+            <Image src="/superLogo.png" alt="SoulBalance" width={65} height={65} className={styles.logoImage} />
+            <span className={styles.logoText}>SOULBALANCE</span>
           </Link>
         </div>
         <div className={styles.authButtons}>

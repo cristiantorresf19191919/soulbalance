@@ -2,10 +2,10 @@ import type { MetadataRoute } from 'next'
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Aura Spa - Reserva Servicios Terapéuticos a Domicilio',
-    short_name: 'Aura Spa',
+    name: 'SoulBalance - Reserva Servicios Terapéuticos a Domicilio',
+    short_name: 'SoulBalance',
     description:
-      'Reserva servicios terapéuticos profesionales a domicilio con Aura Spa.',
+      'Reserva servicios terapéuticos profesionales a domicilio con SoulBalance.',
     start_url: '/',
     display: 'standalone',
     orientation: 'portrait-primary',

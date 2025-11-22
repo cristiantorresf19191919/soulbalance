@@ -32,7 +32,7 @@ export function PremiumExperiences() {
             </div>
           </div>
           <div className={`${styles.premiumCard} ${styles.premiumCardDark}`}>
-            <h3>Masaje Aura Spa – Cuatro Elementos</h3>
+            <h3>Masaje SoulBalance – Cuatro Elementos</h3>
             <p>
               Nuestro masaje insignia, uniendo técnicas profundas y energéticas,
               inspirado en los cuatro elementos (Tierra, Agua, Fuego y Aire).

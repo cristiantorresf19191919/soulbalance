@@ -59,13 +59,13 @@ export function HeroSection() {
         <div className={styles.logoLarge}>
           <Image
             src="/superLogo.png"
-            alt="Aura Spa"
+            alt="SoulBalance"
             width={280}
             height={280}
             className={styles.logoHeroImage}
             priority
           />
-          <h1 className={styles.brandName}>AURA SPA</h1>
+          <h1 className={styles.brandName}>SOULBALANCE</h1>
         </div>
         <p className={styles.taglineMain}>RESERVA TUS SERVICIOS TERAPÉUTICOS</p>
         <p className={styles.taglineSub}>

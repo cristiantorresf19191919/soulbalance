@@ -20,7 +20,7 @@ export const serviceCategories: ServiceCategory[] = [
       { value: 'piedras', label: 'Masaje con Piedras Volcánicas' },
       { value: 'vela', label: 'Masaje con Vela' },
       { value: 'pindas', label: 'Masaje con Pindas' },
-      { value: 'soulbalance', label: 'Masaje Aura Spa - Cuatro Elementos' },
+      { value: 'soulbalance', label: 'Masaje SoulBalance - Cuatro Elementos' },
     ]
   },
   {

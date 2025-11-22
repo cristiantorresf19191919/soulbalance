@@ -186,7 +186,7 @@ export default function DashboardPage() {
             </Typography>
             <Typography variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
               Selecciona los servicios de nuestro catálogo que estás habilitado para ofrecer. Los
-              precios y duraciones son definidos por Aura Spa y no pueden modificarse aquí.
+              precios y duraciones son definidos por SoulBalance y no pueden modificarse aquí.
             </Typography>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
               {services.map((service) => {

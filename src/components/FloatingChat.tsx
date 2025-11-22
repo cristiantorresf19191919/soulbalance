@@ -17,10 +17,10 @@ interface Message {
 }
 
 const WELCOME_MESSAGES = [
-  '¡Hola! 👋 Bienvenido, soy tu asistente de Aura Spa. ¿En qué servicio terapéutico puedo ayudarte hoy? 😌',
-  '¡Hola! 🌸 Bienvenido, soy tu asistente de Aura Spa. ¿Listo para reservar tu servicio? ✨',
-  '¡Bienvenido! 💆‍♀️ Soy tu asistente de Aura Spa. ¿Qué servicio terapéutico necesitas? 🧘',
-  '¡Hola! 🌿 Bienvenido, soy tu asistente de Aura Spa. ¿Cómo puedo ayudarte a reservar tu cita? 💚'
+  '¡Hola! 👋 Bienvenido, soy tu asistente de SoulBalance. ¿En qué servicio terapéutico puedo ayudarte hoy? 😌',
+  '¡Hola! 🌸 Bienvenido, soy tu asistente de SoulBalance. ¿Listo para reservar tu servicio? ✨',
+  '¡Bienvenido! 💆‍♀️ Soy tu asistente de SoulBalance. ¿Qué servicio terapéutico necesitas? 🧘',
+  '¡Hola! 🌿 Bienvenido, soy tu asistente de SoulBalance. ¿Cómo puedo ayudarte a reservar tu cita? 💚'
 ]
 
 export function FloatingChat() {

@@ -25,8 +25,8 @@ const siteUrl = getSiteUrl()
 const imageUrl = `${siteUrl}/soulbalance.png`
 
 export const metadata: Metadata = {
-  applicationName: 'Aura Spa',
-  title: 'Aura Spa - Reserva Servicios Terapéuticos a Domicilio',
+  applicationName: 'SoulBalance',
+  title: 'SoulBalance - Reserva Servicios Terapéuticos a Domicilio',
   description: 'Reserva servicios terapéuticos profesionales a domicilio. Masajes terapéuticos y relajantes con profesionales certificados.',
   keywords: [
     'masaje spa',
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     'masaje terapéutico',
     'bienestar',
     'relajación',
-    'Aura Spa',
+    'SoulBalance',
     'spa a domicilio',
     'masajes profesionales',
     'terapias alternativas',
@@ -45,9 +45,9 @@ export const metadata: Metadata = {
     'masaje con piedras volcánicas',
     'bambú terapia',
   ],
-  authors: [{ name: 'Aura Spa' }],
-  creator: 'Aura Spa',
-  publisher: 'Aura Spa',
+  authors: [{ name: 'SoulBalance' }],
+  creator: 'SoulBalance',
+  publisher: 'SoulBalance',
   formatDetection: {
     email: false,
     address: false,
@@ -58,22 +58,22 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'es_ES',
     url: siteUrl,
-    siteName: 'Aura Spa',
-    title: 'Aura Spa - Reserva Servicios Terapéuticos a Domicilio',
+    siteName: 'SoulBalance',
+    title: 'SoulBalance - Reserva Servicios Terapéuticos a Domicilio',
     description: 'Reserva servicios terapéuticos profesionales a domicilio. Masajes terapéuticos y relajantes con profesionales certificados.',
     images: [
       {
         url: imageUrl, // Absolute URL is required
         width: 1200,
         height: 630,
-        alt: 'Aura Spa - Servicios Terapéuticos',
+        alt: 'SoulBalance - Servicios Terapéuticos',
         type: 'image/png',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Aura Spa - Reserva Servicios Terapéuticos a Domicilio',
+    title: 'SoulBalance - Reserva Servicios Terapéuticos a Domicilio',
     description: 'Reserva servicios terapéuticos profesionales a domicilio. Masajes terapéuticos y relajantes con profesionales certificados.',
     images: [imageUrl],
   },
@@ -81,7 +81,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
-    title: 'Aura Spa',
+    title: 'SoulBalance',
   },
   robots: {
     index: true,

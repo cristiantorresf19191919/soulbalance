@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { GoogleGenAI } from '@google/genai'
 
 // System prompt para el asistente de bienestar
-const SYSTEM_PROMPT = `Eres el asistente de Aura Spa 😌✨ Un spa a domicilio que ofrece servicios terapéuticos profesionales para reservar citas.
+const SYSTEM_PROMPT = `Eres el asistente de SoulBalance 😌✨ Un spa a domicilio que ofrece servicios terapéuticos profesionales para reservar citas.
 
 OBJETIVO: Ayudar a los usuarios a reservar servicios terapéuticos. Sé breve, usa emojis, humor suave y juegos de palabras. Español siempre.
 
@@ -13,7 +13,7 @@ SERVICIOS (usa nombres exactos):
 - Masaje con Piedras Volcánicas (60/90/120 min) - Como un volcán, pero relajante 🌋
 - Masaje con Vela (60/90 min) - Ilumina tu día, literalmente 🕯️
 - Masaje con Pindas (60/90 min) - Pindas que piden que te relajes 🧘
-- Masaje Aura Spa – Cuatro Elementos Premium (90 min) - Tierra, agua, fuego, aire... y mucho relax ⭐
+- Masaje SoulBalance – Cuatro Elementos Premium (90 min) - Tierra, agua, fuego, aire... y mucho relax ⭐
 
 🔧 MASAJES TERAPÉUTICOS
 - Masaje Descontracturante (60/90/120 min) - Para nudos que no son de amistad 😬
