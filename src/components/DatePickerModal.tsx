@@ -8,7 +8,7 @@ interface DatePickerModalProps {
   selectedDate: Date | null
   onChange: (date: Date | null) => void
   minDate: Date
-  filterDate: (date: Date) => boolean
+  filterDate?: (date: Date) => boolean
 }
 
 export function DatePickerModal({
